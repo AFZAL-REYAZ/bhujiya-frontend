@@ -21,11 +21,8 @@ const Header = () => {
 
   const navLinks = [
     { label: "Home", path: "/" },
-    { label: "Combos", path: "/combos" }, // Assuming routes exist or just placeholders
     { label: "Products", path: "/products" },
     { label: "About Us", path: "/about" },
-    { label: "Recipes", path: "/recipes" },
-    { label: "Locate", path: "/locate" },
   ];
 
   return (
@@ -48,7 +45,7 @@ const Header = () => {
         <Link to="/" className="flex items-center gap-2">
             {/* Logo placeholder - replacing text with a visually distinct header */}
             <div className="text-2xl font-bold text-red-600 tracking-tighter">
-                Maa<span className="text-green-700"> Kavita Lakxmi</span>
+                Maa Kavita Lakxmi<span className="text-green-700"> </span>
             </div>
         </Link>
 
@@ -63,12 +60,12 @@ const Header = () => {
 
         {/* Icons */}
         <div className="hidden md:flex items-center gap-6 text-gray-600">
+            <FaSearch className="cursor-pointer hover:text-brand-green" />
             <div className="flex items-center gap-2 cursor-pointer hover:text-brand-green">
                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/2560px-Flag_of_India.svg.png" className="h-4 w-6 object-cover border" alt="IN" />
                  <span className="text-xs font-bold">INR ₹</span>
             </div>
-            <FaSearch className="cursor-pointer hover:text-brand-green" />
-            <FaUser className="cursor-pointer hover:text-brand-green" />
+            {/* <FaUser className="cursor-pointer hover:text-brand-green" /> */}
             <div className="relative cursor-pointer hover:text-brand-green">
                 <FaShoppingCart />
                 <span className="absolute -top-2 -right-2 bg-brand-green text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">0</span>

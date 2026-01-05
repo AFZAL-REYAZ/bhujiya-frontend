@@ -1,13 +1,13 @@
 import React from "react";
 import { FaStar } from "react-icons/fa";
 import bhujiya from "../assets/bhujiya.webp";
-import bananach1 from "../assets/banana/bananach1.jpeg";
-import bananach2 from "../assets/banana/bananach2.jpeg";
-import bananach3 from "../assets/banana/bananach3.jpeg";
-import bananach4 from "../assets/banana/bananach4.jpeg";
+import bananaChilli from "../assets/banana/bananaChilli.jpeg";
+import bananaChips from "../assets/banana/bananaChips.jpeg";
+import bananaPowder from "../assets/banana/bananaPowder.jpeg";
+import bananaSalti from "../assets/banana/bananaSalti.jpeg";
+import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 import bananach7 from "../assets/banana/bananach7.jpeg";
-import alubhujia1 from "../assets/bhujiyaa/alubhujia1.jpg";
 
 const ProductCard = ({ title, price, image, tag }) => (
   <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col items-center text-center relative group">
@@ -42,25 +42,25 @@ const CategoryCard = ({ title, image }) => (
 
 export default function Landing() {
   const plumCakes = [
-    { title: "Banana Chips Lime-n-Onion", price: "450", image: bananach1, tag: "Best Seller" },
-    { title: "Bhujiya", price: "350", image: alubhujia1, tag: "New" },
+    { title: "Banana Chips ", price: "450", image: chilliBana, tag: "Best Seller" },
+    { title: "Banana Powder", price: "350", image: bananaPowder, tag: "New" },
     { title: "Banana Length Pepper", price: "550", image: bananach5 },
   ];
 
   const bestSellers = [
-    { title: "Banana Chips Lime-n-Onion - 200g", price: "120", image: bananach1 },
-    { title: "Banana Chips Crisps Thick - 200g", price: "90", image: bananach2 },
-    { title: "Ripe Banana Fruits Chips - 150g", price: "80", image: bananach3 },
-    { title: "Ultra Thin Banana Wafers (Made in Coconut Oil) - 150g", price: "150", image: bananach4 },
-    { title: "Banana Length Pepper - 200g", price: "100", image: bananach5 },
+    { title: "Ultra Thin Banana Wafers (Made in Coconut Oil) - 150g", price: "150", image: chilliBana },
+    { title: "Banana Chips Lime-n-Onion - 200g", price: "120", image: bananaChilli },
+    { title: "Banana Chips Crisps Thick - 200g", price: "90", image: bananaChips },
+    { title: "Ripe Banana Fruits Chips - 150g", price: "80", image: bananaSalti },
+    { title: "Banana Length Pepper - 200g", price: "100", image: bananaPowder },
     { title: "Red Banana Jaggery Chips - 200g", price: "85", image: bananach7 },
     { title: "Pakoda - 200g", price: "95", image: "https://placehold.co/300x300/b45309/FFF?text=Pakoda" },
     { title: "Banana Chips Spicy - 200g", price: "125", image: "https://placehold.co/300x300/facc15/000?text=Spicy+Banana" },
   ];
 
   const categories = [
-    { title: "Banana Chips", image: bananach1 },
-    { title: "Bhujiya", image: alubhujia1 },
+    { title: "Banana Chips", image: bananaChilli },
+    { title: "bananaPowder", image: bananaPowder },
     { title: "Banana Length Pepper", image: bananach5 },
   ];
 
@@ -71,7 +71,7 @@ export default function Landing() {
       <section className="bg-gradient-to-r from-red-900 to-red-700 text-white py-16 px-4 relative overflow-hidden">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between z-10 relative">
           <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
-            <h2 className="text-xl md:text-2xl font-script text-yellow-400 mb-2">Christmas Special</h2>
+            <h2 className="text-xl md:text-2xl font-script text-yellow-400 mb-2">Tasty and Crunchy</h2>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">Khawo Jaldi <br/><span className="text-yellow-300">Raho Healthy</span></h1>
             <p className="text-red-100 mb-8 max-w-md">Experience the authentic taste of tradition with our rich, dry-fruit loaded plum cakes.</p>
             <button className="bg-white text-red-800 px-8 py-3 rounded-full font-bold hover:bg-yellow-100 transition shadow-lg">Shop Now</button>
@@ -86,21 +86,12 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Marquee Strip */}
-      {/* <div className="bg-brand-green text-white py-3 overflow-hidden">
-         <div className="flex gap-8 animate-marquee whitespace-nowrap text-sm font-bold uppercase tracking-widest">
-            {[...Array(10)].map((_, i) => (
-                <span key={i}>Banana Chips • Potato Chips • Tapioca Chips • Murukku • Mixture • Puffed Snacks • Cakes • </span>
-            ))}
-         </div>
-      </div> */}
-
       {/* Plum Cake Collection */}
       <section className="py-16 bg-red-50">
         <div className="max-w-7xl mx-auto px-4">
             <div className="text-center mb-12">
                 {/* <img src="https://placehold.co/100x100/transparent/png?text=Santa" alt="Santa" className="w-16 h-16 mx-auto mb-4 inline-block" /> */}
-                <h2 className="text-3xl font-bold text-red-900">Christmas Delights</h2>
+                <h2 className="text-3xl font-bold text-red-900">Our top selling products</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {plumCakes.map((cake, i) => (
@@ -118,12 +109,12 @@ export default function Landing() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/2">
-                 <img src={bananach2} alt="Banana Wafers" className="rounded-full shadow-2xl border-8 border-yellow-100 w-full max-w-md mx-auto" />
+                 <img src={chilliBana} alt="Banana Wafers" className="rounded-full shadow-2xl border-8 border-yellow-100 w-full max-w-md mx-auto" />
             </div>
             <div className="md:w-1/2">
-                <h2 className="text-3xl md:text-4xl font-bold text-green-900 mb-4">Ultra Thin Banana Wafers Made in Coconut Oil</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-green-900 mb-4">Ultra Thin Banana</h2>
                 <p className="text-gray-600 mb-6 leading-relaxed">
-                    Authentic Kerala Banana Chips, fried in pure coconut oil for that traditional taste and crunch. 
+                    Authentic Banana Chips, fried in pure oil for that traditional taste and crunch. 
                     Perfectly sliced, ultra-thin wafers that melt in your mouth.
                 </p>
                 <div className="flex gap-4 mb-8">

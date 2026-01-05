@@ -1,102 +1,144 @@
-import { FaFacebookF, FaYoutube, FaInstagram, FaLinkedinIn, FaCheckCircle } from "react-icons/fa";
-import { MdLocationOn, MdPhone, MdEmail } from "react-icons/md";
+import {
+  FaFacebookF,
+  FaYoutube,
+  FaInstagram,
+  FaCheckCircle,
+} from "react-icons/fa";
+import { MdLocationOn, MdEmail } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className="bg-brand-yellow text-gray-900 mt-auto">
-      {/* Top Banner */}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-12 py-8 border-b border-yellow-500/20 text-center">
-        <div className="flex items-center gap-2">
-            <div className="bg-white p-2 rounded-full shadow-sm"><FaCheckCircle className="text-brand-green" /></div>
-            <span className="font-semibold text-sm">From our advanced oil extracting facility to your snack bowl,</span>
-        </div>
-        <div className="flex items-center gap-2">
-             <div className="bg-white p-2 rounded-full shadow-sm"><FaCheckCircle className="text-brand-green" /></div>
-            <span className="font-semibold text-sm">every chip and bhujiya meets 100% standardized quality</span>
-        </div>
-        <div className="flex items-center gap-2">
-             <div className="bg-white p-2 rounded-full shadow-sm"><FaCheckCircle className="text-brand-green" /></div>
-            <span className="font-semibold text-sm">HYGIENIC PROCESSING</span>
+
+      {/* ================= TOP QUALITY BAR ================= */}
+      <div className="border-b border-yellow-500/20 py-8">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+          {[
+            "From our advanced oil extracting facility to your snack bowl",
+            "Every chip and bhujiya meets 100% standardized quality",
+            "Hygienic & quality-controlled processing",
+          ].map((text, i) => (
+            <div key={i} className="flex items-center gap-3 justify-center md:justify-start">
+              <div className="bg-white p-2 rounded-full shadow-sm">
+                <FaCheckCircle className="text-brand-green text-sm" />
+              </div>
+              <p className="text-sm font-medium leading-relaxed">
+                {text}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
+      {/* ================= MAIN FOOTER ================= */}
       <div className="max-w-7xl mx-auto px-6 py-14">
-        {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-          {/* Brand + social */}
+
+          {/* BRAND */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-                {/* Logo placeholder */}
-                <div className="bg-white p-2 rounded shadow-sm inline-block">
-                    <div className="text-xl font-bold text-red-600 tracking-tighter">
-                        Maa<span className="text-green-700"> Kavita Lakxmi</span>
-                    </div>
-                </div>
+            <div className="inline-block bg-white px-3 py-2 rounded shadow-sm">
+              <h3 className="text-lg font-bold tracking-tight text-red-600">
+                Maa Kavita Lakxmi
+              </h3>
             </div>
-            
-            <p className="mt-3 text-sm text-gray-800 font-medium leading-relaxed">
-              Authentic taste. Pure ingredients. Crunch you can trust — since 2024.
+
+            <p className="mt-4 text-sm leading-relaxed text-gray-800">
+              Authentic taste, pure ingredients, and trusted crunch —
+              proudly serving quality snacks since 2024.
             </p>
 
-            <div className="mt-5 flex items-center gap-3">
-              <a href="#" className="h-9 w-9 inline-flex items-center justify-center rounded-full bg-white hover:bg-white/80 text-brand-green transition shadow-sm"><FaFacebookF /></a>
-              <a href="#" className="h-9 w-9 inline-flex items-center justify-center rounded-full bg-white hover:bg-white/80 text-red-600 transition shadow-sm"><FaYoutube /></a>
-              <a href="#" className="h-9 w-9 inline-flex items-center justify-center rounded-full bg-white hover:bg-white/80 text-pink-600 transition shadow-sm"><FaInstagram /></a>
+            <div className="mt-6 flex items-center gap-3">
+              <SocialIcon icon={<FaFacebookF />} color="text-blue-600" />
+              <SocialIcon icon={<FaYoutube />} color="text-red-600" />
+              <SocialIcon icon={<FaInstagram />} color="text-pink-600" />
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h6 className="text-lg font-bold text-gray-900 mb-4 uppercase tracking-wider">Quick Links</h6>
-            <ul className="space-y-2 text-sm font-medium">
-              <li><Link to="/" className="hover:text-white transition">Home</Link></li>
-              <li><Link to="/about" className="hover:text-white transition">About Us</Link></li>
-              <li><Link to="/products" className="hover:text-white transition">Products</Link></li>
-              <li><Link to="/contactus" className="hover:text-white transition">Contact Us</Link></li>
-              <li><Link to="/locate" className="hover:text-white transition">Store Locator</Link></li>
-            </ul>
-          </div>
+          {/* QUICK LINKS */}
+          <FooterColumn title="Quick Links">
+            <FooterLink to="/">Home</FooterLink>
+            <FooterLink to="/about">About Us</FooterLink>
+            <FooterLink to="/products">Products</FooterLink>
+            <FooterLink to="/contactus">Contact Us</FooterLink>
+            <FooterLink to="/locate">Store Locator</FooterLink>
+          </FooterColumn>
 
-          {/* Policies */}
-          <div>
-            <h6 className="text-lg font-bold text-gray-900 mb-4 uppercase tracking-wider">Policies</h6>
-            <ul className="space-y-2 text-sm font-medium">
-              <li><Link to="/privacy" className="hover:text-white transition">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="hover:text-white transition">Terms & Conditions</Link></li>
-              <li><Link to="/shipping" className="hover:text-white transition">Shipping Policy</Link></li>
-              <li><Link to="/refund" className="hover:text-white transition">Refund Policy</Link></li>
-            </ul>
-          </div>
+          {/* POLICIES */}
+          <FooterColumn title="Policies">
+            <FooterLink to="/privacy">Privacy Policy</FooterLink>
+            <FooterLink to="/terms">Terms & Conditions</FooterLink>
+            <FooterLink to="/shipping">Shipping Policy</FooterLink>
+            <FooterLink to="/refund">Refund Policy</FooterLink>
+          </FooterColumn>
 
-          {/* Contact */}
-          <div>
-            <h6 className="text-lg font-bold text-gray-900 mb-4 uppercase tracking-wider">Customer Support</h6>
-            <div className="space-y-3 text-sm font-medium">
-              <p className="text-xl font-bold text-brand-green mb-2">+91 8252753985</p>
-              <p className="text-xl font-bold text-brand-green mb-2">+91 7366981951</p>
-              <div className="flex items-start gap-3">
-                <MdLocationOn className="text-gray-800 text-lg mt-0.5" />
-                <p>
-                  Malsalami, Shahadra, Patna City-800008<br />
-                  Bihar,India
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                 <MdEmail className="text-gray-800 text-lg" />
-                 <p>maakavitalaxmi@gmail.com</p>
-              </div>
+          {/* CONTACT */}
+          <FooterColumn title="Customer Support">
+            <p className="text-base  text-brand-green">
+              +91 82527 53985
+            </p>
+            <p className="text-base  text-brand-green">
+              +91 73669 81951
+            </p>
+
+            <div className="mt-3 flex items-start gap-3 text-sm leading-relaxed">
+              <MdLocationOn className="text-lg mt-0.5" />
+              <p>
+                Malsalami, Shahadra, Patna City – 800008 <br />
+                Bihar, India
+              </p>
             </div>
-          </div>
+
+            <div className="mt-3 flex items-center gap-3 text-sm">
+              <MdEmail className="text-lg" />
+              <p>maakavitalaxmi@gmail.com</p>
+            </div>
+          </FooterColumn>
+
         </div>
       </div>
-      
-      {/* Copyright */}
-      <div className="bg-yellow-600 text-white text-center py-4 text-xs md:text-sm">
-        <p>&copy; {new Date().getFullYear()} Maa Kavita Lakxmi. All rights reserved. Designed for Taste.</p>
+
+      {/* ================= COPYRIGHT ================= */}
+      <div className="bg-yellow-600 text-white text-center py-4 text-xs sm:text-sm">
+        © {new Date().getFullYear()} Maa Kavita Lakxmi. All rights reserved.
       </div>
     </footer>
   );
 };
 
 export default Footer;
+
+/* ================= REUSABLE ================= */
+
+function FooterColumn({ title, children }) {
+  return (
+    <div>
+      <h6 className="mb-4 text-sm font-semibold uppercase tracking-wider">
+        {title}
+      </h6>
+      <div className="space-y-2 text-sm">{children}</div>
+    </div>
+  );
+}
+
+function FooterLink({ to, children }) {
+  return (
+    <Link
+      to={to}
+      className="block hover:text-white transition"
+    >
+      {children}
+    </Link>
+  );
+}
+
+function SocialIcon({ icon, color }) {
+  return (
+    <a
+      href="#"
+      className={`h-9 w-9 inline-flex items-center justify-center rounded-full bg-white shadow-sm ${color} hover:scale-105 transition`}
+    >
+      {icon}
+    </a>
+  );
+}
