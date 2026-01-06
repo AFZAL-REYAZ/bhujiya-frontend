@@ -10,6 +10,7 @@ import About from './pages/About';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import WhatsAppChat from './components/WhatsAppChat';
+import ScrollToTop from './components/ScrollToTop';
 
 
 
@@ -18,7 +19,7 @@ const App = () => {
    
   return (
     <BrowserRouter>
-      {/* <ScrollToTop/> */}
+      <ScrollToTop/>
       <Header/>
       <Routes>
         <Route  path="/" element={<Landing />}/>

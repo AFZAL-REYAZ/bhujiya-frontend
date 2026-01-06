@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes, FaShoppingBag, FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
-
+import jaldi from "../assets/banana/jaldi.jpeg"
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -53,7 +53,12 @@ const Header = () => {
       {/* Main nav */}
       <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-            {/* Logo placeholder - replacing text with a visually distinct header */}
+            {/* Logo Image */}
+            <img
+              src={jaldi}
+              alt="Maa Kavita Lakxmi Logo"
+              className="h-10 w-10 object-contain"
+            />
             <div className="text-2xl font-bold text-red-600 tracking-tighter">
                 Maa Kavita Lakxmi<span className="text-green-700"> </span>
             </div>

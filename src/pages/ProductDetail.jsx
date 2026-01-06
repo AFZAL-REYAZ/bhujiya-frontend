@@ -40,11 +40,14 @@ export default function ProductDetail() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <img
-            src={selectedImage}
-            alt={product.title}
-            className="rounded-xl shadow-lg w-full object-cover"
-          />
+          <div className="w-full h-[420px] bg-white flex items-center justify-center rounded-xl shadow-lg">
+            <img
+              src={selectedImage}
+              alt={product.title}
+              className="max-w-full max-h-full object-contain"
+            />
+          </div>
+
 
           <div className="flex gap-3 mt-4">
             {product.images.map((img, i) => (

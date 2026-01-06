@@ -16,9 +16,15 @@ const ProductCard = ({ title, price, image, tag }) => (
         {tag}
       </span>
     )}
-    <div className="w-40 h-40 mb-4 overflow-hidden rounded-full border-4 border-white shadow-inner bg-gray-50 flex items-center justify-center">
+    <div className="w-40 h-40 mb-4 overflow-hidden  border-4 border-white shadow-inner bg-gray-50 flex items-center justify-center">
       {image ? (
-        <img src={image} alt={title} className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" />
+        <div className="w-full h-44 md:h-48 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+          <img
+            src={image}
+            alt={title}
+            className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
       ) : (
         <div className="text-gray-300 text-xs">No Image</div>
       )}
@@ -48,11 +54,11 @@ export default function Landing() {
   ];
 
   const bestSellers = [
-    { title: "Ultra Thin Banana Wafers - 100g", price: "90", image: chilliBana },
-    { title: "Banana Chips Lime-n-Onion - 100g", price: "90", image: bananaChilli },
+    { title: "Ultra Thin Banana Chips - 100g", price: "90", image: chilliBana },
+    { title: "Banana Chips Spicy - 100g", price: "90", image: bananaChilli },
     { title: "Banana Chips Crisps Thick - 100g", price: "90", image: bananaChips },
-    { title: "Ripe Banana Fruits Chips - 100g", price: "90", image: bananaSalti },
-    { title: "Banana Length Pepper - 100g", price: "90", image: bananaPowder },
+    { title: "Banana Salti Chips - 100g", price: "90", image: bananaSalti },
+    { title: "Banana Powder - 100g", price: "90", image: bananaPowder },
    ];
 
   const categories = [
