@@ -7,7 +7,7 @@ import bananaPowder from "../assets/banana/bananaPowder.jpeg";
 import bananaSalti from "../assets/banana/bananaSalti.jpeg";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
-import bananach7 from "../assets/banana/bananach7.jpeg";
+
 
 const ProductCard = ({ title, price, image, tag }) => (
   <div className="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col items-center text-center relative group">
@@ -42,21 +42,18 @@ const CategoryCard = ({ title, image }) => (
 
 export default function Landing() {
   const plumCakes = [
-    { title: "Banana Chips ", price: "450", image: chilliBana, tag: "Best Seller" },
-    { title: "Banana Powder", price: "350", image: bananaPowder, tag: "New" },
-    { title: "Banana Length Pepper", price: "550", image: bananach5 },
+    { title: "Banana Chips-100g", price: "90", image: chilliBana, tag: "Best Seller" },
+    { title: "Banana Powder-100g", price: "90", image: bananaPowder, tag: "New" },
+    { title: "Banana Length Pepper-100g", price: "90", image: bananach5 },
   ];
 
   const bestSellers = [
-    { title: "Ultra Thin Banana Wafers (Made in Coconut Oil) - 150g", price: "150", image: chilliBana },
-    { title: "Banana Chips Lime-n-Onion - 200g", price: "120", image: bananaChilli },
-    { title: "Banana Chips Crisps Thick - 200g", price: "90", image: bananaChips },
-    { title: "Ripe Banana Fruits Chips - 150g", price: "80", image: bananaSalti },
-    { title: "Banana Length Pepper - 200g", price: "100", image: bananaPowder },
-    { title: "Red Banana Jaggery Chips - 200g", price: "85", image: bananach7 },
-    { title: "Pakoda - 200g", price: "95", image: "https://placehold.co/300x300/b45309/FFF?text=Pakoda" },
-    { title: "Banana Chips Spicy - 200g", price: "125", image: "https://placehold.co/300x300/facc15/000?text=Spicy+Banana" },
-  ];
+    { title: "Ultra Thin Banana Wafers - 100g", price: "90", image: chilliBana },
+    { title: "Banana Chips Lime-n-Onion - 100g", price: "90", image: bananaChilli },
+    { title: "Banana Chips Crisps Thick - 100g", price: "90", image: bananaChips },
+    { title: "Ripe Banana Fruits Chips - 100g", price: "90", image: bananaSalti },
+    { title: "Banana Length Pepper - 100g", price: "90", image: bananaPowder },
+   ];
 
   const categories = [
     { title: "Banana Chips", image: bananaChilli },
@@ -65,7 +62,7 @@ export default function Landing() {
   ];
 
   return (
-    <div className="font-sans pt-28">
+    <div className="font-sans pt-25">
       
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-red-900 to-red-700 text-white py-16 px-4 relative overflow-hidden">
@@ -118,8 +115,8 @@ export default function Landing() {
                     Perfectly sliced, ultra-thin wafers that melt in your mouth.
                 </p>
                 <div className="flex gap-4 mb-8">
-                    <span className="px-4 py-2 border rounded-full hover:bg-green-50 cursor-pointer border-green-600 text-green-700 font-bold">150g</span>
-                    <span className="px-4 py-2 border rounded-full hover:bg-green-50 cursor-pointer border-gray-300 text-gray-600">250g</span>
+                    <span className="px-4 py-2 border rounded-full hover:bg-green-50 cursor-pointer border-green-600 text-green-700 font-bold">100g</span>
+                    <span className="px-4 py-2 border rounded-full hover:bg-green-50 cursor-pointer border-gray-300 text-gray-600">200g</span>
                     <span className="px-4 py-2 border rounded-full hover:bg-green-50 cursor-pointer border-gray-300 text-gray-600">500g</span>
                 </div>
                 <div className="flex gap-4">
@@ -148,14 +145,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Banner */}
-      {/* <section className="py-20 bg-gray-100 relative overflow-hidden flex items-center justify-center">
-         <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{ backgroundImage: "url('https://placehold.co/1200x400?text=Chips+Pattern')" }}></div>
-         <div className="text-center z-10">
-            <h2 className="text-3xl md:text-5xl font-light text-gray-800 mb-4">Discover What's Next Now!</h2>
-            <img src="https://placehold.co/600x200/transparent/png?text=Assorted+Snacks" alt="Snacks" className="mx-auto" />
-         </div>
-      </section> */}
 
       {/* Featured Product - Aloo Tandoori */}
       <section className="py-16 bg-red-700 text-white">

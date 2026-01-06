@@ -15,13 +15,13 @@ const Header = () => {
   }, []);
 
   const items = [
-    "Banana Chips | Potato Chips | Tapioca Chips | Murukku | Mixture | Puffed Snacks | Cakes",
-    "Banana Chips | Potato Chips | Tapioca Chips | Murukku | Mixture | Puffed Snacks | Cakes",
+    "Banana Chips | Banana Powder | Banana Chili Chips | Banana Salti Chips",
+    "Banana Chips | Banana Powder | Banana Chili Chips | Banana Salti Chips",
   ];
 
   const navLinks = [
     { label: "Home", path: "/" },
-    { label: "Products", path: "/products" },
+    { label: "Products", path: "/ProductDetail" },
     { label: "About Us", path: "/about" },
   ];
 
@@ -30,15 +30,25 @@ const Header = () => {
       className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 bg-white shadow-sm`}
     >
       {/* Top announcement bar */}
-      <div className="bg-brand-green py-2 overflow-hidden text-white">
-        <div className="relative mx-auto max-w-7xl px-4">
-          <div className="flex gap-4 w-max animate-marquee text-xs md:text-sm font-medium whitespace-nowrap">
-            {items.map((item, i) => (
-              <span key={i} className="mx-4">{item}</span>
+      <div className="relative overflow-hidden bg-gradient-to-r from-green-700 via-green-600 to-green-700">
+        {/* Glow overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15),transparent_60%)]"></div>
+
+        <div className="relative mx-auto max-w-7xl px-4 py-2">
+          <div className="flex w-max gap-10 animate-marquee hover:[animation-play-state:paused]">
+            {[...items, ...items].map((item, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 text-xs md:text-sm font-semibold tracking-wide text-white/90"
+              >
+                <span className="text-yellow-300">★</span>
+                <span className="whitespace-nowrap">{item}</span>
+              </div>
             ))}
           </div>
         </div>
       </div>
+
 
       {/* Main nav */}
       <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">

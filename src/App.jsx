@@ -9,6 +9,7 @@ import ContactUs from './pages/ContactUs';
 import About from './pages/About';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import WhatsAppChat from './components/WhatsAppChat';
 
 
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route  path="/privacy" element={<Privacy />}/>
       </Routes>
       <Footer/>
+      <WhatsAppChat/>
     </BrowserRouter>
   )
 }
