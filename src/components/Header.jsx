@@ -62,7 +62,7 @@ const Header = () => {
               className="h-10 w-10 object-contain"
             />
             <div className="text-2xl font-bold text-red-600 tracking-tighter">
-                Maa Kavita Lakxmi Pvt. Ltd.<span className="text-green-700"> </span>
+                Maa Kavita Lakxmi Pvt. <span className="text-green-700"> </span>
             </div>
         </Link>
 
