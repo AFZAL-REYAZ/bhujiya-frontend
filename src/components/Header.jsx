@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes, FaShoppingBag, FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
-import jaldi from "../assets/banana/jaldi.jpeg"
+import logo2 from "../assets/banana/logo2.jpeg";
+
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -22,6 +23,7 @@ const Header = () => {
   const navLinks = [
     { label: "Home", path: "/" },
     { label: "Products", path: "/ProductDetail" },
+    { label: "B2B", path: "/b2b" },
     { label: "About Us", path: "/about" },
   ];
 
@@ -55,12 +57,12 @@ const Header = () => {
         <Link to="/" className="flex items-center gap-2">
             {/* Logo Image */}
             <img
-              src={jaldi}
+              src={logo2}
               alt="Maa Kavita Lakxmi Logo"
               className="h-10 w-10 object-contain"
             />
             <div className="text-2xl font-bold text-red-600 tracking-tighter">
-                Maa Kavita Lakxmi<span className="text-green-700"> </span>
+                Maa Kavita Lakxmi Pvt. Ltd.<span className="text-green-700"> </span>
             </div>
         </Link>
 
