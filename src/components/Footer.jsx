@@ -9,55 +9,47 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-brand-yellow text-gray-900 mt-auto relative overflow-hidden">
+    <footer className="bg-[#FFF6D6] text-gray-900 mt-auto relative">
 
-      {/* subtle animated background */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_60%)] animate-fadeInSlow" />
-
-      {/* ================= TOP QUALITY BAR ================= */}
-      <div className="relative border-b border-yellow-500/30 py-8">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+      {/* ================= TRUST BAR ================= */}
+      <div className="border-b border-yellow-300/40">
+        <div className="max-w-7xl mx-auto px-6 py-6
+                        grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
           {[
             "From our advanced oil extracting facility to your snack bowl",
-            "Every chip and bhujiya meets 100% standardized quality",
+            "Every product meets strict quality standards",
             "Hygienic & quality-controlled processing",
           ].map((text, i) => (
             <div
               key={i}
-              className="flex items-center gap-3 justify-center md:justify-start group"
+              className="flex items-center gap-3 justify-center md:justify-start"
             >
-              <div className="bg-white p-2 rounded-full shadow-sm group-hover:scale-110 transition">
-                <FaCheckCircle className="text-brand-green text-sm animate-pulseSlow" />
-              </div>
-              <p className="text-sm font-medium leading-relaxed group-hover:translate-x-1 transition">
-                {text}
-              </p>
+              <FaCheckCircle className="text-green-600 text-sm" />
+              <p className="leading-relaxed">{text}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* ================= MAIN FOOTER ================= */}
-      <div className="relative max-w-7xl mx-auto px-6 py-14 animate-slideUp">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
 
           {/* BRAND */}
           <div>
-            <div className="inline-block bg-white px-4 py-2 rounded shadow hover:scale-105 transition">
-              <h3 className="text-lg font-bold tracking-tight text-red-600">
-                Maa Kavita Lakxmi
-              </h3>
-            </div>
+            <h3 className="text-xl font-bold text-red-700">
+              Maa Kavita Lakxmi Pvt. Ltd.
+            </h3>
 
-            <p className="mt-4 text-sm leading-relaxed text-gray-800">
+            <p className="mt-4 text-sm text-gray-700 leading-relaxed">
               Authentic taste, pure ingredients, and trusted crunch —
               proudly serving quality snacks since 2024.
             </p>
 
-            <div className="mt-6 flex items-center gap-3">
-              <SocialIcon icon={<FaFacebookF />} color="text-blue-600" />
-              <SocialIcon icon={<FaYoutube />} color="text-red-600" />
-              <SocialIcon icon={<FaInstagram />} color="text-pink-600" />
+            <div className="mt-6 flex items-center gap-4">
+              <SocialIcon icon={<FaFacebookF />} />
+              <SocialIcon icon={<FaYoutube />} />
+              <SocialIcon icon={<FaInstagram />} />
             </div>
           </div>
 
@@ -82,56 +74,44 @@ const Footer = () => {
           <FooterColumn title="Customer Support">
             <a
               href="tel:+918252753985"
-              className="block text-base text-brand-green hover:translate-x-1 transition hover:text-red-600"
+              className="block text-sm text-gray-800 hover:text-red-600 transition"
             >
-            +91 82527 53985
+              +91 82527 53985
             </a>
 
             <a
               href="tel:+917366981951"
-              className="block text-base text-brand-green hover:translate-x-1 transition hover:text-red-600"
+              className="block text-sm text-gray-800 hover:text-red-600 transition"
             >
-            +91 73669 81951
+              +91 73669 81951
             </a>
-
 
             <a
               href="https://www.google.com/maps?q=Malsalami+Shahadra+Patna+City+800008"
               target="_blank"
               rel="noreferrer"
-              className="mt-3 flex items-start gap-3 text-sm leading-relaxed hover:text-red-600 transition"
+              className="mt-3 flex items-start gap-3 text-sm text-gray-700 hover:text-red-600 transition"
             >
-              <MdLocationOn className="text-lg mt-0.5 animate-bounceSlow" />
+              <MdLocationOn className="text-lg mt-0.5" />
               <p>
                 Malsalami, Shahadra, Patna City – 800008 <br />
                 Bihar, India
               </p>
             </a>
 
-           <a
-  href="mailto:maakavitalaxmi@gmail.com"
-  className="mt-3 flex items-center gap-3 text-sm hover:text-red-600 transition"
->
-  <MdEmail className="text-lg" />
-  <p>maakavitalaxmi@gmail.com</p>
-</a>
-
-
-            {/* GOOGLE MAP */}
-            <div className="mt-4 rounded-lg overflow-hidden shadow-lg border">
-              <iframe
-                title="location-map"
-                src="https://maps.google.com/maps?q=Patna%20City%20800008&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                className="w-full h-32"
-                loading="lazy"
-              />
-            </div>
+            <a
+              href="mailto:maakavitalaxmi@gmail.com"
+              className="mt-3 flex items-center gap-3 text-sm text-gray-700 hover:text-red-600 transition"
+            >
+              <MdEmail className="text-lg" />
+              <span>maakavitalaxmi@gmail.com</span>
+            </a>
           </FooterColumn>
         </div>
       </div>
 
       {/* ================= COPYRIGHT ================= */}
-      <div className="bg-yellow-600 text-white text-center py-4 text-xs sm:text-sm tracking-wide">
+      <div className="bg-yellow-500 text-white text-center py-4 text-xs sm:text-sm">
         © {new Date().getFullYear()} Maa Kavita Lakxmi. All rights reserved.
       </div>
     </footer>
@@ -145,10 +125,11 @@ export default Footer;
 function FooterColumn({ title, children }) {
   return (
     <div>
-      <h6 className="mb-4 text-sm font-semibold uppercase tracking-wider relative after:block after:h-[2px] after:w-8 after:bg-red-600 after:mt-1">
+      <h6 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-900">
         {title}
+        <span className="block h-[2px] w-8 bg-red-600 mt-1" />
       </h6>
-      <div className="space-y-2 text-sm">{children}</div>
+      <div className="space-y-2">{children}</div>
     </div>
   );
 }
@@ -157,21 +138,22 @@ function FooterLink({ to, children }) {
   return (
     <Link
       to={to}
-      className="block relative w-fit hover:text-red-600 transition after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-red-600 hover:after:w-full after:transition-all"
+      className="block text-sm text-gray-700 hover:text-red-600 transition"
     >
       {children}
     </Link>
   );
 }
 
-function SocialIcon({ icon, color }) {
+function SocialIcon({ icon }) {
   return (
     <a
       href="#"
-      className={`h-9 w-9 inline-flex items-center justify-center rounded-full bg-white shadow-md ${color}
-      hover:scale-110 hover:shadow-xl transition-all relative overflow-hidden`}
+      className="h-9 w-9 inline-flex items-center justify-center
+                 rounded-full border border-gray-300 text-gray-700
+                 hover:bg-red-600 hover:text-white hover:border-red-600
+                 transition"
     >
-      <span className="absolute inset-0 bg-white opacity-20 scale-0 hover:scale-150 transition-transform rounded-full" />
       {icon}
     </a>
   );

@@ -1,249 +1,266 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaShoppingCart, FaTruck, FaPhone, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  FaShoppingCart,
+  FaTruck,
+  FaPhone,
+  FaEnvelope,
+  FaWhatsapp,
+} from "react-icons/fa";
+
 import chilliBana from "../assets/banana/chilliBana.jpeg";
-import potatoChips from "../assets/potato/Potato-Chips-1.webp"
-import murukku from "../assets/potato/Murukku - Traditional.webp"
-import mixture from "../assets/potato/Mixture-South Special.webp"
-import tapiocaChips from "../assets/potato/Tapioca Chips - Kerala Style.webp"
-import bananaWafers from "../assets/banana/Banana Wafers - Thin.webp" 
+import potatoChips from "../assets/potato/Potato-Chips-1.webp";
+import murukku from "../assets/potato/Murukku - Traditional.webp";
+import mixture from "../assets/potato/Mixture-South Special.webp";
+import tapiocaChips from "../assets/potato/Tapioca Chips - Kerala Style.webp";
+import bananaWafers from "../assets/banana/Banana Wafers - Thin.webp";
 
-const BulkProductCard = ({ title, price, bulkPrice, minQuantity, image, description }) => {
-  const [quantity, setQuantity] = useState(minQuantity);
+/* ================= BULK PRODUCT CARD ================= */
+const BulkProductCard = ({
+  title,
+  price,
+  bulkPrice,
+  minQuantity,
+  image,
+  description,
+}) => {
+  const [quantity] = useState(minQuantity);
 
-  const calculateTotal = () => {
-    return quantity >= minQuantity ? (bulkPrice * quantity).toFixed(2) : (price * quantity).toFixed(2);
-  };
-
-  const getUnitPrice = () => {
-    return quantity >= minQuantity ? bulkPrice : price;
-  };
+  const unitPrice = quantity >= minQuantity ? bulkPrice : price;
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-200">
-      <div className="relative">
-        {image ? (
-          <img src={image} alt={title} className="w-full h-48 object-cover" />
-        ) : (
-          <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-500">Product Image</span>
-          </div>
-        )}
-        <div className="absolute top-2 right-2 bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">
-          BULK PRICING
-        </div>
+    <div className="group bg-white rounded-2xl border border-gray-200
+                    shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+
+      {/* Image */}
+      <div className="relative aspect-square overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover
+                     group-hover:scale-105 transition duration-500"
+        />
+
+        <span className="absolute top-4 right-4 bg-emerald-700 text-white
+                         text-[11px] font-bold px-3 py-1 rounded-full tracking-widest">
+          BULK
+        </span>
       </div>
-      
-      <div className="p-4">
-        <h3 className="text-lg font-bold text-gray-800 mb-2">{title}</h3>
-        <p className="text-gray-600 text-sm mb-3">{description}</p>
-        
-        <div className="mb-4">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-600">Unit Price:</span>
-            <div className="text-right">
-              <span className="text-lg font-bold text-green-800">₹{getUnitPrice()}</span>
-              {quantity >= minQuantity && (
-                <span className="text-xs text-green-700 block">Bulk price applied!</span>
-              )}
-            </div>
+
+      {/* Content */}
+      <div className="p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-1">
+          {title}
+        </h3>
+
+        <p className="text-sm text-gray-500 mb-4">
+          {description}
+        </p>
+
+        <div className="flex items-center justify-between mb-5">
+          <div>
+            <p className="text-xs text-gray-500">Price / Kg</p>
+            <p className="text-xl font-bold text-emerald-700">
+              ₹{unitPrice}
+            </p>
           </div>
-          
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-gray-600">Min. Order:</span>
-            <span className="text-sm font-semibold">{minQuantity} units</span>
+
+          <div className="text-right">
+            <p className="text-xs text-gray-500">Min Order</p>
+            <p className="font-semibold text-gray-800">
+              {minQuantity} Kg
+            </p>
           </div>
         </div>
 
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Quantity:</label>
-          <div className="flex items-center">
-            <button 
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-l"
-            >
-              -
-            </button>
-            <input 
-              type="number" 
-              value={quantity} 
-              onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-              className="w-16 text-center border-t border-b border-gray-300 py-1 bg-white text-gray-800"
-              min="1"
-            />
-            <button 
-              onClick={() => setQuantity(quantity + 1)}
-              className="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded-r"
-            >
-              +
-            </button>
-          </div>
-        </div>
-
-        <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
-          <div className="flex justify-between items-center">
-            <span className="font-semibold">Total:</span>
-            <span className="text-xl font-bold text-green-800">₹{calculateTotal()}</span>
-          </div>
-        </div>
-
-        <button className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center">
-          <FaShoppingCart className="mr-2" />
-          Add to Bulk Order
+        <button
+          onClick={() =>
+            window.open(
+              "https://docs.google.com/forms/d/e/1FAIpQLSeZOL6yvrZndmCO1QJ0qJu0WxDzgcgXFsiw3hHTbocGXQH_xQ/viewform?usp=publish-editor",
+              "_blank"
+            )
+          }
+         className="w-full bg-emerald-700 hover:bg-emerald-800
+                           text-white py-3 rounded-xl font-semibold
+                           transition">
+          Buy Now
         </button>
       </div>
     </div>
   );
 };
 
+/* ================= B2B PAGE ================= */
 const B2B = () => {
   const bulkProducts = [
     {
       id: 1,
-      title: "Banana Chips - Classic",
-      price: 120,
-      bulkPrice: 95,
-      minQuantity: 50,
+      title: "Banana Chips – Classic",
+      price: 420,
+      bulkPrice: 425,
+      minQuantity: 10,
       description: "Crispy banana chips made from premium Kerala bananas",
-      image: chilliBana
+      image: chilliBana,
     },
     {
       id: 2,
-      title: "Potato Chips - Spicy",
-      price: 150,
-      bulkPrice: 120,
-      minQuantity: 100,
+      title: "Potato Chips – Spicy",
+      price: 450,
+      bulkPrice: 420,
+      minQuantity: 10,
       description: "Spicy potato chips with authentic Indian spices",
-      image: potatoChips
+      image: potatoChips,
     },
     {
       id: 3,
-      title: "Murukku - Traditional",
-      price: 180,
-      bulkPrice: 145,
-      minQuantity: 75,
+      title: "Murukku – Traditional",
+      price: 480,
+      bulkPrice: 445,
+      minQuantity: 15,
       description: "Traditional South Indian murukku snack",
-      image: murukku
+      image: murukku,
     },
     {
       id: 4,
-      title: "Mixture - South Special",
-      price: 200,
-      bulkPrice: 160,
-      minQuantity: 60,
+      title: "Mixture – South Special",
+      price: 400,
+      bulkPrice: 460,
+      minQuantity: 10,
       description: "Authentic South Indian mixture snack",
-      image: mixture
+      image: mixture,
     },
     {
       id: 5,
-      title: "Banana Wafers - Thin",
-      price: 140,
-      bulkPrice: 110,
-      minQuantity: 80,
+      title: "Banana Wafers – Thin",
+      price: 440,
+      bulkPrice: 410,
+      minQuantity: 10,
       description: "Ultra-thin banana wafers, crispy and light",
-      image: bananaWafers
+      image: bananaWafers,
     },
     {
       id: 6,
-      title: "Tapioca Chips - Kerala Style",
-      price: 160,
-      bulkPrice: 130,
-      minQuantity: 70,
+      title: "Tapioca Chips – Kerala Style",
+      price: 460,
+      bulkPrice: 400,
+      minQuantity: 10,
       description: "Traditional Kerala-style tapioca chips",
-      image: tapiocaChips
-    }
+      image: tapiocaChips,
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <div className="bg-green-600 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">B2B Bulk Orders</h1>
-          <p className="text-xl mb-8">Premium snacks at wholesale prices for retailers, restaurants, and distributors</p>
-          
-          <div className="grid md:grid-cols-3 gap-8 mt-12">
-            <div className="flex flex-col items-center">
-              <div className="bg-white text-green-700 p-4 rounded-full mb-4">
-                <FaTruck className="text-3xl" />
+    <div className="bg-gray-50 min-h-screen">
+
+      {/* ================= HERO ================= */}
+      <section className="bg-gradient-to-br from-emerald-700 to-emerald-600
+                          text-white pt-32 pb-24">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
+            B2B Bulk Orders
+          </h1>
+
+          <p className="text-lg md:text-xl text-emerald-100
+                        max-w-2xl mx-auto">
+            Premium snacks at wholesale prices for retailers,
+            distributors, and restaurants.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-12 mt-16">
+            {[
+              {
+                icon: <FaTruck />,
+                title: "Fast Delivery",
+                text: "Pan India logistics",
+              },
+              {
+                icon: <FaShoppingCart />,
+                title: "Bulk Discounts",
+                text: "Wholesale pricing",
+              },
+              {
+                icon: <FaPhone />,
+                title: "Dedicated Support",
+                text: "B2B sales team",
+              },
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col items-center">
+                <div className="bg-white/15 p-5 rounded-full mb-4 text-3xl">
+                  {item.icon}
+                </div>
+                <h3 className="font-semibold text-lg">{item.title}</h3>
+                <p className="text-sm text-emerald-100">{item.text}</p>
               </div>
-              <h3 className="text-lg font-semibold mb-2">Fast Delivery</h3>
-              <p className="text-sm opacity-90">Pan India delivery within 7-10 business days</p>
-            </div>
-            
-            <div className="flex flex-col items-center">
-              <div className="bg-white text-green-700 p-4 rounded-full mb-4">
-                <FaShoppingCart className="text-3xl" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">Bulk Discounts</h3>
-              <p className="text-sm opacity-90">Up to 25% discount on bulk orders</p>
-            </div>
-            
-            <div className="flex flex-col items-center">
-              <div className="bg-white text-green-700 p-4 rounded-full mb-4">
-                <FaPhone className="text-3xl" />
-              </div>
-              <h3 className="text-lg font-semibold mb-2">24/7 Support</h3>
-              <p className="text-sm opacity-90">Dedicated B2B support team</p>
-            </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Bulk Products Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Bulk Products</h2>
-          <p className="text-gray-600 text-lg">Order in bulk and save more! Minimum quantities apply for wholesale pricing.</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {bulkProducts.map((product) => (
-            <BulkProductCard key={product.id} {...product} />
-          ))}
-        </div>
-      </div>
-
-      {/* Contact Section */}
-      <div className="bg-gray-100 py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Need Custom Orders?</h2>
-            <p className="text-gray-600 text-lg">Contact our B2B team for custom quantities, packaging, and pricing</p>
+      {/* ================= PRODUCTS ================= */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+              Bulk Products
+            </h2>
+            <p className="text-gray-600 mt-3 max-w-xl mx-auto">
+              Order in bulk and unlock special wholesale pricing.
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 flex items-center">
-                <FaPhone className="mr-2 text-green-700" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            {bulkProducts.map((product) => (
+              <BulkProductCard key={product.id} {...product} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= CONTACT ================= */}
+      <section className="bg-white py-24">
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-16">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl font-bold text-gray-900">
+              Need Custom Orders?
+            </h2>
+            <p className="text-gray-600 mt-3">
+              Get custom pricing, packaging, and quantities.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="p-8 rounded-2xl border shadow-sm">
+              <h3 className="font-semibold text-lg flex items-center mb-3">
+                <FaPhone className="mr-2 text-emerald-600" />
                 Call Us
               </h3>
-              <p className="text-gray-600 mb-2">B2B Sales Team</p>
-              <p className="text-2xl font-bold text-green-800 mb-4">+91 98765 43210</p>
-              <p className="text-sm text-gray-500">Mon-Fri: 9AM-6PM IST</p>
+              <p className="text-xl font-bold text-emerald-700">
+                +91 98765 43210
+              </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 flex items-center">
-                <FaEnvelope className="mr-2 text-green-700" />
+            <div className="p-8 rounded-2xl border shadow-sm">
+              <h3 className="font-semibold text-lg flex items-center mb-3">
+                <FaEnvelope className="mr-2 text-emerald-600" />
                 Email Us
               </h3>
-              <p className="text-gray-600 mb-2">For bulk inquiries</p>
-              <p className="text-lg font-semibold text-green-800 mb-4">b2b@hotchips.com</p>
-              <p className="text-sm text-gray-500">Response within 24 hours</p>
+              <p className="font-semibold text-emerald-700">
+                maakavitalaxmi@gmail.com
+              </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-md md:col-span-2">
-              <h3 className="text-xl font-semibold mb-4 flex items-center">
-                <FaWhatsapp className="mr-2 text-green-500" />
+            <div className="md:col-span-2 p-8 rounded-2xl border shadow-sm">
+              <h3 className="font-semibold text-lg flex items-center mb-4">
+                <FaWhatsapp className="mr-2 text-emerald-500" />
                 WhatsApp Business
               </h3>
-              <p className="text-gray-600 mb-4">Quick support and instant quotes</p>
-              <a 
-                href="https://wa.me/919876543210" 
-                target="_blank" 
+              <a
+                href="https://wa.me/919876543210"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="inline-flex items-center bg-emerald-600
+                           hover:bg-emerald-700 text-white
+                           px-6 py-3 rounded-xl font-semibold transition"
               >
                 <FaWhatsapp className="mr-2" />
                 Chat on WhatsApp
@@ -251,18 +268,30 @@ const B2B = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* CTA Section */}
-      <div className="bg-green-600 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Place Your Bulk Order?</h2>
-          <p className="text-xl mb-8">Join hundreds of satisfied B2B customers across India</p>
-          <Link to="/contactus" className="inline-block bg-white text-green-700 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors">
-            Start Bulk Ordering
-          </Link>
-        </div>
-      </div>
+      {/* ================= CTA ================= */}
+      <section className="bg-emerald-700 text-white py-20 text-center">
+        <h2 className="text-3xl font-bold mb-4">
+          Ready to Place Your Bulk Order?
+        </h2>
+        <p className="text-emerald-100 mb-8">
+          Trusted by retailers across India
+        </p>
+        <button
+            onClick={() =>
+            window.open(
+              "https://docs.google.com/forms/d/e/1FAIpQLSeZOL6yvrZndmCO1QJ0qJu0WxDzgcgXFsiw3hHTbocGXQH_xQ/viewform?usp=publish-editor",
+              "_blank"
+            )
+          }
+          className="inline-block bg-white text-emerald-700
+                     px-10 py-4 rounded-xl font-semibold text-lg
+                     hover:bg-gray-100 transition"
+        >
+          Start Bulk Ordering
+        </button>
+      </section>
     </div>
   );
 };
