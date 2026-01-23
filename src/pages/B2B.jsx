@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart, FaTruck, FaPhone, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
+import chilliBana from "../assets/banana/chilliBana.jpeg";
+import potatoChips from "../assets/potato/Potato-Chips-1.webp"
+import murukku from "../assets/potato/Murukku - Traditional.webp"
+import mixture from "../assets/potato/Mixture-South Special.webp"
+import tapiocaChips from "../assets/potato/Tapioca Chips - Kerala Style.webp"
+import bananaWafers from "../assets/banana/Banana Wafers - Thin.webp" 
 
 const BulkProductCard = ({ title, price, bulkPrice, minQuantity, image, description }) => {
   const [quantity, setQuantity] = useState(minQuantity);
@@ -99,7 +105,7 @@ const B2B = () => {
       bulkPrice: 95,
       minQuantity: 50,
       description: "Crispy banana chips made from premium Kerala bananas",
-      image: null
+      image: chilliBana
     },
     {
       id: 2,
@@ -108,7 +114,7 @@ const B2B = () => {
       bulkPrice: 120,
       minQuantity: 100,
       description: "Spicy potato chips with authentic Indian spices",
-      image: null
+      image: potatoChips
     },
     {
       id: 3,
@@ -117,7 +123,7 @@ const B2B = () => {
       bulkPrice: 145,
       minQuantity: 75,
       description: "Traditional South Indian murukku snack",
-      image: null
+      image: murukku
     },
     {
       id: 4,
@@ -126,7 +132,7 @@ const B2B = () => {
       bulkPrice: 160,
       minQuantity: 60,
       description: "Authentic South Indian mixture snack",
-      image: null
+      image: mixture
     },
     {
       id: 5,
@@ -135,7 +141,7 @@ const B2B = () => {
       bulkPrice: 110,
       minQuantity: 80,
       description: "Ultra-thin banana wafers, crispy and light",
-      image: null
+      image: bananaWafers
     },
     {
       id: 6,
@@ -144,7 +150,7 @@ const B2B = () => {
       bulkPrice: 130,
       minQuantity: 70,
       description: "Traditional Kerala-style tapioca chips",
-      image: null
+      image: tapiocaChips
     }
   ];
 
