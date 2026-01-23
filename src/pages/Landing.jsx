@@ -69,7 +69,7 @@ export default function Landing() {
   ];
 
   return (
-    <div className="font-sans pt-25">
+    <div className="font-sans pt-5">
 
       {/* ================= HERO SECTION ================= */}
       <section className="relative min-h-[700px] py-1 lg:py-1 flex items-center 
