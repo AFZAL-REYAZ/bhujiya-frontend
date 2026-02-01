@@ -21,7 +21,6 @@ const App = () => {
     <BrowserRouter>
       <ScrollToTop/>
       <Header/>
-      <div className="min-h-[70vh]"> 
         <Routes>
           <Route path="/" element={<Landing />}/>
           
@@ -43,7 +42,7 @@ const App = () => {
           
           <Route path="*" element={<div className="pt-40 text-center font-bold uppercase tracking-widest text-red-600">404 - Page Not Found</div>} />
         </Routes>
-      </div>
+
       <Footer/>
       <WhatsAppChat/>
     </BrowserRouter>

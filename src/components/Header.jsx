@@ -1,6 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaBars, FaTimes, FaSearch, FaSignOutAlt, FaShoppingBasket, FaBoxOpen } from "react-icons/fa";
+import { 
+  FaBars, 
+  FaTimes, 
+  FaSignOutAlt, 
+  FaShoppingBasket, 
+  FaBoxOpen,
+  FaUserCircle,
+  FaCaretDown,
+  FaStar,
+  FaTruck,
+  FaShieldAlt,
+  FaPercent,
+  FaLeaf,
+  FaFire,
+  FaAward
+} from "react-icons/fa";
+import { 
+  IoIosArrowDown,
+  IoIosArrowForward
+} from "react-icons/io";
 import logo2 from "../assets/banana/logo2.jpeg";
 import API from "../api/axios";
 
@@ -9,11 +28,7 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState(null);
   const [cartCount, setCartCount] = useState(0);
-  
-  // Search States
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [showSearch, setShowSearch] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,26 +59,7 @@ const Header = () => {
       setCartCount(totalItems);
     } catch (err) {
       console.error("Cart count error:", err);
-    }
-  };
-
-  // Search Logic (Simulating filtering from API or Global State)
-  const handleSearch = async (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-    
-    if (query.length > 1) {
-      try {
-        // Replace with your actual products endpoint
-        const { data } = await API.get(`/products?search=${query}`); 
-        setSearchResults(data.slice(0, 5)); // Limit to 5 results
-        setShowSearch(true);
-      } catch (err) {
-        // Fallback or handle error
-        setSearchResults([]);
-      }
-    } else {
-      setShowSearch(false);
+      setCartCount(0);
     }
   };
 
@@ -76,160 +72,363 @@ const Header = () => {
 
   const navLinks = [
     { label: "Home", path: "/" },
-    { label: "Shop", path: "/ProductDetail" },
+    { label: "All Product", path: "/ProductDetail" },
+    { label: "Contac Us", path: "/contactus" },
     { label: "Wholesale/B2B", path: "/b2b" },
-    { label: "Our Story", path: "/about" },
+    { label: "About Us", path: "/about" },
+  ];
+
+  const promoBanners = [
+    { text: "FREE SHIPPING ON ₹500+", icon: <FaTruck className="text-green-500" /> },
+    { text: "AUTHENTIC KERALA TASTE", icon: <FaLeaf className="text-yellow-500" /> },
+    { text: "NO PRESERVATIVES ADDED", icon: <FaShieldAlt className="text-blue-500" /> },
+    { text: "FLASH SALE LIVE!", icon: <FaFire className="text-red-500" /> },
+    { text: "24H DISPATCH", icon: <FaAward className="text-orange-500" /> },
   ];
 
   return (
-    <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-500 ${
-      scrolled ? "bg-white/80 backdrop-blur-xl shadow-lg py-2" : "bg-white py-4"
-    }`}>
-      
-      <div className="bg-neutral-900 py-2 overflow-hidden">
-        <div className="flex animate-marquee whitespace-nowrap gap-12 text-white text-[10px] font-black uppercase tracking-[0.2em]">
-           <span>Free delivery on orders above ₹500</span>
-           <span>Authentic Kerala Taste</span>
-           <span>No Preservatives Added</span>
-           <span>Ships within 24 Hours</span>
-           <span>Free delivery on orders above</span>
+    <>
+      {/* Top Promo Bar */}
+      <div className="w-full bg-gradient-to-r from-green-900 via-emerald-900 to-green-800 py-3 overflow-hidden relative border-b border-green-800">
+        {/* Animated background effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/10 to-transparent animate-shimmer"></div>
+        
+        <div className="relative">
+          <div className="flex animate-marquee whitespace-nowrap gap-20">
+            {promoBanners.map((banner, index) => (
+              <div key={index} className="flex items-center gap-3 text-white/95 group">
+                <div className="flex items-center justify-center w-5 h-5 transform group-hover:scale-110 transition-transform">
+                  {banner.icon}
+                </div>
+                <span className="text-xs font-bold tracking-[0.2em] uppercase">{banner.text}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-6 flex items-center justify-between mt-2">
+      {/* Main Header */}
+      <header className={`w-full fixed top-0 left-0 z-50 transition-all duration-500 ${
+        scrolled 
+          ? "bg-white/98 backdrop-blur-xl shadow-xl shadow-black/5 border-b border-gray-100" 
+          : "bg-white border-b border-gray-100"
+      }`}>
         
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="relative">
-             <img src={logo2} alt="MKL Logo" className="h-12 w-12 object-contain rounded-2xl shadow-md group-hover:rotate-6 transition-transform duration-300" />
-             <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
-          </div>
-          <div className="flex flex-col hidden md:flex">
-            <span className="text-xl font-black text-gray-900 tracking-tighter leading-none">Maa Kavita Lakxmi</span>
-            <span className="text-[9px] font-bold text-green-700 tracking-[0.2em] uppercase opacity-80">Purely Authentic</span>
-          </div>
-        </Link>
+        {/* Main Header Row */}
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col">
+            {/* Top Row: Logo + User Actions */}
+            <div className="flex items-center justify-between px-6 lg:px-8 py-4">
+              
+              {/* Logo Section */}
+              <Link to="/" className="flex items-center gap-4 group">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-yellow-400 rounded-2xl blur-md opacity-70 group-hover:opacity-90 transition-opacity"></div>
+                  <img 
+                    src={logo2} 
+                    alt="MKL Logo" 
+                    className="relative h-16 w-16 object-cover rounded-2xl shadow-xl border-4 border-white transform group-hover:rotate-3 group-hover:scale-105 transition-all duration-500" 
+                  />
+                  <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-gradient-to-r from-green-600 to-emerald-700 border-2 border-white rounded-full flex items-center justify-center shadow-lg">
+                    <FaStar className="text-white w-2.5 h-2.5" />
+                  </div>
+                </div>
+                
+                <div className="flex flex-col">
+                  <span className="text-3xl font-black text-gray-900 tracking-tight leading-none">
+                    Maa Kavita
+                    <span className="bg-gradient-to-r from-green-700 to-emerald-700 bg-clip-text text-transparent"> Lakxmi</span>
+                  </span>
+                  <span className="text-xs font-bold text-gray-600 tracking-[0.3em] uppercase mt-1">
+                    PURELY AUTHENTIC · SINCE 1995
+                  </span>
+                </div>
+              </Link>
 
-        <nav className="hidden lg:flex items-center gap-10">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.path} 
-              to={link.path} 
-              className={`text-[11px] font-black uppercase tracking-[0.15em] transition-all hover:text-green-600 ${
-                location.pathname === link.path ? "text-green-600 underline underline-offset-8" : "text-gray-500"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+              {/* Right Actions */}
+              <div className="flex items-center gap-4 lg:gap-6">
+                
+                {/* User Account */}
+                {user ? (
+                  <div className="hidden lg:block relative">
+                    <button
+                      onMouseEnter={() => setShowUserMenu(true)}
+                      onClick={() => setShowUserMenu(!showUserMenu)}
+                      className="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-gray-50 transition-all group border border-gray-200"
+                    >
+                      <div className="relative">
+                        <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-md">
+                          {user.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full shadow-sm"></div>
+                      </div>
+                      <div className="text-left">
+                        <p className="text-sm font-bold text-gray-900">Hi, {user.name.split(' ')[0]}</p>
+                        <p className="text-xs text-gray-500 font-medium">My Account</p>
+                      </div>
+                      <FaCaretDown className={`text-gray-400 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} />
+                    </button>
 
-        <div className="flex items-center gap-6">
-          {/* Search Engine */}
-          <div className="relative hidden sm:block">
-            <div className="flex items-center bg-gray-50 px-4 py-2 rounded-full border border-gray-100 group focus-within:ring-2 focus-within:ring-green-500/20 transition-all">
-              <FaSearch className="text-gray-400 group-focus-within:text-green-600" size={12} />
-              <input 
-                type="text" 
-                value={searchQuery}
-                onChange={handleSearch}
-                placeholder="Search Snacks..." 
-                className="bg-transparent border-none text-[11px] font-bold px-3 focus:outline-none w-32 lg:w-48" 
-              />
-            </div>
-            
-            {/* Search Dropdown (Amazon Style) */}
-            {showSearch && searchResults.length > 0 && (
-              <div className="absolute top-full left-0 w-full bg-white mt-2 shadow-2xl rounded-2xl border border-gray-100 overflow-hidden">
-                {searchResults.map((item) => (
-                  <Link 
-                    key={item._id} 
-                    to={`/product/${item._id}`} 
-                    onClick={() => setShowSearch(false)}
-                    className="flex items-center gap-3 p-3 hover:bg-gray-50 transition-colors"
-                  >
-                    <img src={item.image} className="w-8 h-8 object-contain" alt="" />
-                    <span className="text-xs font-bold text-gray-700">{item.name}</span>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+                    {/* User Menu Dropdown */}
+                    {showUserMenu && (
+                      <div 
+                        className="absolute top-full right-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-fadeIn"
+                        onMouseLeave={() => setShowUserMenu(false)}
+                      >
+                        <div className="p-6 bg-gradient-to-r from-green-50 to-emerald-50 border-b border-gray-100">
+                          <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md">
+                              {user.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                              <p className="font-bold text-gray-900">{user.name}</p>
+                              <p className="text-sm text-gray-600">{user.email}</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="p-2">
+                          {[
+                            { icon: <FaUserCircle className="text-gray-600" />, label: "My Profile", path: "/profile" },
+                            { icon: <FaBoxOpen className="text-blue-600" />, label: "My Orders", path: "/orders" },
+                            { icon: <FaStar className="text-yellow-600" />, label: "Wishlist", path: "/wishlist" },
+                            { icon: <FaTruck className="text-purple-600" />, label: "Track Order", path: "/track" },
+                          ].map((item, index) => (
+                            <Link
+                              key={index}
+                              to={item.path}
+                              className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors"
+                              onClick={() => setShowUserMenu(false)}
+                            >
+                              <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
+                                {item.icon}
+                              </div>
+                              <span className="font-medium text-gray-900">{item.label}</span>
+                            </Link>
+                          ))}
+                          
+                          <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-3 p-3 rounded-xl hover:bg-red-50 transition-colors w-full mt-2 border-t border-gray-100 pt-3"
+                          >
+                            <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
+                              <FaSignOutAlt className="text-red-600" />
+                            </div>
+                            <span className="font-medium text-red-600">Logout</span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="hidden lg:flex items-center gap-3">
+                    <Link 
+                      to="/auth" 
+                      className="px-6 py-3.5 bg-gradient-to-r from-green-700 to-emerald-800 text-white rounded-2xl font-bold text-sm hover:shadow-2xl hover:scale-105 transition-all flex items-center gap-3 shadow-lg"
+                    >
+                      <FaUserCircle className="text-white/90" />
+                      Join Now
+                    </Link>
+                  </div>
+                )}
 
-          <div className="flex items-center gap-4">
-            {user ? (
-              <div className="flex items-center gap-4 border-l pl-4 border-gray-100">
-                {/* Orders Icon */}
-                <Link to="/orders" title="My Orders" className="p-2.5 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded-xl transition-all">
-                   <FaBoxOpen size={20} />
+                {/* Cart */}
+                <Link 
+                  to="/cart" 
+                  className="relative p-3.5 bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl hover:from-green-100 hover:to-emerald-100 transition-all group shadow-lg shadow-green-100/50 border border-green-100"
+                >
+                  <FaShoppingBasket className="text-green-700 group-hover:text-green-800 transition-colors" size={24} />
+                  
+                  {cartCount > 0 && (
+                    <>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-red-600 to-pink-700 text-white text-xs font-black flex items-center justify-center rounded-full border-2 border-white shadow-xl shadow-red-200 animate-pulse-slow">
+                        {cartCount > 99 ? "99+" : cartCount}
+                      </div>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-red-600 to-pink-700 text-white text-xs font-black flex items-center justify-center rounded-full border-2 border-white shadow-xl shadow-red-200 animate-ping opacity-30"></div>
+                    </>
+                  )}
                 </Link>
 
-                <div className="text-right hidden sm:block">
-                  <p className="text-[9px] font-black text-gray-400 uppercase leading-none">Account</p>
-                  <p className="text-xs font-black text-gray-800 uppercase">{user.name.split(' ')[0]}</p>
-                </div>
-
-                <button onClick={handleLogout} className="p-2 hover:bg-red-50 text-gray-400 hover:text-red-600 rounded-xl transition-all">
-                  <FaSignOutAlt size={18} />
+                {/* Mobile Menu Toggle */}
+                <button 
+                  className="lg:hidden p-3 bg-gray-100 rounded-2xl hover:bg-gray-200 transition-all border border-gray-200"
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
+                  {menuOpen ? (
+                    <FaTimes className="text-gray-700" size={24} />
+                  ) : (
+                    <FaBars className="text-gray-700" size={24} />
+                  )}
                 </button>
               </div>
-            ) : (
-              <div className="hidden sm:flex items-center gap-2">
-                <Link to="/auth" className="text-[11px] font-black uppercase bg-gray-900 text-white px-5 py-2.5 rounded-xl hover:bg-green-700 transition-all shadow-lg shadow-gray-200">
-                  Join Now
-                </Link>
+            </div>
+
+            {/* Navigation Bar (Separate Row) */}
+            <div className="hidden lg:block border-t border-gray-100">
+              <div className="flex items-center justify-center px-8 py-4">
+                <nav className="flex items-center gap-12">
+                  {navLinks.map((link, index) => (
+                    <div key={link.path} className="relative group">
+                      <Link 
+                        to={link.path} 
+                        className={`font-bold text-xs uppercase tracking-[0.2em] transition-all duration-300 ${
+                          location.pathname === link.path 
+                            ? "text-green-700" 
+                            : "text-gray-700 hover:text-green-600"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                      
+                      {/* Animated underline */}
+                      <div className={`absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-300 ${
+                        location.pathname === link.path 
+                          ? 'w-full' 
+                          : 'group-hover:w-full'
+                      }`}></div>
+                      
+                      {/* Decorative dot */}
+                      <div className={`absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-1 h-1 rounded-full transition-all duration-300 ${
+                        location.pathname === link.path 
+                          ? 'bg-green-500' 
+                          : 'bg-transparent group-hover:bg-green-400'
+                      }`}></div>
+                    </div>
+                  ))}
+                </nav>
               </div>
-            )}
-
-            <Link to="/cart" className="relative p-2.5 bg-green-50 text-green-700 rounded-2xl hover:bg-green-600 hover:text-white transition-all duration-300">
-              <FaShoppingBasket size={20} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-white shadow-sm">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-
-            <button className="lg:hidden p-2 text-gray-900" onClick={() => setMenuOpen(!menuOpen)}>
-              {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-            </button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {menuOpen && (
-        <div className="fixed inset-0 top-[90px] bg-white z-40 lg:hidden p-8 flex flex-col animate-fadeIn">
-          <nav className="flex flex-col gap-6">
-            {navLinks.map((l) => (
-              <Link 
-                key={l.path} 
-                to={l.path} 
-                className="text-4xl font-black text-gray-900 uppercase tracking-tighter" 
-                onClick={() => setMenuOpen(false)}
-              >
-                {l.label}
+        {/* Mobile Menu Overlay */}
+        {menuOpen && (
+          <div className="fixed inset-0 top-0 bg-white z-50 lg:hidden animate-slideIn">
+            {/* Mobile Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-100">
+              <Link to="/" onClick={() => setMenuOpen(false)}>
+                <div className="flex items-center gap-3">
+                  <img src={logo2} alt="Logo" className="w-12 h-12 rounded-xl" />
+                  <div>
+                    <p className="font-bold text-gray-900 text-lg">Maa Kavita Lakxmi</p>
+                    <p className="text-xs text-gray-500">PURELY AUTHENTIC</p>
+                  </div>
+                </div>
               </Link>
-            ))}
-            {user && (
-              <Link 
-                to="/orders" 
-                className="text-4xl font-black text-green-600 uppercase tracking-tighter"
+              <button 
                 onClick={() => setMenuOpen(false)}
+                className="p-3 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all"
               >
-                My Orders
-              </Link>
-            )}
-          </nav>
-          
-          <div className="mt-auto space-y-4">
-            {!user ? (
-              <Link to="/auth" className="block w-full text-center py-4 font-black bg-gray-900 text-white rounded-2xl uppercase tracking-widest text-sm" onClick={() => setMenuOpen(false)}>Login / Register</Link>
-            ) : (
-              <button onClick={handleLogout} className="w-full text-center py-4 font-black text-red-600 border-2 border-red-100 rounded-2xl uppercase tracking-widest text-sm">Logout Session</button>
-            )}
+                <FaTimes className="text-gray-700" size={20} />
+              </button>
+            </div>
+
+            {/* Mobile Navigation */}
+            <div className="p-6">
+              <nav className="space-y-2">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setMenuOpen(false)}
+                    className={`flex items-center justify-between p-4 rounded-2xl transition-all ${
+                      location.pathname === link.path
+                        ? "bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 border border-green-100"
+                        : "hover:bg-gray-50 border border-transparent"
+                    }`}
+                  >
+                    <span className="font-bold text-gray-900 text-lg tracking-wide">{link.label}</span>
+                    <IoIosArrowForward className={`text-gray-300 ${location.pathname === link.path ? 'text-green-500' : ''}`} />
+                  </Link>
+                ))}
+
+                {user && (
+                  <div className="mt-8 pt-8 border-t border-gray-100">
+                    <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">MY ACCOUNT</h3>
+                    {[
+                      { icon: <FaUserCircle />, label: "Profile", path: "/profile" },
+                      { icon: <FaBoxOpen />, label: "Orders", path: "/orders" },
+                      { icon: <FaStar />, label: "Wishlist", path: "/wishlist" },
+                    ].map((item, index) => (
+                      <Link
+                        key={index}
+                        to={item.path}
+                        onClick={() => setMenuOpen(false)}
+                        className="flex items-center gap-4 p-4 rounded-2xl hover:bg-gray-50 transition-all mb-2"
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
+                          {item.icon}
+                        </div>
+                        <span className="font-medium text-gray-900 text-base">{item.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </nav>
+
+              {/* Mobile Actions */}
+              <div className="mt-12 space-y-4">
+                {user ? (
+                  <>
+                    <div className="flex items-center gap-3 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-100">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl flex items-center justify-center text-white font-bold">
+                        {user.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <p className="font-bold text-gray-900">{user.name}</p>
+                        <p className="text-sm text-gray-600">{user.email}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full py-4 text-center font-bold text-red-600 border-2 border-red-100 rounded-2xl hover:bg-red-50 transition-colors"
+                    >
+                      LOGOUT
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="/auth"
+                    onClick={() => setMenuOpen(false)}
+                    className="block w-full text-center py-4 font-bold bg-gradient-to-r from-green-700 to-emerald-800 text-white rounded-2xl hover:shadow-lg transition-all tracking-wide"
+                  >
+                    JOIN NOW / LOGIN
+                  </Link>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-    </header>
+        )}
+      </header>
+
+      {/* Add CSS for animations */}
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-shimmer {
+          animation: shimmer 3s infinite;
+        }
+        @keyframes slideIn {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(0); }
+        }
+        .animate-slideIn {
+          animation: slideIn 0.3s ease-out;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease-out;
+        }
+        .animate-pulse-slow {
+          animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+      `}</style>
+    </>
   );
 };
 
