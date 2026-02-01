@@ -92,7 +92,7 @@ const Header = () => {
            <span>Authentic Kerala Taste</span>
            <span>No Preservatives Added</span>
            <span>Ships within 24 Hours</span>
-           <span>Free delivery on orders above</span>
+           <span>Free delivery on orders above ₹500</span>
         </div>
       </div>
 
