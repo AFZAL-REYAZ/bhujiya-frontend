@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  ShoppingCart,
-  ArrowRight,
   Leaf,
   ShieldCheck,
   Truck,
@@ -12,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 
-// Assets
+// Assets (UNCHANGED)
 import bhujiya from "../assets/bhujiya.webp";
 import bananaChilli from "../assets/banana/bananaChilli.jpeg";
 import bananaChips from "../assets/banana/bananaChips.jpeg";
@@ -48,7 +46,7 @@ const ProductCard = ({ product }) => {
       );
 
       redirect ? navigate("/cart") : alert("Added to cart 🛒");
-    } catch (err) {
+    } catch {
       alert("Something went wrong");
     } finally {
       setIsAdding(false);
@@ -57,31 +55,45 @@ const ProductCard = ({ product }) => {
 
   return (
     <motion.div
-      whileHover={{ y: -8 }}
-      className="bg-white rounded-[2rem] shadow-md overflow-hidden border"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ scale: 1.05 }}
+      transition={{ duration: 0.4 }}
+      viewport={{ once: true }}
+      className="bg-white rounded-3xl shadow-lg overflow-hidden border"
     >
       <div className="aspect-square bg-gray-50 flex items-center justify-center">
-        <img src={product.image} className="w-full h-full object-contain p-6" />
+        <img
+          src={product.image}
+          className="w-full h-full object-contain p-5"
+        />
       </div>
 
       <div className="p-5 text-center">
-        <h3 className="font-bold text-sm mb-2">{product.title}</h3>
+        <h3 className="font-bold text-sm md:text-base mb-2">
+          {product.title}
+        </h3>
+
         <p className="text-green-700 font-black text-xl mb-4">
           ₹{product.price}
         </p>
 
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-3">
           <button
             disabled={isAdding}
             onClick={() => handleAdd(false)}
-            className="bg-yellow-500 text-white py-3 rounded-xl font-bold text-xs"
+            className="bg-yellow-500 hover:bg-yellow-600 transition text-white py-2 rounded-xl font-bold text-xs flex items-center justify-center"
           >
-            {isAdding ? <Loader2 className="animate-spin" /> : "Add"}
+            {isAdding ? (
+              <Loader2 className="animate-spin w-4 h-4" />
+            ) : (
+              "Add"
+            )}
           </button>
 
           <button
             onClick={() => handleAdd(true)}
-            className="bg-orange-600 text-white py-3 rounded-xl font-bold text-xs"
+            className="bg-orange-600 hover:bg-orange-700 transition text-white py-2 rounded-xl font-bold text-xs"
           >
             Buy Now
           </button>
@@ -94,91 +106,60 @@ const ProductCard = ({ product }) => {
 /* ================= LANDING PAGE ================= */
 export default function Landing() {
   const featuredProducts = [
-    {
-      id: "feat1",
-      title: "Signature Banana Chips",
-      price: "90",
-      image: chilliBana,
-    },
-    {
-      id: "feat2",
-      title: "Natural Banana Powder",
-      price: "90",
-      image: bananaPowder,
-    },
-    {
-      id: "feat3",
-      title: "Banana Length Pepper",
-      price: "90",
-      image: bananach5,
-    },
+    { id: "feat1", title: "Signature Banana Chips", price: "90", image: chilliBana },
+    { id: "feat2", title: "Natural Banana Powder", price: "90", image: bananaPowder },
+    { id: "feat3", title: "Banana Length Pepper", price: "90", image: bananach5 },
   ];
 
   const bestSellers = [
-    {
-      id: "best1",
-      title: "Ultra Thin Banana Chips",
-      price: "90",
-      image: chilliBana,
-    },
-    {
-      id: "best2",
-      title: "Spicy Banana Chips",
-      price: "90",
-      image: bananaChilli,
-    },
-    {
-      id: "best3",
-      title: "Classic Banana Chips",
-      price: "90",
-      image: bananaChips,
-    },
-    {
-      id: "best4",
-      title: "Banana Salti Chips",
-      price: "90",
-      image: bananaSalti,
-    },
-    {
-      id: "best5",
-      title: "Banana Powder",
-      price: "90",
-      image: bananaPowder,
-    },
+    { id: "best1", title: "Ultra Thin Banana Chips", price: "90", image: chilliBana },
+    { id: "best2", title: "Spicy Banana Chips", price: "90", image: bananaChilli },
+    { id: "best3", title: "Classic Banana Chips", price: "90", image: bananaChips },
+    { id: "best4", title: "Banana Salti Chips", price: "90", image: bananaSalti },
+    { id: "best5", title: "Banana Powder", price: "90", image: bananaPowder },
   ];
 
   return (
-    <div className="pt-16 font-sans">
+    <div className="pt-24 font-sans">
       {/* ================= HERO ================= */}
-      <section className="min-h-[700px] bg-gradient-to-br from-red-900 to-red-700 text-white flex items-center">
+      <section className="min-h-[600px] md:min-h-[700px] bg-gradient-to-br from-red-900 to-red-700 text-white flex items-center">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h1 className="text-6xl font-black mb-6">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
               Khawo <span className="text-yellow-300">Jaldi</span>
               <br />
               Raho Swasth
             </h1>
-            <p className="text-red-100 mb-8 text-lg">
+
+            <p className="text-red-100 mb-8 text-base md:text-lg">
               Authentic banana snacks fried in pure coconut oil.
             </p>
-            <button className="bg-white text-red-800 px-8 py-4 rounded-full font-bold">
+
+            <button className="bg-white text-red-800 px-8 py-4 rounded-full font-bold hover:scale-105 transition">
               Shop Now
             </button>
-          </div>
+          </motion.div>
 
           <motion.img
             animate={{ y: [0, -20, 0] }}
-            transition={{ repeat: Infinity, duration: 6 }}
+            transition={{ repeat: Infinity, duration: 5 }}
             src={bhujiya}
-            className="w-full max-w-md mx-auto"
+            className="w-full max-w-xs md:max-w-md mx-auto"
           />
         </div>
       </section>
 
       {/* ================= FEATURED ================= */}
-      <section className="py-20 max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl font-black mb-10">Top Selling</h2>
-        <div className="grid md:grid-cols-3 gap-10">
+      <section className="py-16 md:py-20 max-w-7xl mx-auto px-6">
+        <h2 className="text-3xl md:text-4xl font-black mb-10">
+          Top Selling
+        </h2>
+
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
           {featuredProducts.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
@@ -186,10 +167,13 @@ export default function Landing() {
       </section>
 
       {/* ================= BEST SELLERS ================= */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-16 md:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl font-black mb-12">Best Sellers</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+          <h2 className="text-3xl md:text-4xl font-black mb-12">
+            Best Sellers
+          </h2>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
             {bestSellers.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
@@ -198,24 +182,22 @@ export default function Landing() {
       </section>
 
       {/* ================= FEATURES ================= */}
-      <section className="py-20 bg-green-950 text-white">
+      <section className="py-16 md:py-20 bg-green-950 text-white">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-          <div>
-            <Leaf className="mx-auto text-yellow-400" />
-            <p className="font-bold mt-2">100% Natural</p>
-          </div>
-          <div>
-            <ShieldCheck className="mx-auto text-yellow-400" />
-            <p className="font-bold mt-2">Hygienic</p>
-          </div>
-          <div>
-            <Truck className="mx-auto text-yellow-400" />
-            <p className="font-bold mt-2">Fast Delivery</p>
-          </div>
-          <div>
-            <Zap className="mx-auto text-yellow-400" />
-            <p className="font-bold mt-2">Daily Fresh</p>
-          </div>
+          {[Leaf, ShieldCheck, Truck, Zap].map((Icon, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              viewport={{ once: true }}
+            >
+              <Icon className="mx-auto text-yellow-400 w-8 h-8" />
+              <p className="font-bold mt-3 text-sm md:text-base">
+                {["100% Natural", "Hygienic", "Fast Delivery", "Daily Fresh"][i]}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </section>
     </div>
