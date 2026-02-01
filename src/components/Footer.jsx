@@ -55,7 +55,7 @@ const Footer = () => {
           <div className="space-y-6">
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
               <h3 className="text-2xl font-black text-red-700 leading-none tracking-tighter">
-                MAA KAVITA <br/> LAKXMI <span className="text-xs font-bold text-gray-400 block mt-1">PVT. LTD.</span>
+                Maa Kavita <br/> Lakshmi<span className="text-xs font-bold text-gray-400 block mt-1">PVT. LTD.</span>
               </h3>
               <p className="mt-6 text-sm text-gray-600 font-medium leading-relaxed">
                 Authentic taste, pure ingredients, and trusted crunch — proudly serving quality snacks crafted with tradition and modern safety.

@@ -137,10 +137,10 @@ const Header = () => {
                 <div className="flex flex-col">
                   <span className="text-3xl font-black text-gray-900 tracking-tight leading-none">
                     Maa Kavita
-                    <span className="bg-gradient-to-r from-green-700 to-emerald-700 bg-clip-text text-transparent"> Lakxmi</span>
+                    <span className="bg-gradient-to-r from-green-700 to-emerald-700 bg-clip-text text-transparent"> Lakxmi Pvt. Ltd.</span>
                   </span>
                   <span className="text-xs font-bold text-gray-600 tracking-[0.3em] uppercase mt-1">
-                    PURELY AUTHENTIC · SINCE 1995
+                    PURELY AUTHENTIC · SINCE 2025
                   </span>
                 </div>
               </Link>

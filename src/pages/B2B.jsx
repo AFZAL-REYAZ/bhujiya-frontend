@@ -24,12 +24,12 @@ export default function B2B() {
   const [activeTab, setActiveTab] = useState("all");
 
   const bulkProducts = [
-    { id: "b1", title: "Signature Banana Chips", price: 90, retail: 150, minQty: 50, desc: "Hand-sliced premium Nendran bananas fried in cold-pressed coconut oil.", image: chilliBana, category: "chips" },
-    { id: "b2", title: "Natural Banana Powder", price: 90, retail: 180, minQty: 30, desc: "Sun-dried raw banana flour, perfect for health supplements.", image: bananaPowder, category: "powder" },
-    { id: "b3", title: "Banana Length Pepper", price: 90, retail: 140, minQty: 50, desc: "Long-cut style infused with black Malabar pepper.", image: bananach5, category: "chips" },
-    { id: "b5", title: "Spicy Banana Chips", price: 90, retail: 160, minQty: 50, desc: "Infused with bird's eye chilli for an authentic kick.", image: bananaChilli, category: "chips" },
-    { id: "b6", title: "Classic Banana Chips", price: 90, retail: 120, minQty: 100, desc: "Traditional sea-salt variant, the gold standard of snacks.", image: bananaChips, category: "chips" },
-    { id: "b7", title: "Banana Salti Chips", price: 90, retail: 130, minQty: 50, desc: "Ultra-thin crisps seasoned with Himalayan pink salt.", image: bananaSalti, category: "chips" },
+    { id: "b1", title: "Signature Banana Chips", price: 400, retail: 450, minQty: 10, desc: "Hand-sliced premium Nendran bananas fried in cold-pressed coconut oil.", image: chilliBana, category: "chips" },
+    { id: "b2", title: "Natural Banana Powder", price: 400, retail: 480, minQty: 10, desc: "Sun-dried raw banana flour, perfect for health supplements.", image: bananaPowder, category: "powder" },
+    { id: "b3", title: "Banana Length Pepper", price: 400, retail: 440, minQty: 10, desc: "Long-cut style infused with black Malabar pepper.", image: bananach5, category: "chips" },
+    { id: "b5", title: "Spicy Banana Chips", price: 400, retail: 460, minQty: 10, desc: "Infused with bird's eye chilli for an authentic kick.", image: bananaChilli, category: "chips" },
+    { id: "b6", title: "Classic Banana Chips", price: 400, retail: 420, minQty: 10, desc: "Traditional sea-salt variant, the gold standard of snacks.", image: bananaChips, category: "chips" },
+    { id: "b7", title: "Banana Salti Chips", price: 400, retail: 430, minQty: 10, desc: "Ultra-thin crisps seasoned with Himalayan pink salt.", image: bananaSalti, category: "chips" },
   ];
 
   const handleBulkAction = async (product, quantity, redirectToCart = false) => {
@@ -89,8 +89,8 @@ export default function B2B() {
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-50 text-green-700 text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-green-100">
               <Globe size={12} className="animate-spin-slow" /> Global Supply Chain
             </span>
-            <h1 className="text-7xl md:text-9xl font-black text-gray-900 tracking-tighter leading-[0.85] mb-8">
-              DIRECT <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-400">SOURCE.</span>
+            <h1 className="text-xl md:text-3xl font-black text-gray-900 tracking-tighter leading-[0.85] mb-8">
+              DIRECT <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-400">SOURCE.</span>
             </h1>
             <p className="text-xl text-gray-500 font-medium max-w-2xl leading-relaxed mb-10">
               Skip the middleman. Secure factory-gate pricing on India's most exported snack range. Built for retailers who demand quality and consistency.
@@ -231,7 +231,7 @@ function BulkProductCard({ product, onAction, isLoading }) {
         <div className="bg-gray-50 rounded-[2.5rem] p-6 mb-8 border border-gray-100">
           <div className="flex justify-between items-center mb-6">
             <div>
-              <p className="text-[10px] font-black text-green-600 uppercase mb-1">Price Per Unit</p>
+              <p className="text-[10px] font-black text-green-600 uppercase mb-1">Price Per kg</p>
               <div className="flex items-center gap-2">
                 <span className="text-3xl font-black text-gray-900">₹{product.price}</span>
                 <span className="text-xs text-gray-300 font-bold line-through">₹{product.retail}</span>
