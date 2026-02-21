@@ -4,7 +4,7 @@ import { FaWhatsapp } from "react-icons/fa";
 const WhatsAppChat = () => {
   return (
     <a
-      href="https://wa.me/919102548287?text=Hello%20I%20want%20to%20know%20more%20about%20your%20products"
+      href="https://wa.me/917366981951?text=Hello%20I%20want%20to%20know%20more%20about%20your%20products"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 group"
@@ -14,7 +14,7 @@ const WhatsAppChat = () => {
       <span className="absolute inset-0 rounded-full bg-green-500 opacity-70 animate-ping"></span>
 
       {/* Button */}
-      <div className="relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-green-500 to-green-700 shadow-2xl hover:scale-110 transition-all duration-300">
+      <div className="relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-green-500 to-[#0b3b2a] shadow-2xl hover:scale-110 transition-all duration-300">
         <FaWhatsapp className="text-white text-3xl" />
       </div>
 

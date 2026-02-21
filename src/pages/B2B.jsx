@@ -18,7 +18,7 @@ import bananaSalti from "../assets/banana/bananaSalti.jpeg";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 
-export default function B2B() {
+function B2BPageOld() {
   const navigate = useNavigate();
   const [loadingId, setLoadingId] = useState(null);
   const [activeTab, setActiveTab] = useState("all");
@@ -86,7 +86,7 @@ export default function B2B() {
             animate={{ opacity: 1, x: 0 }}
             className="relative z-10"
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-50 text-green-700 text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-green-100">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-50 text-[#0b3b2a] text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-green-100">
               <Globe size={12} className="animate-spin-slow" /> Global Supply Chain
             </span>
             <h1 className="text-xl md:text-3xl font-black text-gray-900 tracking-tighter leading-[0.85] mb-8">
@@ -276,5 +276,379 @@ function BulkProductCard({ product, onAction, isLoading }) {
         </div>
       </div>
     </motion.div>
+  );
+}
+
+const initialFormState = {
+  companyName: "",
+  gstNumber: "",
+  contactName: "",
+  phoneNumber: "",
+  email: "",
+  quantity: "",
+  message: "",
+};
+
+export default function B2B() {
+  const [form, setForm] = useState(initialFormState);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    toast.success("Wholesale enquiry submitted. Our team will contact you shortly.");
+    setForm(initialFormState);
+  };
+
+  return (
+    <div className="min-h-screen bg-[#F4F0E6] pt-24 pb-20">
+      <Toaster position="top-right" />
+
+      <main className="max-w-6xl mx-auto px-4 sm:px-6">
+        <section className="w-screen bg-[#0b3b2a] text-white py-14 sm:py-16 mx-[calc(50%-50vw)]">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="max-w-2xl mx-auto text-center">
+            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-emerald-100 mb-3">
+              Wholesale &amp; B2B Partnership
+            </p>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight mb-3">
+              Partner with us for bulk orders and grow your business with premium
+              quality traditional snacks.
+            </h1>
+            <p className="text-sm sm:text-base text-emerald-100/90 max-w-xl mx-auto mb-6">
+              Consistent quality, reliable supply, and tailor-made solutions for retailers, distributors,
+              and food service businesses across India and abroad.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                const element = document.getElementById("wholesale-form");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
+              className="inline-flex items-center justify-center rounded-full bg-amber-300 text-[#0b3b2a] text-sm font-semibold px-6 py-3 shadow-md hover:bg-amber-200 transition-colors"
+            >
+              Become a Wholesale Partner
+            </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
+            Why Partner With Us
+          </h2>
+          <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
+            Benefits of choosing Maa Kavita Lakxmi as your wholesale partner.
+          </p>
+
+          <div className="mt-10 grid gap-8 md:grid-cols-4">
+            <div className="flex flex-col items-center text-center bg-white rounded-2xl px-6 py-8 shadow-sm">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 mb-4">
+                <Package size={22} />
+              </div>
+              <h3 className="text-sm font-semibold text-[#0b3b2a] mb-2">Bulk Supply</h3>
+              <p className="text-xs text-gray-600">
+                Large-scale production capacity to fulfill small and high-volume wholesale orders.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center bg-white rounded-2xl px-6 py-8 shadow-sm">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 mb-4">
+                <CheckCircle2 size={22} />
+              </div>
+              <h3 className="text-sm font-semibold text-[#0b3b2a] mb-2">Custom Packaging</h3>
+              <p className="text-xs text-gray-600">
+                Flexible packaging sizes and private labelling options tailored to your brand.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center bg-white rounded-2xl px-6 py-8 shadow-sm">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 mb-4">
+                <ShieldCheck size={22} />
+              </div>
+              <h3 className="text-sm font-semibold text-[#0b3b2a] mb-2">Dedicated Support</h3>
+              <p className="text-xs text-gray-600">
+                A dedicated account manager to assist with pricing, dispatch and documentation.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center text-center bg-white rounded-2xl px-6 py-8 shadow-sm">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 mb-4">
+                <Truck size={22} />
+              </div>
+              <h3 className="text-sm font-semibold text-[#0b3b2a] mb-2">Flexible Delivery</h3>
+              <p className="text-xs text-gray-600">
+                Strong logistics network for timely delivery to your location across regions.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-16 rounded-3xl bg-[#F7F1E6] px-6 sm:px-10 py-10 border border-[#E5D7C3]">
+          <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
+            Volume-Based Pricing
+          </h2>
+          <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
+            Competitive pricing tiers for different wholesale needs.
+          </p>
+
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            <div className="bg-white rounded-2xl border border-[#E5D7C3] px-6 py-7 text-center shadow-sm">
+              <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#0b3b2a]">
+                10% OFF
+              </p>
+              <p className="mt-2 text-lg font-semibold text-[#0b3b2a]">10–50 kg</p>
+              <p className="mt-2 text-xs text-gray-600">
+                Perfect for retail shops and boutique stores starting with trial orders.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border-[1.5px] border-[#D8C7AE] px-6 py-7 text-center shadow-sm">
+              <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#0b3b2a]">
+                15% OFF
+              </p>
+              <p className="mt-2 text-lg font-semibold text-[#0b3b2a]">50–100 kg</p>
+              <p className="mt-2 text-xs text-gray-600">
+                Ideal for supermarkets, distributors and multi-outlet partners.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-[#E5D7C3] px-6 py-7 text-center shadow-sm">
+              <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#0b3b2a]">
+                20% OFF
+              </p>
+              <p className="mt-2 text-lg font-semibold text-[#0b3b2a]">200+ kg</p>
+              <p className="mt-2 text-xs text-gray-600">
+                Best suited for large distributors, exporters and institutional buyers.
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-6 text-xs text-gray-600 text-center">
+            Minimum Order Quantity (MOQ): 10 kg. Special rates available for export and contract orders.
+          </p>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
+            Our B2B Clients
+          </h2>
+          <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
+            Trusted by leading businesses across India and international markets.
+          </p>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            {[
+              "Premium Retail Stores",
+              "Modern Trade & Supermarkets",
+              "Resellers & Kirana Stores",
+              "Corporate Offices",
+              "Cafes & Snack Counters",
+              "Export Partners",
+              "Online Marketplaces",
+            ].map((label) => (
+              <div
+                key={label}
+                className="rounded-full border border-[#DBCBB5] bg-white px-4 py-2 text-xs font-medium text-[#0b3b2a]"
+              >
+                {label}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section
+          id="wholesale-form"
+          className="mt-16 grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-start"
+        >
+          <div className="bg-white rounded-3xl px-6 sm:px-8 py-8 shadow-sm border border-[#E5D7C3]">
+            <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a]">
+              Become a Wholesale Partner
+            </h2>
+            <p className="mt-2 text-sm text-gray-600 max-w-xl">
+              Fill out the form below and our B2B team will get in touch with you
+              within 24–48 working hours.
+            </p>
+
+            <form onSubmit={handleSubmit} className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="sm:col-span-1">
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  name="companyName"
+                  value={form.companyName}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm outline-none focus:border-[#0b3b2a]"
+                  placeholder="Enter company name"
+                />
+              </div>
+
+              <div className="sm:col-span-1">
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  GST Number
+                </label>
+                <input
+                  type="text"
+                  name="gstNumber"
+                  value={form.gstNumber}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm outline-none focus:border-[#0b3b2a]"
+                  placeholder="Enter GST (optional)"
+                />
+              </div>
+
+              <div className="sm:col-span-1">
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  Contact Person
+                </label>
+                <input
+                  type="text"
+                  name="contactName"
+                  value={form.contactName}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm outline-none focus:border-[#0b3b2a]"
+                  placeholder="Full name"
+                />
+              </div>
+
+              <div className="sm:col-span-1">
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  name="phoneNumber"
+                  value={form.phoneNumber}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm outline-none focus:border-[#0b3b2a]"
+                  placeholder="WhatsApp / mobile number"
+                />
+              </div>
+
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm outline-none focus:border-[#0b3b2a]"
+                  placeholder="Business email"
+                />
+              </div>
+
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  Required Quantity (Monthly)
+                </label>
+                <input
+                  type="text"
+                  name="quantity"
+                  value={form.quantity}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm outline-none focus:border-[#0b3b2a]"
+                  placeholder="Example: 50–100 kg per month"
+                />
+              </div>
+
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  Message / Requirements
+                </label>
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  rows={4}
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm outline-none focus:border-[#0b3b2a] resize-none"
+                  placeholder="Tell us about your requirements, product interest, and delivery location."
+                />
+              </div>
+
+              <div className="sm:col-span-2 mt-2">
+                <button
+                  type="submit"
+                  className="w-full inline-flex items-center justify-center rounded-full bg-[#0b3b2a] text-white text-sm font-semibold px-6 py-3.5 hover:bg-[#0b3b2a] transition-colors"
+                >
+                  Submit Enquiry
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="bg-[#F7F1E6] rounded-3xl px-6 sm:px-8 py-8 border border-[#E5D7C3]">
+            <h3 className="text-base sm:text-lg font-semibold text-[#0b3b2a]">
+              Direct Contact
+            </h3>
+            <p className="mt-2 text-sm text-gray-600">
+              For immediate assistance, reach out to our B2B team using the details below.
+            </p>
+
+            <div className="mt-6 space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#0b3b2a] border border-[#DCCCB6]">
+                  <Phone size={18} />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-[#0b3b2a] uppercase tracking-[0.18em]">
+                    Call / WhatsApp
+                  </p>
+                  <a
+                    href="tel:+918252753850"
+                    className="block mt-1 text-sm font-medium text-[#0b3b2a]"
+                  >
+                    +91 82527 53850
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#0b3b2a] border border-[#DCCCB6]">
+                  <Mail size={18} />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-[#0b3b2a] uppercase tracking-[0.18em]">
+                    Email
+                  </p>
+                  <a
+                    href="mailto:maakavitalaxmi@gmail.com"
+                    className="block mt-1 text-sm font-medium text-[#0b3b2a]"
+                  >
+                    maakavitalaxmi@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-[#E0D1BC]">
+                <p className="text-xs font-semibold text-[#0b3b2a] uppercase tracking-[0.18em]">
+                  Office Address
+                </p>
+                <p className="mt-1 text-xs text-gray-700 leading-relaxed">
+                  Maa Kavita Lakxmi Pvt. Ltd.
+                  <br />
+                  Kerala, India
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }

@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;600;700;800&display=swap');
 
 @import "tailwindcss";
 
 :root {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #333;
@@ -19,6 +19,22 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-weight: 800; line-height: 1.15; }
+h2 { font-weight: 700; line-height: 1.2; }
+h3 { font-weight: 600; line-height: 1.25; }
+
+p, li, label, input, button, textarea, select, small {
+  font-family: 'Inter', sans-serif;
 }
 
 /* Custom Scrollbar */
@@ -56,4 +72,19 @@ body {
   display: flex;
   width: max-content;
   animation: marquee 25s linear infinite;
+}
+
+.footer-link {
+  color: rgba(228, 243, 234, 0.9);
+  transition: color 180ms ease, transform 180ms ease, text-decoration-color 180ms ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.footer-link:hover {
+  color: #ffffff;
+  text-underline-offset: 3px;
+  text-decoration: underline;
+  transform: translateY(-1px);
 }

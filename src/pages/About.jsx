@@ -41,7 +41,7 @@ export default function About() {
   return (
     <section className="mt-24 pb-32 bg-gradient-to-b from-[#fafafa] to-[#f1f5f9] overflow-hidden">
       {/* ================= HERO ================= */}
-      <div className="relative bg-gradient-to-br from-black via-[#052e16] to-black py-32 px-6">
+      <div className="relative bg-[#0b3b2a] to-black py-32 px-6">
         <div className="absolute inset-0 opacity-40">
           <div className="absolute -top-20 -left-20 w-[45%] h-[90%] bg-emerald-600 blur-[140px] rounded-full" />
           <div className="absolute bottom-[-20%] right-[-10%] w-[45%] h-[90%] bg-green-500 blur-[140px] rounded-full" />
@@ -96,9 +96,9 @@ export default function About() {
             </IconBox>
             <CardTitle>Statutory Profile</CardTitle>
             <InfoRow label="Banker" value="Axis Bank" />
-            <InfoRow label="GST No." value="10AAOCM9571F1ZB" />
-            <InfoRow label="CIN No." value="U15419BR2021PTC053992" />
-            <InfoRow label="Legal Status" value="Limited Company" />
+            <InfoRow label="Acc No." value="924020039325098" />
+            <InfoRow label="IFSC Code" value="UTIB0003615" />
+            <InfoRow label="Legal Status" value="Private Limited Company" />
           </motion.div>
 
           <motion.div
@@ -115,9 +115,9 @@ export default function About() {
 
             <div className="mt-8 pt-6 border-t border-white/20">
               <p className="text-xs text-gray-300 uppercase tracking-widest">
-                Registration Date
+                Gst no
               </p>
-              <p className="text-2xl font-black text-emerald-400">11-02-2025</p>
+              <p className="text-2xl font-black text-emerald-400">10AAOCM9571F1ZB</p>
             </div>
           </motion.div>
         </motion.div>

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { MdLocationOn, MdPhone, MdEmail, MdAccessTime } from "react-icons/md";
-import { FaWhatsapp } from "react-icons/fa";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
     email: "",
     phone: "",
     subject: "",
@@ -16,104 +14,239 @@ export default function ContactUs() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert("Thank you for contacting us!");
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    alert("Thank you for reaching out. We will get back to you shortly.");
   };
 
+  const faqs = [
+    {
+      question: "What are your delivery options?",
+      answer:
+        "We offer pan-India delivery with standard and express options. Free shipping is available above selected order values.",
+    },
+    {
+      question: "Do you have minimum order quantities?",
+      answer:
+        "For retail orders there is no strict minimum. Wholesale and B2B orders may have an MOQ depending on products.",
+    },
+    {
+      question: "What is your return policy?",
+      answer:
+        "We accept returns within 7 days if the product is damaged or defective. Please share order details with our support.",
+    },
+    {
+      question: "Can I customize products for corporate gifting?",
+      answer:
+        "Yes, we offer curated gift packs and branding options for corporate and festive gifting. Contact our team for details.",
+    },
+  ];
+
   return (
-    <section className="mt-24 px-6 md:px-10">
-      {/* Hero */}
-      <div className="max-w-6xl mx-auto mb-8 rounded-2xl bg-gray-100 p-8 text-gray-800">
-        <h2 className="text-3xl md:text-4xl font-semibold">Contact Us</h2>
-        <p className="mt-2 text-sm md:text-base text-gray-600">We respond within 24 hours for orders and support.</p>
-      </div>
-
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Info cards */}
-        <div className="space-y-4">
-          <div className="rounded-2xl bg-white shadow-md p-5 text-gray-800">
-            <div className="flex items-start gap-3">
-              <MdLocationOn className="text-green-600 mt-0.5" />
-              <div>
-                <div className="text-xs uppercase tracking-wider text-gray-500">Store Address</div>
-                <p className="mt-1 text-gray-600">Malsalami, Shahadra, Patna City – 800008<br/>Bihar, India</p>
-                <a href="https://maps.google.com/?q=Malsalami%20Shahadra%20Patna%20City%20800008" target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs text-green-600 hover:text-green-700">View on Maps</a>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-white shadow-md p-5 text-gray-800">
-            <div className="flex items-start gap-3">
-              <MdPhone className="text-green-600 mt-0.5" />
-              <div>
-                <div className="text-xs uppercase tracking-wider text-gray-500">Call Us</div>
-                <p className="mt-1 text-gray-600">+91 82527 53985 · +91 73669 81951</p>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-white shadow-md p-5 text-gray-800">
-            <div className="flex items-start gap-3">
-              <MdEmail className="text-green-600 mt-0.5" />
-              <div>
-                <div className="text-xs uppercase tracking-wider text-gray-500">Email</div>
-                <p className="mt-1 text-gray-600">maakavitalaxmi@gmail.com</p>
-              </div>
-            </div>
-          </div>
-          <div className="rounded-2xl bg-white shadow-md p-5 text-gray-800">
-            <div className="flex items-start gap-3">
-              <MdAccessTime className="text-green-600 mt-0.5" />
-              <div>
-                <div className="text-xs uppercase tracking-wider text-gray-500">Hours</div>
-                <p className="mt-1 text-gray-600">Mon–Sun: 10:00 AM – 8:00 PM IST</p>
-              </div>
-            </div>
-          </div>
-
-          <a
-            href="https://wa.me/918252753985"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-full bg-green-500 text-white px-4 py-3 shadow-lg ring-1 ring-green-400/40 hover:bg-green-600 transition"
-            aria-label="Chat on WhatsApp"
-          >
-            <FaWhatsapp /> <span className="text-sm font-medium">Chat on WhatsApp</span>
-          </a>
+    <section className="mt-24 bg-[#F4F0E6] pb-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="text-center py-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#0b3b2a]">
+            Get In Touch
+          </h1>
+          <p className="mt-3 text-sm sm:text-base text-gray-600 max-w-xl mx-auto">
+            We would love to hear from you. Send us a message and we will respond as
+            soon as possible.
+          </p>
         </div>
 
-        {/* Form */}
-        <div className="rounded-2xl bg-white shadow-lg p-6">
-          <h3 className="text-xl font-semibold text-gray-900">Send a message</h3>
-          <form onSubmit={handleSubmit} className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="flex flex-col">
-              <label className="mb-1 text-gray-700">First Name *</label>
-              <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required className="px-3 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder:text-gray-400" />
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-start bg-white rounded-3xl px-6 sm:px-8 py-8 shadow-sm border border-[#E5D7C3]">
+          <div>
+            <h2 className="text-lg sm:text-xl font-semibold text-[#0b3b2a]">
+              Send Us a Message
+            </h2>
+            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-[#0b3b2a]"
+                  placeholder="Enter your name"
+                />
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-[#0b3b2a]"
+                    placeholder="you@example.com"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-[#0b3b2a]"
+                    placeholder="+91 00000 00000"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  Subject
+                </label>
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-[#0b3b2a]"
+                  placeholder="How can we help?"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#0b3b2a] mb-1.5">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={4}
+                  className="w-full rounded-xl border border-[#E0D1BC] bg-[#FAF6EF] px-3 py-2.5 text-sm text-gray-900 outline-none focus:border-[#0b3b2a] resize-none"
+                  placeholder="Write your message here..."
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="mt-1 inline-flex w-full items-center justify-center rounded-full bg-[#0b3b2a] text-white text-sm font-semibold px-6 py-3.5 hover:bg-[#0b3b2a] transition-colors"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
+
+          <div className="space-y-4">
+            <div className="rounded-2xl bg-[#F7F1E6] px-5 py-4 border border-[#E5D7C3]">
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0b3b2a] text-white">
+                  <MdLocationOn />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0b3b2a]">
+                    Address
+                  </p>
+                  <p className="mt-1 text-sm text-gray-700">
+                    Malsalami, Shahadra, Patna City – 800008
+                    <br />
+                    Bihar, India
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <label className="mb-1 text-gray-700">Last Name *</label>
-              <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required className="px-3 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder:text-gray-400" />
+
+            <div className="rounded-2xl bg-[#F7F1E6] px-5 py-4 border border-[#E5D7C3]">
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0b3b2a] text-white">
+                  <MdPhone />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0b3b2a]">
+                    Phone
+                  </p>
+                  <p className="mt-1 text-sm text-gray-700">
+                    +91 82527 53985
+                    <br />
+                    +91 73669 81951
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col sm:col-span-2">
-              <label className="mb-1 text-gray-700">Email *</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required className="px-3 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder:text-gray-400" />
+
+            <div className="rounded-2xl bg-[#F7F1E6] px-5 py-4 border border-[#E5D7C3]">
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0b3b2a] text-white">
+                  <MdEmail />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0b3b2a]">
+                    Email
+                  </p>
+                  <p className="mt-1 text-sm text-gray-700">maakavitalaxmi@gmail.com</p>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <label className="mb-1 text-gray-700">Phone</label>
-              <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="px-3 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder:text-gray-400" />
+
+            <div className="rounded-2xl bg-[#F7F1E6] px-5 py-4 border border-[#E5D7C3]">
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0b3b2a] text-white">
+                  <MdAccessTime />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0b3b2a]">
+                    Business Hours
+                  </p>
+                  <p className="mt-1 text-sm text-gray-700">
+                    Monday – Sunday
+                    <br />
+                    10:00 AM – 8:00 PM IST
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-col">
-              <label className="mb-1 text-gray-700">Subject</label>
-              <input type="text" name="subject" value={formData.subject} onChange={handleChange} className="px-3 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder:text-gray-400" />
-            </div>
-            <div className="flex flex-col sm:col-span-2">
-              <label className="mb-1 text-gray-700">Message</label>
-              <textarea name="message" value={formData.message} onChange={handleChange} rows="4" className="px-3 py-2 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900 placeholder:text-gray-400"></textarea>
-            </div>
-            <div className="sm:col-span-2 flex gap-3">
-              <button type="submit" className="flex-1 px-6 py-3 rounded-full bg-green-600 text-white font-medium hover:bg-green-700 transition">Submit</button>
-              <a href="tel:+918252753985" className="px-6 py-3 rounded-full border border-gray-300 text-gray-900 hover:bg-gray-900 hover:text-white transition">Call now</a>
-            </div>
-          </form>
+          </div>
+        </div>
+
+        <div className="mt-16 text-center">
+          <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a]">
+            Visit Our Kitchen
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Come see where the magic happens.
+          </p>
+          <div className="mt-6 w-full rounded-3xl bg-[#E1DED6] h-52 sm:h-64 flex flex-col items-center justify-center text-gray-600 text-sm">
+            <span className="mb-2 font-medium">Map Placeholder</span>
+            <span className="text-xs">
+              Rudraksha Kitchen, Malsalami, New Market Road, Kerala
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-16 w-full rounded-3xl bg-[#F7F1E6] px-6 sm:px-8 py-10 border border-[#E5D7C3]">
+          <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
+            Frequently Asked Questions
+          </h2>
+          <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
+            Find quick answers to common questions about delivery, orders and returns.
+          </p>
+          <div className="mt-8 space-y-3">
+            {faqs.map((item) => (
+              <div
+                key={item.question}
+                className="rounded-2xl bg-white px-4 sm:px-5 py-4 text-left text-sm text-gray-800 border border-[#E5D7C3]"
+              >
+                <p className="font-semibold text-[#0b3b2a]">{item.question}</p>
+                <p className="mt-1 text-xs text-gray-600">{item.answer}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

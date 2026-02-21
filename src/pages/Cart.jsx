@@ -192,7 +192,7 @@ export default function Cart() {
             <ShoppingBag className="mx-auto text-gray-100 mb-6" size={80} />
             <h2 className="text-3xl font-black text-gray-900 mb-2">Your basket is empty</h2>
             <p className="text-gray-400 text-sm mb-8">Looks like you haven't added any snacks yet.</p>
-            <button onClick={() => navigate("/")} className="bg-black text-white px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-green-700 transition-all">Shop Now</button>
+            <button onClick={() => navigate("/")} className="bg-black text-white px-10 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-[#0b3b2a] transition-all">Shop Now</button>
           </motion.div>
         ) : (
           <div className="grid lg:grid-cols-12 gap-12">
@@ -297,7 +297,7 @@ export default function Cart() {
       <div className="flex items-center gap-4 mt-4">
         <button 
           onClick={() => setShowAddress(true)} 
-          className="text-[10px] font-black text-green-700 underline uppercase tracking-tighter hover:text-green-900"
+          className="text-[10px] font-black text-[#0b3b2a] underline uppercase tracking-tighter hover:text-green-900"
         >
           Edit Address
         </button>
@@ -349,7 +349,7 @@ export default function Cart() {
 
                 <button 
                   onClick={handleFinalCheckout}
-                  className="w-full bg-black text-white py-5 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:bg-green-700 transition-all shadow-lg active:scale-95"
+                  className="w-full bg-black text-white py-5 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:bg-[#0b3b2a] transition-all shadow-lg active:scale-95"
                 >
                   {selectedAddress ? "Confirm & Pay" : "Set Address First"}
                 </button>

@@ -50,7 +50,7 @@ export default function Orders() {
             <p className="text-gray-500 text-xl font-bold">No orders found yet.</p>
             <button 
               onClick={() => navigate('/')}
-              className="mt-6 bg-green-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-green-700 transition-all"
+              className="mt-6 bg-green-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-[#0b3b2a] transition-all"
             >
               Start Shopping
             </button>
@@ -99,7 +99,7 @@ export default function Orders() {
                             <img src={item.image} alt="" className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
                           </div>
                           <div>
-                            <h4 className="font-bold text-gray-800 group-hover:text-green-700 transition-colors">{item.name}</h4>
+                            <h4 className="font-bold text-gray-800 group-hover:text-[#0b3b2a] transition-colors">{item.name}</h4>
                             <p className="text-sm text-gray-500">Qty: {item.quantity} • ₹{item.price}</p>
                           </div>
                         </div>
