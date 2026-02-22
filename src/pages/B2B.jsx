@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { 
-  ShoppingCart, Zap, Truck, Phone, Mail, 
-  CheckCircle2, Info, Package, Store, 
+import {
+  ShoppingCart, Zap, Truck, Phone, Mail,
+  CheckCircle2, Info, Package, Store,
   ArrowRight, ShieldCheck, Globe, Percent,
   MessageCircle, ExternalLink
 } from "lucide-react";
@@ -17,7 +17,7 @@ import bananaPowder from "../assets/banana/bananaPowder.png";
 import bananaSalti from "../assets/banana/bananaSalti.png";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
-
+import upiqr from "../assets/banana/upi-qr.jpeg";
 function B2BPageOld() {
   const navigate = useNavigate();
   const [loadingId, setLoadingId] = useState(null);
@@ -34,10 +34,10 @@ function B2BPageOld() {
 
   const handleBulkAction = async (product, quantity, redirectToCart = false) => {
     const token = localStorage.getItem("token");
-    if (!token) { 
+    if (!token) {
       toast.error("Wholesale access requires an account.");
-      navigate("/auth"); 
-      return; 
+      navigate("/auth");
+      return;
     }
 
     setLoadingId(product.id);
@@ -48,7 +48,7 @@ function B2BPageOld() {
         price: product.price,
         image: product.image,
         quantity: quantity,
-        isBulk: true 
+        isBulk: true
       }, { headers: { Authorization: `Bearer ${token}` } });
 
       if (redirectToCart) navigate('/cart');
@@ -63,10 +63,10 @@ function B2BPageOld() {
   return (
     <div className="min-h-screen bg-[#FBFBFD] pt-24 pb-20 selection:bg-green-100 overflow-x-hidden">
       <Toaster position="bottom-right" />
-      
+
       {/* --- FLOATING WHATSAPP WIDGET --- */}
-      <motion.a 
-        href="https://wa.me/919876543210" 
+      <motion.a
+        href="https://wa.me/919876543210"
         target="_blank"
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -78,11 +78,11 @@ function B2BPageOld() {
       </motion.a>
 
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* --- HERO SECTION --- */}
         <section className="relative mb-24 mt-12">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }} 
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             className="relative z-10"
           >
@@ -95,23 +95,23 @@ function B2BPageOld() {
             <p className="text-xl text-gray-500 font-medium max-w-2xl leading-relaxed mb-10">
               Skip the middleman. Secure factory-gate pricing on India's most exported snack range. Built for retailers who demand quality and consistency.
             </p>
-            
+
             <div className="flex flex-wrap gap-4">
-               <button className="bg-black text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-gray-800 transition-all">
-                  Download Catalog <ExternalLink size={18}/>
-               </button>
-               <div className="flex -space-x-4">
-                  {[1,2,3,4].map(i => (
-                    <div key={i} className="w-12 h-12 rounded-full border-4 border-white bg-gray-200" />
-                  ))}
-                  <div className="pl-6 flex flex-col justify-center">
-                    <p className="text-xs font-black text-gray-900 leading-none">500+ PARTNERS</p>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase">Trusted Globally</p>
-                  </div>
-               </div>
+              <button className="bg-black text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 hover:bg-gray-800 transition-all">
+                Download Catalog <ExternalLink size={18} />
+              </button>
+              <div className="flex -space-x-4">
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className="w-12 h-12 rounded-full border-4 border-white bg-gray-200" />
+                ))}
+                <div className="pl-6 flex flex-col justify-center">
+                  <p className="text-xs font-black text-gray-900 leading-none">500+ PARTNERS</p>
+                  <p className="text-[10px] font-bold text-gray-400 uppercase">Trusted Globally</p>
+                </div>
+              </div>
             </div>
           </motion.div>
-          
+
           {/* Abstract Background Element */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-200/30 rounded-full blur-[120px] -z-0 translate-x-1/2 -translate-y-1/2" />
         </section>
@@ -119,12 +119,12 @@ function B2BPageOld() {
         {/* --- STAT TICKER --- */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
           {[
-            { label: "Daily Output", value: "25 Tons", icon: <Package size={16}/> },
-            { label: "Wholesale Disc.", value: "Up to 30%", icon: <Percent size={16}/> },
-            { label: "QC Verified", value: "Level 4", icon: <ShieldCheck size={16}/> },
-            { label: "Fast Logistics", value: "48H Dispatch", icon: <Truck size={16}/> },
+            { label: "Daily Output", value: "25 Tons", icon: <Package size={16} /> },
+            { label: "Wholesale Disc.", value: "Up to 30%", icon: <Percent size={16} /> },
+            { label: "QC Verified", value: "Level 4", icon: <ShieldCheck size={16} /> },
+            { label: "Fast Logistics", value: "48H Dispatch", icon: <Truck size={16} /> },
           ].map((stat, i) => (
-            <motion.div 
+            <motion.div
               whileHover={{ y: -5 }}
               key={i} className="bg-white/60 backdrop-blur-md border border-white p-6 rounded-[2rem] shadow-sm flex items-center gap-4"
             >
@@ -144,10 +144,10 @@ function B2BPageOld() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence>
             {bulkProducts.map((product) => (
-              <BulkProductCard 
-                key={product.id} 
-                product={product} 
-                onAction={handleBulkAction} 
+              <BulkProductCard
+                key={product.id}
+                product={product}
+                onAction={handleBulkAction}
                 isLoading={loadingId === product.id}
               />
             ))}
@@ -155,7 +155,7 @@ function B2BPageOld() {
         </div>
 
         {/* --- CONTACT & SUPPORT --- */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -163,7 +163,7 @@ function B2BPageOld() {
         >
           <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl md:text-6xl font-black text-white leading-none mb-6">NEED A CUSTOM <br/> <span className="text-green-400">QUOTATION?</span></h2>
+              <h2 className="text-4xl md:text-6xl font-black text-white leading-none mb-6">NEED A CUSTOM <br /> <span className="text-green-400">QUOTATION?</span></h2>
               <p className="text-gray-400 font-medium text-lg mb-8 max-w-md">For containers or customized white-labeling, our specialized account managers are ready to assist.</p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <a href="mailto:maakavitalaxmi@gmail.com" className="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase text-xs flex items-center justify-center gap-2 hover:scale-105 transition-transform">
@@ -176,13 +176,13 @@ function B2BPageOld() {
             </div>
             <div className="hidden md:block">
               <div className="bg-gradient-to-br from-green-500 to-emerald-700 p-12 rounded-[3rem] shadow-2xl rotate-3">
-                 <Store size={60} className="text-white mb-6" />
-                 <p className="text-white text-2xl font-black mb-2">Retail Partner Program</p>
-                 <p className="text-green-100 opacity-80 text-sm">Join our network of 5,000+ vendors across Asia and the Middle East.</p>
-                 <div className="mt-8 pt-8 border-t border-white/20 flex justify-between items-center text-white">
-                    <span className="font-bold uppercase text-xs tracking-widest">Apply Now</span>
-                    <ArrowRight />
-                 </div>
+                <Store size={60} className="text-white mb-6" />
+                <p className="text-white text-2xl font-black mb-2">Retail Partner Program</p>
+                <p className="text-green-100 opacity-80 text-sm">Join our network of 5,000+ vendors across Asia and the Middle East.</p>
+                <div className="mt-8 pt-8 border-t border-white/20 flex justify-between items-center text-white">
+                  <span className="font-bold uppercase text-xs tracking-widest">Apply Now</span>
+                  <ArrowRight />
+                </div>
               </div>
             </div>
           </div>
@@ -197,11 +197,11 @@ function B2BPageOld() {
 /* ================= COMPONENT: BULK PRODUCT CARD ================= */
 function BulkProductCard({ product, onAction, isLoading }) {
   const [qty, setQty] = useState(product.minQty);
-  
+
   const totalPrice = product.price * qty;
 
   return (
-    <motion.div 
+    <motion.div
       layout
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -213,11 +213,11 @@ function BulkProductCard({ product, onAction, isLoading }) {
         <div className="absolute top-6 right-6 z-10 bg-black text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
           Min: {product.minQty}u
         </div>
-        <motion.img 
+        <motion.img
           whileHover={{ scale: 1.15, rotate: -5 }}
           transition={{ type: "spring", stiffness: 300 }}
-          src={product.image} 
-          className="h-full object-contain drop-shadow-[0_25px_25px_rgba(0,0,0,0.15)]" 
+          src={product.image}
+          className="h-full object-contain drop-shadow-[0_25px_25px_rgba(0,0,0,0.15)]"
         />
         <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white/80 to-transparent pointer-events-none" />
       </div>
@@ -238,11 +238,11 @@ function BulkProductCard({ product, onAction, isLoading }) {
                 <span className="text-xs text-gray-300 font-bold line-through">₹{product.retail}</span>
               </div>
             </div>
-            
+
             <div className="flex items-center bg-white rounded-2xl p-1 shadow-sm border border-gray-100">
-               <button onClick={() => setQty(Math.max(product.minQty, qty - 10))} className="w-10 h-10 flex items-center justify-center font-black hover:bg-gray-100 rounded-xl transition-all">-</button>
-               <span className="w-12 text-center font-black text-sm">{qty}</span>
-               <button onClick={() => setQty(qty + 10)} className="w-10 h-10 flex items-center justify-center font-black hover:bg-gray-100 rounded-xl transition-all">+</button>
+              <button onClick={() => setQty(Math.max(product.minQty, qty - 10))} className="w-10 h-10 flex items-center justify-center font-black hover:bg-gray-100 rounded-xl transition-all">-</button>
+              <span className="w-12 text-center font-black text-sm">{qty}</span>
+              <button onClick={() => setQty(qty + 10)} className="w-10 h-10 flex items-center justify-center font-black hover:bg-gray-100 rounded-xl transition-all">+</button>
             </div>
           </div>
 
@@ -254,15 +254,15 @@ function BulkProductCard({ product, onAction, isLoading }) {
 
         {/* Buttons */}
         <div className="grid grid-cols-2 gap-3">
-          <button 
+          <button
             disabled={isLoading}
             onClick={() => onAction(product, qty, false)}
             className="bg-white border-2 border-gray-900 text-gray-900 py-4 rounded-2xl font-black uppercase text-[10px] flex items-center justify-center gap-2 hover:bg-gray-900 hover:text-white transition-all disabled:opacity-50"
           >
             {isLoading ? "..." : <ShoppingCart size={16} />} Cart
           </button>
-          
-          <button 
+
+          <button
             disabled={isLoading}
             onClick={() => onAction(product, qty, true)}
             className="bg-green-600 text-white py-4 rounded-2xl font-black uppercase text-[10px] flex items-center justify-center gap-2 hover:bg-black transition-all shadow-xl shadow-green-100 disabled:opacity-50"
@@ -270,7 +270,7 @@ function BulkProductCard({ product, onAction, isLoading }) {
             <Zap size={16} fill="currentColor" /> Buy Now
           </button>
         </div>
-        
+
         <div className="mt-6 flex items-center justify-center gap-2">
           <Info size={12} className="text-gray-300" />
           <p className="text-[9px] font-bold text-gray-300 uppercase tracking-tighter">Bulk discounts automatically applied at checkout</p>
@@ -315,18 +315,18 @@ export default function B2B() {
         <section className="w-screen bg-[#0b3b2a] text-white py-14 sm:py-16 mx-[calc(50%-50vw)]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="max-w-2xl mx-auto text-center">
-            <p className="text-xs font-semibold tracking-[0.25em] uppercase text-emerald-100 mb-3">
-              Wholesale &amp; B2B Partnership
-            </p>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight mb-3">
-              Partner with us for bulk orders and grow your business with premium
-              quality traditional snacks.
-            </h1>
-            <p className="text-sm sm:text-base text-emerald-100/90 max-w-xl mx-auto mb-6">
-              Consistent quality, reliable supply, and tailor-made solutions for retailers, distributors,
-              and food service businesses across India and abroad.
-            </p>
-            {/* <button
+              <p className="text-xs font-semibold tracking-[0.25em] uppercase text-emerald-100 mb-3">
+                Wholesale &amp; B2B Partnership
+              </p>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight mb-3">
+                Partner with us for bulk orders and grow your business with premium
+                quality traditional snacks.
+              </h1>
+              <p className="text-sm sm:text-base text-emerald-100/90 max-w-xl mx-auto mb-6">
+                Consistent quality, reliable supply, and tailor-made solutions for retailers, distributors,
+                and food service businesses across India and abroad.
+              </p>
+              {/* <button
               type="button"
               onClick={() => {
                 const element = document.getElementById("wholesale-form");
@@ -393,64 +393,64 @@ export default function B2B() {
           </div>
         </section>
         {/* PRICE LIST SECTION */}
-<section className="mt-16">
-  <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
-    Wholesale Price List (Jan 2026)
-  </h2>
+        <section className="mt-16">
+          <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
+            Wholesale Price List (Jan 2026)
+          </h2>
 
-  <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
-    Latest wholesale pricing for bulk buyers.
-  </p>
+          <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
+            Latest wholesale pricing for bulk buyers.
+          </p>
 
-  <div className="mt-8 max-w-5xl mx-auto overflow-x-auto bg-white rounded-3xl border border-[#E5D7C3] shadow-sm">
+          <div className="mt-8 max-w-5xl mx-auto overflow-x-auto bg-white rounded-3xl border border-[#E5D7C3] shadow-sm">
 
-    <table className="w-full text-sm">
+            <table className="w-full text-sm">
 
-      <thead className="bg-[#F7F1E6] text-[#0b3b2a]">
-        <tr>
-          <th className="p-3 text-left">Product</th>
-          <th className="p-3">Weight</th>
-          <th className="p-3">Packing</th>
-          <th className="p-3">MRP</th>
-        </tr>
-      </thead>
+              <thead className="bg-[#F7F1E6] text-[#0b3b2a]">
+                <tr>
+                  <th className="p-3 text-left">Product</th>
+                  <th className="p-3">Weight</th>
+                  <th className="p-3">Packing</th>
+                  <th className="p-3">MRP</th>
+                </tr>
+              </thead>
 
-      <tbody className="text-gray-700">
+              <tbody className="text-gray-700">
 
-        <tr className="border-t">
-          <td className="p-3">Banana Bhujia</td>
-          <td className="p-3 text-center">1kg</td>
-          <td className="p-3 text-center">12x12</td>
-          <td className="p-3 text-center">₹299</td>
-        </tr>
+                <tr className="border-t">
+                  <td className="p-3">Banana Bhujia</td>
+                  <td className="p-3 text-center">1kg</td>
+                  <td className="p-3 text-center">12x12</td>
+                  <td className="p-3 text-center">₹299</td>
+                </tr>
 
-        <tr className="border-t">
-          <td className="p-3">Banana Chilli Chips</td>
-          <td className="p-3 text-center">1kg</td>
-          <td className="p-3 text-center">12x12</td>
-          <td className="p-3 text-center">₹299</td>
-        </tr>
+                <tr className="border-t">
+                  <td className="p-3">Banana Chilli Chips</td>
+                  <td className="p-3 text-center">1kg</td>
+                  <td className="p-3 text-center">12x12</td>
+                  <td className="p-3 text-center">₹299</td>
+                </tr>
 
-        <tr className="border-t">
-          <td className="p-3">Banana Salt Chips</td>
-          <td className="p-3 text-center">1kg</td>
-          <td className="p-3 text-center">12x12</td>
-          <td className="p-3 text-center">₹290</td>
-        </tr>
+                <tr className="border-t">
+                  <td className="p-3">Banana Salt Chips</td>
+                  <td className="p-3 text-center">1kg</td>
+                  <td className="p-3 text-center">12x12</td>
+                  <td className="p-3 text-center">₹290</td>
+                </tr>
 
-        <tr className="border-t">
-          <td className="p-3">Banana Powder</td>
-          <td className="p-3 text-center">1kg</td>
-          <td className="p-3 text-center">48 Jar</td>
-          <td className="p-3 text-center">₹550</td>
-        </tr>
+                <tr className="border-t">
+                  <td className="p-3">Banana Powder</td>
+                  <td className="p-3 text-center">1kg</td>
+                  <td className="p-3 text-center">48 Jar</td>
+                  <td className="p-3 text-center">₹550</td>
+                </tr>
 
-      </tbody>
+              </tbody>
 
-    </table>
+            </table>
 
-  </div>
-</section>
+          </div>
+        </section>
         <section className="mt-16 rounded-3xl bg-[#F7F1E6] px-6 sm:px-10 py-10 border border-[#E5D7C3]">
           <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
             Volume-Based Pricing
@@ -676,6 +676,7 @@ export default function B2B() {
                     +91 82527 53850
                   </a>
                 </div>
+
               </div>
 
               <div className="flex items-start gap-3">
@@ -705,6 +706,19 @@ export default function B2B() {
                   Kerala, India
                 </p>
               </div>
+            </div>
+            <div className="mt-6 pt-4 border-t border-[#E0D1BC] text-center">
+
+              <img
+                src={upiqr}
+                alt="UPI Payment QR"
+                className="mx-auto w-48 sm:w-56 rounded-xl border border-[#DCCCB6] shadow-sm"
+              />
+
+              <p className="mt-2 text-xs text-gray-600">
+                Scan to pay Maa Kavita Lakxmi Pvt. Ltd.
+              </p>
+
             </div>
           </div>
         </section>
