@@ -82,7 +82,7 @@ const ProductCard = ({ product }) => {
           <p className="text-lg font-bold text-gray-900">
             ₹ {product.price}
           </p>
-          <span className="text-xs text-gray-500">100 g</span>
+          <span className="text-xs text-gray-500">{product.quantity}</span>
         </div>
 
         <button
@@ -501,29 +501,34 @@ export default function Landing() {
       title: "Signature Banana Chips",
       price: "290",
       image: chilliBana,
+      quantity: "1 Kg"
     },
     {
       id: "feat2",
       title: "Natural Banana Powder",
       price: "500",
       image: bananaPowder,
+      quantity: "1 Kg"
     },
     {
       id: "feat3",
       title: "Banana Length Pepper",
       price: "81",
       image: bananach5,
+      quantity: "100 g"
     },
     {
       id: "best2",
       title: "Spicy Banana Chips",
       price: "81",
       image: bananaChilli,
+      quantity: "100 g"
     },{
       id: "best4",
       title: "Banana Salty Chips",
       price: "81",
       image: bananaSalti,
+      quantity: "100 g"
     },
   ];
 
@@ -531,32 +536,37 @@ export default function Landing() {
     {
       id: "best1",
       title: "Ultra Thin Banana Chips",
-      price: "151",
+      price: "290",
       image: chilliBana,
+      quantity: "1 Kg"
     },
     {
       id: "best2",
       title: "Spicy Banana Chips",
       price: "81",
       image: bananaChilli,
+      quantity: "100 g"
     },
     {
       id: "best3",
       title: "Classic Banana Chips",
       price: "151",
       image: bananaChips,
+      quantity: "100 g"
     },
     {
       id: "best4",
       title: "Banana Salty Chips",
       price: "81",
       image: bananaSalti,
+      quantity: "100 g"
     },
     {
       id: "best5",
       title: "Banana Powder",
       price: "500",
       image: bananaPowder,
+      quantity: "1 Kg"
     },
   ];
 
