@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaBars, FaTimes, FaSignOutAlt, FaShoppingBasket, FaUserCircle, FaSearch, FaLock } from "react-icons/fa";
 import API from "../api/axios";
+import logo from "../assets/banana/logo2.png";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -67,13 +68,18 @@ const Header = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-3">
+
+          <img
+            src={logo}
+            alt="Maa Kavita Laxmi Logo"
+            className="w-15 h-15 object-contain"
+          />
+
           <span className="text-lg sm:text-xl font-bold text-green-900 tracking-tight">
-            Maa Kavita
+            Maa Kavita Laxmi Pvt. Ltd.
           </span>
-          <span className="lg:inline text-lg sm:text-xl font-light text-green-700">
-            Laxmi Pvt. Ltd.
-          </span>
+
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">

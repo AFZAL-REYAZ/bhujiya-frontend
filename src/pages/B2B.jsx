@@ -11,10 +11,10 @@ import { toast, Toaster } from "react-hot-toast";
 import API from "../api/axios";
 
 // Assets
-import bananaChilli from "../assets/banana/bananaChilli.png";
+import bananaChilli from "../assets/banana/bananaChilli.jpeg";
 import bananaChips from "../assets/banana/bananaChips.jpeg";
-import bananaPowder from "../assets/banana/bananaPowder.png";
-import bananaSalti from "../assets/banana/bananaSalti.png";
+import bananaPowder from "../assets/banana/bananaPowder.jpeg";
+import bananaSalti from "../assets/banana/bananaSalti.jpeg";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 import upiqr from "../assets/banana/upi-qr.jpeg";

@@ -11,7 +11,7 @@ import {
   ShieldCheck 
 } from "lucide-react";
 
-import logo from "/src/assets/banana/logo2.jpeg";
+import logo from "/src/assets/banana/logo2.png";
 
 export default function Login({ onLogin }) {
   const [email, setEmail] = useState("");

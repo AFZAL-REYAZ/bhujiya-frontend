@@ -4,10 +4,10 @@ import { ShoppingBag, Heart, Star, Plus, Minus } from "lucide-react";
 import API from "../api/axios";
 
 // Assets
-import bananaChilli from "../assets/banana/bananaChilli.png";
+import bananaChilli from "../assets/banana/bananaChilli.jpeg";
 import bananaChips from "../assets/banana/bananaChips.jpeg";
-import bananaPowder from "../assets/banana/bananaPowder.png";
-import bananaSalti from "../assets/banana/bananaSalti.png";
+import bananaPowder from "../assets/banana/bananaPowder.jpeg";
+import bananaSalti from "../assets/banana/bananaSalti.jpeg";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 
 export default function ProductDetail() {
@@ -18,36 +18,6 @@ export default function ProductDetail() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const products = [
-    {
-      id: "p1",
-      title: "Signature Banana Chips",
-      subtitle: "Spicy & Crunchy",
-      price: 290,
-      mrp: 350,
-      quantity: "1 Kg",
-      image: chilliBana,
-      tag: "Best Seller",
-      rating: 4.9,
-      reviews: "2.1k",
-      features: ["Farm Fresh", "No Preservatives", "Zero Trans Fat"],
-      color: "rose",
-      badgeColor: "bg-rose-600"
-    },
-    {
-      id: "p2",
-      title: "Classic Golden Chips",
-      subtitle: "Traditional Taste",
-      price: 81,
-      mrp: 120,
-      quantity: "100 g",
-      image: bananaChips,
-      tag: "Traditional",
-      rating: 4.8,
-      reviews: "1.8k",
-      features: ["100% Coconut Oil", "Sea Salted", "Hand-picked"],
-      color: "amber",
-      badgeColor: "bg-amber-600"
-    },
     {
       id: "p3",
       title: "Pure Banana Powder",
@@ -92,7 +62,37 @@ export default function ProductDetail() {
       features: ["Zesty Flavor", "Global Fusion", "Limited"],
       color: "orange",
       badgeColor: "bg-orange-600"
-    }
+    },
+        {
+      id: "p1",
+      title: "Signature Banana Chips",
+      subtitle: "Spicy & Crunchy",
+      price: 290,
+      mrp: 350,
+      quantity: "1 Kg",
+      image: chilliBana,
+      tag: "Best Seller",
+      rating: 4.9,
+      reviews: "2.1k",
+      features: ["Farm Fresh", "No Preservatives", "Zero Trans Fat"],
+      color: "rose",
+      badgeColor: "bg-rose-600"
+    },
+    {
+      id: "p2",
+      title: "Classic Golden Chips",
+      subtitle: "Traditional Taste",
+      price: 81,
+      mrp: 120,
+      quantity: "100 g",
+      image: bananaChips,
+      tag: "Traditional",
+      rating: 4.8,
+      reviews: "1.8k",
+      features: ["100% Coconut Oil", "Sea Salted", "Hand-picked"],
+      color: "amber",
+      badgeColor: "bg-amber-600"
+    },
   ];
 
   const filteredProducts = products.filter((product) =>
@@ -163,7 +163,7 @@ export default function ProductDetail() {
                 <img
                   src={product.image}
                   alt={product.title}
-                  className="h-48 w-full object-cover"
+                  className="h-68 w-full object-cover"
                 />
                 <button
                   onClick={() => toggleFavorite(product.id)}

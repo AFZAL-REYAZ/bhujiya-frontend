@@ -21,13 +21,19 @@ import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 
 // Assets
-import bananaChilli from "../assets/banana/bananaChilli.png";
+import bananaChilli from "../assets/banana/bananaChilli.jpeg";
 import bananaChips from "../assets/banana/bananaChips.jpeg";
-import bananaPowder from "../assets/banana/bananaPowder.png";
-import bananaSalti from "../assets/banana/bananaSalti.png";
+import bananaPowder from "../assets/banana/bananaPowder.jpeg";
+import bananaSalti from "../assets/banana/bananaSalti.jpeg";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 
+import crousel1 from "../assets/carousel/crousel1.jpeg";
+import crousel2 from "../assets/carousel/crousel2.jpeg";
+import crousel3 from "../assets/carousel/crousel3.jpeg";
+import crousel4 from "../assets/carousel/crousel4.jpeg";
+import crousel5 from "../assets/carousel/crousel5.jpeg";
+import crousel6 from "../assets/carousel/crousel6.jpeg";
 /* ================= PRODUCT CARD ================= */
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
@@ -65,7 +71,7 @@ const ProductCard = ({ product }) => {
       whileHover={{ y: -6 }}
       className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden flex flex-col"
     >
-      <div className="h-52 bg-gray-50 flex items-center justify-center overflow-hidden">
+      <div className="h-72 bg-gray-50 flex items-center justify-center overflow-hidden">
         <img
           src={product.image}
           alt={product.title}
@@ -571,7 +577,7 @@ export default function Landing() {
   ];
 
   const [heroIndex, setHeroIndex] = useState(0);
-  const heroImages = [bananaChips, bananaChilli, chilliBana, bananaPowder, bananaSalti, bananach5];
+  const heroImages = [crousel1,crousel2,crousel3,crousel4,crousel5,crousel6];
   useEffect(() => {
     const id = setInterval(() => {
       setHeroIndex((i) => (i + 1) % heroImages.length);
