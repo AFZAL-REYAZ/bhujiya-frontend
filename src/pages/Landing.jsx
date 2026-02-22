@@ -21,10 +21,10 @@ import { useNavigate } from "react-router-dom";
 import API from "../api/axios";
 
 // Assets
-import bananaChilli from "../assets/banana/bananaChilli.jpeg";
+import bananaChilli from "../assets/banana/bananaChilli.png";
 import bananaChips from "../assets/banana/bananaChips.jpeg";
-import bananaPowder from "../assets/banana/bananaPowder.jpeg";
-import bananaSalti from "../assets/banana/bananaSalti.jpeg";
+import bananaPowder from "../assets/banana/bananaPowder.png";
+import bananaSalti from "../assets/banana/bananaSalti.png";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 
@@ -593,7 +593,7 @@ export default function Landing() {
                 खावो जल्दी <span className="block text-lime-300">रहो Healthy</span>
               </h1>
               <p className="mt-4 text-sm sm:text-base lg:text-lg text-emerald-100 max-w-xl">
-                Handcrafted in small batches using traditional recipes and pure coconut oil.
+                Handcrafted in small batches using traditional recipes and pure oil.
                 Crispy, light and full of authentic South Indian flavour.
               </p>
               <div className="mt-6 flex flex-wrap gap-4 text-xs sm:text-sm text-emerald-100">
@@ -610,14 +610,14 @@ export default function Landing() {
                   10K+ Happy Customers
                 </div>
               </div>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              {/* <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <button className="inline-flex items-center justify-center rounded-full bg-green-800 px-8 py-3 text-sm font-semibold text-white shadow-md hover:bg-green-900 transition-colors border border-white/20">
                   Shop Now
                 </button>
                 <button className="inline-flex items-center justify-center rounded-full border border-emerald-100/70 px-8 py-3 text-sm font-semibold text-emerald-50 bg-white/10 hover:bg-white/15 transition-colors">
                   Explore Wholesale
                 </button>
-              </div>
+              </div> */}
             </div>
             <div className="relative">
               <div className="relative overflow-hidden rounded-3xl h-[45vh] sm:h-[55vh] md:h-[65vh]">

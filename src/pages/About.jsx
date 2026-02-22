@@ -13,13 +13,13 @@ import cert1 from "../assets/certificate/cert1.png";
 import cert2 from "../assets/certificate/cert2.png";
 import cert3 from "../assets/certificate/cert3.png";
 import cert4 from "../assets/certificate/cert4.png";
-import cert5 from "../assets/certificate/cert5.png";
+import cert5 from "../assets/certificate/cert5.jpeg";
 
 // Office Assets
-import office_1 from "../assets/office_1.webp";
-import office_2 from "../assets/office_2.webp";
-import office_3 from "../assets/office_3.webp";
 import office_4 from "../assets/office_4.webp";
+import office_1 from "../assets/office_1.webp";
+import office_2 from "../assets/office_2.jpeg";
+import office_3 from "../assets/office_3.jpeg";
 
 /* ---------------- ANIMATIONS ---------------- */
 const fadeUp = {
@@ -190,7 +190,7 @@ export default function About() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[office_1, office_2, office_3, office_4].map((img, i) => (
+            {[office_4, office_1, office_2, office_3, ].map((img, i) => (
               <motion.div
                 key={i}
                 whileHover={{ y: -12 }}

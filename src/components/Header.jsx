@@ -71,7 +71,7 @@ const Header = () => {
           <span className="text-lg sm:text-xl font-bold text-green-900 tracking-tight">
             Maa Kavita
           </span>
-          <span className="hidden lg:inline text-lg sm:text-xl font-light text-green-700">
+          <span className="lg:inline text-lg sm:text-xl font-light text-green-700">
             Laxmi Pvt. Ltd.
           </span>
         </Link>

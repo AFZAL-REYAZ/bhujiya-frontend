@@ -11,10 +11,10 @@ import { toast, Toaster } from "react-hot-toast";
 import API from "../api/axios";
 
 // Assets
-import bananaChilli from "../assets/banana/bananaChilli.jpeg";
+import bananaChilli from "../assets/banana/bananaChilli.png";
 import bananaChips from "../assets/banana/bananaChips.jpeg";
-import bananaPowder from "../assets/banana/bananaPowder.jpeg";
-import bananaSalti from "../assets/banana/bananaSalti.jpeg";
+import bananaPowder from "../assets/banana/bananaPowder.png";
+import bananaSalti from "../assets/banana/bananaSalti.png";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 
@@ -138,6 +138,7 @@ function B2BPageOld() {
             </motion.div>
           ))}
         </div>
+
 
         {/* --- PRODUCT GRID --- */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -325,7 +326,7 @@ export default function B2B() {
               Consistent quality, reliable supply, and tailor-made solutions for retailers, distributors,
               and food service businesses across India and abroad.
             </p>
-            <button
+            {/* <button
               type="button"
               onClick={() => {
                 const element = document.getElementById("wholesale-form");
@@ -336,7 +337,7 @@ export default function B2B() {
               className="inline-flex items-center justify-center rounded-full bg-amber-300 text-[#0b3b2a] text-sm font-semibold px-6 py-3 shadow-md hover:bg-amber-200 transition-colors"
             >
               Become a Wholesale Partner
-            </button>
+            </button> */}
             </div>
           </div>
         </section>
@@ -391,7 +392,65 @@ export default function B2B() {
             </div>
           </div>
         </section>
+        {/* PRICE LIST SECTION */}
+<section className="mt-16">
+  <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
+    Wholesale Price List (Jan 2026)
+  </h2>
 
+  <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
+    Latest wholesale pricing for bulk buyers.
+  </p>
+
+  <div className="mt-8 max-w-5xl mx-auto overflow-x-auto bg-white rounded-3xl border border-[#E5D7C3] shadow-sm">
+
+    <table className="w-full text-sm">
+
+      <thead className="bg-[#F7F1E6] text-[#0b3b2a]">
+        <tr>
+          <th className="p-3 text-left">Product</th>
+          <th className="p-3">Weight</th>
+          <th className="p-3">Packing</th>
+          <th className="p-3">MRP</th>
+        </tr>
+      </thead>
+
+      <tbody className="text-gray-700">
+
+        <tr className="border-t">
+          <td className="p-3">Banana Bhujia</td>
+          <td className="p-3 text-center">1kg</td>
+          <td className="p-3 text-center">12x12</td>
+          <td className="p-3 text-center">₹299</td>
+        </tr>
+
+        <tr className="border-t">
+          <td className="p-3">Banana Chilli Chips</td>
+          <td className="p-3 text-center">1kg</td>
+          <td className="p-3 text-center">12x12</td>
+          <td className="p-3 text-center">₹299</td>
+        </tr>
+
+        <tr className="border-t">
+          <td className="p-3">Banana Salt Chips</td>
+          <td className="p-3 text-center">1kg</td>
+          <td className="p-3 text-center">12x12</td>
+          <td className="p-3 text-center">₹290</td>
+        </tr>
+
+        <tr className="border-t">
+          <td className="p-3">Banana Powder</td>
+          <td className="p-3 text-center">1kg</td>
+          <td className="p-3 text-center">48 Jar</td>
+          <td className="p-3 text-center">₹550</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+</section>
         <section className="mt-16 rounded-3xl bg-[#F7F1E6] px-6 sm:px-10 py-10 border border-[#E5D7C3]">
           <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
             Volume-Based Pricing
@@ -436,6 +495,7 @@ export default function B2B() {
             Minimum Order Quantity (MOQ): 10 kg. Special rates available for export and contract orders.
           </p>
         </section>
+
 
         <section className="mt-16">
           <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">

@@ -16,18 +16,21 @@ const Footer = () => {
               love and delivered fresh to your doorstep.
             </p>
             <div className="flex gap-3">
-              <SocialIcon>
-                <FaFacebookF size={14} />
+              <SocialIcon link="https://www.facebook.com/profile.php?id=61584024615846">
+                <FaFacebookF size={24} />
               </SocialIcon>
-              <SocialIcon>
+
+              {/* <SocialIcon link="https://instagram.com/yourpage">
                 <FaInstagram size={14} />
+              </SocialIcon> */}
+
+              <SocialIcon link="https://twitter.com/yourpage">
+                <FaTwitter size={24} />
               </SocialIcon>
-              <SocialIcon>
-                <FaTwitter size={14} />
-              </SocialIcon>
-              <SocialIcon>
+
+              {/* <SocialIcon link="https://wa.me/919142514241">
                 <FaWhatsapp size={14} />
-              </SocialIcon>
+              </SocialIcon> */}
             </div>
           </div>
 
@@ -112,10 +115,12 @@ const FooterLink = ({ to, children }) => {
   );
 };
 
-const SocialIcon = ({ children }) => {
+const SocialIcon = ({ children, link }) => {
   return (
     <a
-      href="#"
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
       className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-emerald-50 hover:bg-white/10 transition-colors hover:scale-105"
     >
       {children}

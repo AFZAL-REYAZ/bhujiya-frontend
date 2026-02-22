@@ -4,10 +4,10 @@ import { ShoppingBag, Heart, Star, Plus, Minus } from "lucide-react";
 import API from "../api/axios";
 
 // Assets
-import bananaChilli from "../assets/banana/bananaChilli.jpeg";
+import bananaChilli from "../assets/banana/bananaChilli.png";
 import bananaChips from "../assets/banana/bananaChips.jpeg";
-import bananaPowder from "../assets/banana/bananaPowder.jpeg";
-import bananaSalti from "../assets/banana/bananaSalti.jpeg";
+import bananaPowder from "../assets/banana/bananaPowder.png";
+import bananaSalti from "../assets/banana/bananaSalti.png";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 
 export default function ProductDetail() {
@@ -20,10 +20,11 @@ export default function ProductDetail() {
   const products = [
     {
       id: "p1",
-      title: "Hot Chilli Banana Chips",
+      title: "Signature Banana Chips",
       subtitle: "Spicy & Crunchy",
-      price: 90,
-      mrp: 150,
+      price: 290,
+      mrp: 350,
+      quantity: "1 Kg",
       image: chilliBana,
       tag: "Best Seller",
       rating: 4.9,
@@ -36,8 +37,9 @@ export default function ProductDetail() {
       id: "p2",
       title: "Classic Golden Chips",
       subtitle: "Traditional Taste",
-      price: 90,
+      price: 81,
       mrp: 120,
+      quantity: "100 g",
       image: bananaChips,
       tag: "Traditional",
       rating: 4.8,
@@ -50,8 +52,9 @@ export default function ProductDetail() {
       id: "p3",
       title: "Pure Banana Powder",
       subtitle: "Nutrient Powerhouse",
-      price: 90,
-      mrp: 180,
+      price: 500,
+      mrp: 680,
+      quantity: "1 Kg",
       image: bananaPowder,
       tag: "Superfood",
       rating: 5.0,
@@ -64,8 +67,9 @@ export default function ProductDetail() {
       id: "p4",
       title: "Himalayan Salted Delite",
       subtitle: "Extra Crispy",
-      price: 90,
+      price: 81,
       mrp: 130,
+      quantity: "100 g",
       image: bananaSalti,
       tag: "Gourmet",
       rating: 4.7,
@@ -78,8 +82,9 @@ export default function ProductDetail() {
       id: "p5",
       title: "Peri Peri Spiced Chips",
       subtitle: "Global Fusion",
-      price: 90,
-      mrp: 160,
+      price: 81,
+      mrp: 120,
+      quantity: "100 g",
       image: bananaChilli,
       tag: "New Arrival",
       rating: 4.9,
@@ -182,13 +187,21 @@ export default function ProductDetail() {
                   {product.subtitle}
                 </p>
 
-                <div className="mt-3 flex items-center gap-2">
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <div className="mt-3 flex items-center justify-between gap-2">
                   <span className="text-sm font-semibold text-gray-900">
                     ₹{product.price}
                   </span>
                   <span className="text-xs text-gray-400 line-through">
                     ₹{product.mrp}
                   </span>
+                  </div>
+                  <div>
+                    <span className="text-sm font-semibold text-gray-900">
+                    ₹{product.quantity}
+                  </span>
+                    
+                  </div>
                 </div>
 
                 <div className="mt-1 flex items-center gap-1">
@@ -201,7 +214,7 @@ export default function ProductDetail() {
                   </span>
                 </div>
 
-                <div className="mt-4 flex items-center justify-between gap-3">
+                {/* <div className="mt-4 flex items-center justify-between gap-3">
                   <div className="flex items-center border border-gray-200 rounded-full">
                     <button
                       onClick={() =>
@@ -221,7 +234,7 @@ export default function ProductDetail() {
                       <Plus className="w-3 h-3" />
                     </button>
                   </div>
-                </div>
+                </div> */}
 
                 <button
                   onClick={() => handleAction(product, false)}
