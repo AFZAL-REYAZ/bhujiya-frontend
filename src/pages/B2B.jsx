@@ -4,7 +4,9 @@ import {
   ShoppingCart, Zap, Truck, Phone, Mail,
   CheckCircle2, Info, Package, Store,
   ArrowRight, ShieldCheck, Globe, Percent,
-  MessageCircle, ExternalLink
+  MessageCircle, ExternalLink,
+  Building2, CalendarDays, Users, CircleDollarSign, IdCard, FileText,
+  Star, ThumbsUp
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast, Toaster } from "react-hot-toast";
@@ -18,6 +20,7 @@ import bananaSalti from "../assets/banana/bananaSalti.jpeg";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 import upiqr from "../assets/banana/upi-qr.jpeg";
+import ContactForm from "../components/ContactForm";
 function B2BPageOld() {
   const navigate = useNavigate();
   const [loadingId, setLoadingId] = useState(null);
@@ -32,36 +35,36 @@ function B2BPageOld() {
     { id: "b7", title: "Banana Salti Chips", price: 400, retail: 430, minQty: 10, desc: "Ultra-thin crisps seasoned with Himalayan pink salt.", image: bananaSalti, category: "chips" },
   ];
 
-  const handleBulkAction = async (product, quantity, redirectToCart = false) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      toast.error("Wholesale access requires an account.");
-      navigate("/auth");
-      return;
-    }
+  // const handleBulkAction = async (product, quantity, redirectToCart = false) => {
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     toast.error("Wholesale access requires an account.");
+  //     navigate("/auth");
+  //     return;
+  //   }
 
-    setLoadingId(product.id);
-    try {
-      await API.post("/cart/add", {
-        productId: product.id,
-        name: product.title,
-        price: product.price,
-        image: product.image,
-        quantity: quantity,
-        isBulk: true
-      }, { headers: { Authorization: `Bearer ${token}` } });
+  //   setLoadingId(product.id);
+  //   try {
+  //     await API.post("/cart/add", {
+  //       productId: product.id,
+  //       name: product.title,
+  //       price: product.price,
+  //       image: product.image,
+  //       quantity: quantity,
+  //       isBulk: true
+  //     }, { headers: { Authorization: `Bearer ${token}` } });
 
-      if (redirectToCart) navigate('/cart');
-      else toast.success(`Added ${quantity} units to your wholesale cart!`);
-    } catch (err) {
-      toast.error("Connection error. Please try again.");
-    } finally {
-      setLoadingId(null);
-    }
-  };
+  //     if (redirectToCart) navigate('/cart');
+  //     else toast.success(`Added ${quantity} units to your wholesale cart!`);
+  //   } catch (err) {
+  //     toast.error("Connection error. Please try again.");
+  //   } finally {
+  //     setLoadingId(null);
+  //   }
+  // };
 
   return (
-    <div className="min-h-screen bg-[#FBFBFD] pt-24 pb-20 selection:bg-green-100 overflow-x-hidden">
+    <div className="min-h-screen bg-[#FBFBFD] pt-84 pb-20 selection:bg-green-100 overflow-x-hidden">
       <Toaster position="bottom-right" />
 
       {/* --- FLOATING WHATSAPP WIDGET --- */}
@@ -80,7 +83,7 @@ function B2BPageOld() {
       <div className="max-w-7xl mx-auto px-6">
 
         {/* --- HERO SECTION --- */}
-        <section className="relative mb-24 mt-12">
+        {/* <section className="relative mb-24 mt-12">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -111,174 +114,112 @@ function B2BPageOld() {
               </div>
             </div>
           </motion.div>
-
-          {/* Abstract Background Element */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-green-200/30 rounded-full blur-[120px] -z-0 translate-x-1/2 -translate-y-1/2" />
-        </section>
-
-        {/* --- STAT TICKER --- */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
-          {[
-            { label: "Daily Output", value: "25 Tons", icon: <Package size={16} /> },
-            { label: "Wholesale Disc.", value: "Up to 30%", icon: <Percent size={16} /> },
-            { label: "QC Verified", value: "Level 4", icon: <ShieldCheck size={16} /> },
-            { label: "Fast Logistics", value: "48H Dispatch", icon: <Truck size={16} /> },
-          ].map((stat, i) => (
-            <motion.div
-              whileHover={{ y: -5 }}
-              key={i} className="bg-white/60 backdrop-blur-md border border-white p-6 rounded-[2rem] shadow-sm flex items-center gap-4"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-green-600">
-                {stat.icon}
-              </div>
-              <div>
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{stat.label}</p>
-                <p className="text-lg font-black text-gray-900">{stat.value}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-
-        {/* --- PRODUCT GRID --- */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence>
-            {bulkProducts.map((product) => (
-              <BulkProductCard
-                key={product.id}
-                product={product}
-                onAction={handleBulkAction}
-                isLoading={loadingId === product.id}
+          </section> */}
+        {/* <section className="mt-4">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+            <CategoryThumbs />
+            <div className="mt-6 grid lg:grid-cols-2 gap-6">
+              <WideQuoteCard
+                product={{ id:"w1", title:"Dabeli Sing Namkeen", price:230, image:bananaChilli }}
+                details={{ flavour:"Namkeen", packaging:"Packet", shelfLife:"4 months" }}
               />
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {/* --- CONTACT & SUPPORT --- */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-40 bg-gray-900 rounded-[4rem] p-12 md:p-20 relative overflow-hidden text-center md:text-left"
-        >
-          <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl md:text-6xl font-black text-white leading-none mb-6">NEED A CUSTOM <br /> <span className="text-green-400">QUOTATION?</span></h2>
-              <p className="text-gray-400 font-medium text-lg mb-8 max-w-md">For containers or customized white-labeling, our specialized account managers are ready to assist.</p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a href="mailto:maakavitalaxmi@gmail.com" className="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase text-xs flex items-center justify-center gap-2 hover:scale-105 transition-transform">
-                  <Mail size={16} /> Email Sales
-                </a>
-                <a href="tel:+9182527539850" className="bg-white/10 text-white border border-white/20 px-8 py-4 rounded-2xl font-black uppercase text-xs flex items-center justify-center gap-2 hover:bg-white/20 transition-all">
-                  <Phone size={16} /> Call Hotline
-                </a>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <div className="bg-gradient-to-br from-green-500 to-emerald-700 p-12 rounded-[3rem] shadow-2xl rotate-3">
-                <Store size={60} className="text-white mb-6" />
-                <p className="text-white text-2xl font-black mb-2">Retail Partner Program</p>
-                <p className="text-green-100 opacity-80 text-sm">Join our network of 5,000+ vendors across Asia and the Middle East.</p>
-                <div className="mt-8 pt-8 border-t border-white/20 flex justify-between items-center text-white">
-                  <span className="font-bold uppercase text-xs tracking-widest">Apply Now</span>
-                  <ArrowRight />
-                </div>
-              </div>
+              <WideQuoteCard
+                product={{ id:"w2", title:"SP. Marvadi Sev Namkeen", price:230, image:bananach5 }}
+                details={{ brand:"Sonal Foods", ingredient:"Besan", packagingSize:"1 kg" }}
+              />
             </div>
           </div>
-          {/* Decorative Circles */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-[100px] translate-x-1/2 -translate-y-1/2" />
-        </motion.div>
+        </section> */}
       </div>
     </div>
   );
 }
 
 /* ================= COMPONENT: BULK PRODUCT CARD ================= */
-function BulkProductCard({ product, onAction, isLoading }) {
-  const [qty, setQty] = useState(product.minQty);
+// function BulkProductCard({ product, onAction, isLoading }) {
+//   const [qty, setQty] = useState(product.minQty);
 
-  const totalPrice = product.price * qty;
+//   const totalPrice = product.price * qty;
 
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      whileHover={{ y: -12 }}
-      className="bg-white rounded-[3.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col group"
-    >
-      {/* Image Header */}
-      <div className="h-72 bg-[#F8F8F8] relative overflow-hidden flex items-center justify-center p-12">
-        <div className="absolute top-6 right-6 z-10 bg-black text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
-          Min: {product.minQty}u
-        </div>
-        <motion.img
-          whileHover={{ scale: 1.15, rotate: -5 }}
-          transition={{ type: "spring", stiffness: 300 }}
-          src={product.image}
-          className="h-full object-contain drop-shadow-[0_25px_25px_rgba(0,0,0,0.15)]"
-        />
-        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white/80 to-transparent pointer-events-none" />
-      </div>
+//   return (
+//     <motion.div
+//       layout
+//       initial={{ opacity: 0, scale: 0.9 }}
+//       animate={{ opacity: 1, scale: 1 }}
+//       whileHover={{ y: -12 }}
+//       className="bg-white rounded-[3.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 flex flex-col group"
+//     >
+//       {/* Image Header */}
+//       <div className="h-72 bg-[#F8F8F8] relative overflow-hidden flex items-center justify-center p-12">
+//         <div className="absolute top-6 right-6 z-10 bg-black text-white px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
+//           Min: {product.minQty}u
+//         </div>
+//         <motion.img
+//           whileHover={{ scale: 1.15, rotate: -5 }}
+//           transition={{ type: "spring", stiffness: 300 }}
+//           src={product.image}
+//           className="h-full object-contain drop-shadow-[0_25px_25px_rgba(0,0,0,0.15)]"
+//         />
+//         <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white/80 to-transparent pointer-events-none" />
+//       </div>
 
-      <div className="p-10">
-        <div className="mb-6">
-          <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tighter leading-none mb-2">{product.title}</h3>
-          <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">{product.desc}</p>
-        </div>
+//       <div className="p-10">
+//         <div className="mb-6">
+//           <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tighter leading-none mb-2">{product.title}</h3>
+//           <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">{product.desc}</p>
+//         </div>
 
-        {/* Dynamic Calculation Area */}
-        <div className="bg-gray-50 rounded-[2.5rem] p-6 mb-8 border border-gray-100">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <p className="text-[10px] font-black text-green-600 uppercase mb-1">Price Per kg</p>
-              <div className="flex items-center gap-2">
-                <span className="text-3xl font-black text-gray-900">₹{product.price}</span>
-                <span className="text-xs text-gray-300 font-bold line-through">₹{product.retail}</span>
-              </div>
-            </div>
+//         {/* Dynamic Calculation Area */}
+//         <div className="bg-gray-50 rounded-[2.5rem] p-6 mb-8 border border-gray-100">
+//           <div className="flex justify-between items-center mb-6">
+//             <div>
+//               <p className="text-[10px] font-black text-green-600 uppercase mb-1">Price Per kg</p>
+//               <div className="flex items-center gap-2">
+//                 <span className="text-3xl font-black text-gray-900">₹{product.price}</span>
+//                 <span className="text-xs text-gray-300 font-bold line-through">₹{product.retail}</span>
+//               </div>
+//             </div>
 
-            <div className="flex items-center bg-white rounded-2xl p-1 shadow-sm border border-gray-100">
-              <button onClick={() => setQty(Math.max(product.minQty, qty - 10))} className="w-10 h-10 flex items-center justify-center font-black hover:bg-gray-100 rounded-xl transition-all">-</button>
-              <span className="w-12 text-center font-black text-sm">{qty}</span>
-              <button onClick={() => setQty(qty + 10)} className="w-10 h-10 flex items-center justify-center font-black hover:bg-gray-100 rounded-xl transition-all">+</button>
-            </div>
-          </div>
+//             <div className="flex items-center bg-white rounded-2xl p-1 shadow-sm border border-gray-100">
+//               <button onClick={() => setQty(Math.max(product.minQty, qty - 10))} className="w-10 h-10 flex items-center justify-center font-black hover:bg-gray-100 rounded-xl transition-all">-</button>
+//               <span className="w-12 text-center font-black text-sm">{qty}</span>
+//               <button onClick={() => setQty(qty + 10)} className="w-10 h-10 flex items-center justify-center font-black hover:bg-gray-100 rounded-xl transition-all">+</button>
+//             </div>
+//           </div>
 
-          <div className="pt-4 border-t border-dashed border-gray-200 flex justify-between items-center">
-            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Subtotal</span>
-            <span className="text-xl font-black text-gray-900">₹{totalPrice.toLocaleString()}</span>
-          </div>
-        </div>
+//           <div className="pt-4 border-t border-dashed border-gray-200 flex justify-between items-center">
+//             <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Subtotal</span>
+//             <span className="text-xl font-black text-gray-900">₹{totalPrice.toLocaleString()}</span>
+//           </div>
+//         </div>
 
-        {/* Buttons */}
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            disabled={isLoading}
-            onClick={() => onAction(product, qty, false)}
-            className="bg-white border-2 border-gray-900 text-gray-900 py-4 rounded-2xl font-black uppercase text-[10px] flex items-center justify-center gap-2 hover:bg-gray-900 hover:text-white transition-all disabled:opacity-50"
-          >
-            {isLoading ? "..." : <ShoppingCart size={16} />} Cart
-          </button>
+//         {/* Buttons */}
+//         <div className="grid grid-cols-2 gap-3">
+//           <button
+//             disabled={isLoading}
+//             onClick={() => onAction(product, qty, false)}
+//             className="bg-white border-2 border-gray-900 text-gray-900 py-4 rounded-2xl font-black uppercase text-[10px] flex items-center justify-center gap-2 hover:bg-gray-900 hover:text-white transition-all disabled:opacity-50"
+//           >
+//             {isLoading ? "..." : <ShoppingCart size={16} />} Cart
+//           </button>
 
-          <button
-            disabled={isLoading}
-            onClick={() => onAction(product, qty, true)}
-            className="bg-green-600 text-white py-4 rounded-2xl font-black uppercase text-[10px] flex items-center justify-center gap-2 hover:bg-black transition-all shadow-xl shadow-green-100 disabled:opacity-50"
-          >
-            <Zap size={16} fill="currentColor" /> Buy Now
-          </button>
-        </div>
+//           <button
+//             disabled={isLoading}
+//             onClick={() => onAction(product, qty, true)}
+//             className="bg-green-600 text-white py-4 rounded-2xl font-black uppercase text-[10px] flex items-center justify-center gap-2 hover:bg-black transition-all shadow-xl shadow-green-100 disabled:opacity-50"
+//           >
+//             <Zap size={16} fill="currentColor" /> Buy Now
+//           </button>
+//         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-2">
-          <Info size={12} className="text-gray-300" />
-          <p className="text-[9px] font-bold text-gray-300 uppercase tracking-tighter">Bulk discounts automatically applied at checkout</p>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+//         <div className="mt-6 flex items-center justify-center gap-2">
+//           <Info size={12} className="text-gray-300" />
+//           <p className="text-[9px] font-bold text-gray-300 uppercase tracking-tighter">Bulk discounts automatically applied at checkout</p>
+//         </div>
+//       </div>
+//     </motion.div>
+//   );
+// }
 
 const initialFormState = {
   companyName: "",
@@ -289,6 +230,222 @@ const initialFormState = {
   quantity: "",
   message: "",
 };
+
+function QuoteProductCard({ product, details }) {
+  const navigate = useNavigate();
+  const requestQuote = () => {
+    const subject = encodeURIComponent(`Quote Request: ${product.title}`);
+    const body = encodeURIComponent(`Product: ${product.title}\nPreferred quantity: ${product.minQty} kg+\nPlease share best wholesale pricing and dispatch timeline.`);
+    window.location.href = `mailto:maakavitalaxmi@gmail.com?subject=${subject}&body=${body}`;
+  };
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="p-4">
+        <div
+          className="h-40 bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden cursor-pointer"
+          onClick={() => navigate(`/product/${product.id}`)}
+        >
+          <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
+        </div>
+        <h3
+          className="mt-4 text-base font-bold text-gray-900 cursor-pointer"
+          onClick={() => navigate(`/product/${product.id}`)}
+        >
+          {product.title}
+        </h3>
+        <p className="text-sm font-semibold text-gray-800 mt-1">₹ {product.price}/kg</p>
+        {details ? (
+          <div className="mt-2 text-xs text-gray-600 space-y-1">
+            {details.flavour && <p>Flavour: {details.flavour}</p>}
+            {details.packagingType && <p>Packaging Type: {details.packagingType}</p>}
+            {details.packagingSize && <p>Packaging Size: {details.packagingSize}</p>}
+            {details.shelfLife && <p>Shelf Life: {details.shelfLife}</p>}
+            {details.brand && <p>Brand: {details.brand}</p>}
+            {details.productType && <p>Product Type: {details.productType}</p>}
+            {details.ingredients && <p>Ingredients: {details.ingredients}</p>}
+          </div>
+        ) : (
+          <div className="mt-2 text-xs text-gray-600 space-y-1">
+            <p>Flavour: Premium</p>
+            <p>Packaging Size: 200 gm</p>
+            <p>Shelf Life: 6 Months</p>
+          </div>
+        )}
+        <button
+          onClick={requestQuote}
+          className="mt-4 w-full rounded-xl bg-[#0b3b2a] text-white text-sm font-bold py-2 hover:opacity-90 transition"
+        >
+          Get Quote
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function PromoRangeCard() {
+  return (
+    <div className="relative bg-[#0b3b2a] rounded-2xl overflow-hidden">
+      <img
+        src={bananaChips}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover opacity-30"
+      />
+      <div className="relative p-6 h-full flex flex-col justify-end">
+        <p className="text-white text-lg font-bold">
+          View Complete <br /> Range Of Products
+        </p>
+        <button className="mt-4 inline-flex items-center justify-center rounded-xl bg-white text-[#0b3b2a] text-sm font-bold px-4 py-2">
+          Explore
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function CategoryThumbs() {
+  const cats = [
+    { title:"Spicy Banana Chips", image:bananaChilli },
+    { title:"Banana Length Pepper", image:bananach5 },
+    { title:"Classic Banana Chips", image:bananaChips },
+    { title:"Banana Powder", image:bananaPowder },
+    { title:"Banana Salti Chips", image:bananaSalti },
+    
+  ];
+  return (
+    <div className="flex flex-wrap justify-between gap-6">
+      {cats.map((c, i) => (
+        <div key={i} className="text-center">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-50 overflow-hidden shadow-md border border-emerald-100 mx-auto">
+            <img src={c.image} alt={c.title} className="w-full h-full object-cover" />
+          </div>
+          <p className="mt-2 text-xs font-semibold text-gray-700">{c.title}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function WideQuoteCard({ product, details }) {
+  const requestQuote = () => {
+    const subject = encodeURIComponent(`Quote Request: ${product.title}`);
+    const body = encodeURIComponent(`Product: ${product.title}\nPlease share wholesale pricing, packaging, and dispatch timeline.`);
+    window.location.href = `mailto:maakavitalaxmi@gmail.com?subject=${subject}&body=${body}`;
+  };
+  return (
+    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="grid md:grid-cols-2 gap-6 p-6">
+        <div className="bg-gray-50 rounded-xl flex items-center justify-center p-6">
+          <img src={product.image} alt={product.title} className="w-full h-48 object-contain" />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold text-gray-900">{product.title}</h3>
+          <p className="mt-1 text-green-700 font-bold">₹ {product.price}<span className="text-xs text-gray-500">/Kg</span></p>
+          <div className="mt-3 text-sm text-gray-700 space-y-1">
+            {details.flavour && <p>Flavour: {details.flavour}</p>}
+            {details.packaging && <p>Packaging Type: {details.packaging}</p>}
+            {details.shelfLife && <p>Shelf Life: {details.shelfLife}</p>}
+            {details.brand && <p>Brand: {details.brand}</p>}
+            {details.ingredient && <p>Ingredient: {details.ingredient}</p>}
+            {details.packagingSize && <p>Packaging Size: {details.packagingSize}</p>}
+          </div>
+          <button
+            onClick={requestQuote}
+            className="mt-4 inline-flex items-center justify-center rounded-xl bg-[#0b3b2a] text-white text-sm font-bold px-5 py-2"
+          >
+            Get Quote
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ReviewsSection() {
+  const rating = 4.5;
+  const distribution = [
+    { stars: 5, percent: 70 },
+    { stars: 4, percent: 20 },
+    { stars: 3, percent: 6 },
+    { stars: 2, percent: 3 },
+    { stars: 1, percent: 1 },
+  ];
+  const gauges = [
+    { label: "Response", value: 92 },
+    { label: "Quality", value: 95 },
+    { label: "Delivery", value: 90 },
+  ];
+  const reviews = [
+    { name: "Ravi Kumar", location: "Mumbai", text: "Authentic taste and fast dispatch. Great wholesale partner.", score: 5 },
+    { name: "Anita Sharma", location: "Delhi", text: "Packaging and consistency are reliable. Customers love it.", score: 5 },
+    { name: "Faiz Ahmed", location: "Kochi", text: "Freshness and crispiness are top-notch. Recommended.", score: 4 },
+  ];
+  return (
+    <section className="mt-12">
+      <div className="bg-white rounded-3xl border border-gray-100 p-8 shadow-sm">
+        <div className="grid md:grid-cols-3 gap-8 items-start">
+          <div>
+            <div className="flex items-center gap-2">
+              <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+              <p className="text-2xl font-black text-gray-900">{rating}/5</p>
+            </div>
+            <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Average Rating</p>
+            <div className="mt-4 space-y-2">
+              {distribution.map(d => (
+                <div key={d.stars} className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 w-16">
+                    {Array.from({ length: d.stars }).map((_, i) => (
+                      <Star key={i} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                    ))}
+                  </div>
+                  <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="h-full bg-emerald-600" style={{ width: `${d.percent}%` }} />
+                  </div>
+                  <span className="w-12 text-right text-xs text-gray-500">{d.percent}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            {gauges.map(g => (
+              <div key={g.label} className="flex flex-col items-center gap-2">
+                <div
+                  className="w-20 h-20 rounded-full grid place-items-center"
+                  style={{
+                    background: `conic-gradient(#059669 ${g.value * 3.6}deg, #e5e7eb 0deg)`,
+                  }}
+                >
+                  <div className="w-14 h-14 rounded-full bg-white grid place-items-center text-sm font-bold text-gray-900">
+                    {g.value}%
+                  </div>
+                </div>
+                <p className="text-xs font-black text-gray-500 uppercase tracking-widest">{g.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-3">
+            {reviews.map((r, idx) => (
+              <div key={idx} className="border border-gray-100 rounded-2xl p-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-bold text-gray-900">{r.name}</p>
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: r.score }).map((_, i) => (
+                      <Star key={i} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                    ))}
+                  </div>
+                </div>
+                <p className="text-xs text-gray-500">{r.location}</p>
+                <p className="mt-2 text-sm text-gray-700">{r.text}</p>
+              </div>
+            ))}
+            <button className="w-full inline-flex items-center justify-center rounded-xl bg-[#0b3b2a] text-white text-xs font-black px-4 py-2">
+              <ThumbsUp className="w-4 h-4 mr-2" /> See More Reviews
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function B2B() {
   const [form, setForm] = useState(initialFormState);
@@ -308,193 +465,101 @@ export default function B2B() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F4F0E6] pt-24 pb-20">
+    <div className="min-h-screen bg-[#F4F0E6] pt-34">
       <Toaster position="top-right" />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6">
-        <section className="w-screen bg-[#0b3b2a] text-white py-14 sm:py-16 mx-[calc(50%-50vw)]">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="max-w-2xl mx-auto text-center">
-              <p className="text-xs font-semibold tracking-[0.25em] uppercase text-emerald-100 mb-3">
-                Wholesale &amp; B2B Partnership
-              </p>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold leading-tight mb-3">
-                Partner with us for bulk orders and grow your business with premium
-                quality traditional snacks.
-              </h1>
-              <p className="text-sm sm:text-base text-emerald-100/90 max-w-xl mx-auto mb-6">
-                Consistent quality, reliable supply, and tailor-made solutions for retailers, distributors,
-                and food service businesses across India and abroad.
-              </p>
-              {/* <button
-              type="button"
-              onClick={() => {
-                const element = document.getElementById("wholesale-form");
-                if (element) {
-                  element.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-              }}
-              className="inline-flex items-center justify-center rounded-full bg-amber-300 text-[#0b3b2a] text-sm font-semibold px-6 py-3 shadow-md hover:bg-amber-200 transition-colors"
-            >
-              Become a Wholesale Partner
-            </button> */}
+      <main className=" mx-auto px-4 sm:px-6 pb-4">
+        <section className="mt-4">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+            <CategoryThumbs />
+            <div className="mt-6 grid lg:grid-cols-2 gap-6">
+              <WideQuoteCard
+                product={{ id:"w1", title:"Spicy Banana Chips", price:400, image:bananaChilli }}
+                details={{ brand:"Maa Kavita Laxmi", flavour:"Namkeen", packaging:"Packet", shelfLife:"4 months" }}
+              />
+              <WideQuoteCard
+                product={{ id:"w2", title:"Banana Length Pepper", price:400, image:bananach5 }}
+                details={{ brand:"Maa Kavita Laxmi", ingredient:"Besan", packagingSize:"1 kg",shelfLife:"4 months" }}
+              />
             </div>
           </div>
         </section>
 
-        <section className="mt-16">
-          <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
-            Why Partner With Us
-          </h2>
-          <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
-            Benefits of choosing Maa Kavita Lakxmi as your wholesale partner.
-          </p>
-
-          <div className="mt-10 grid gap-8 md:grid-cols-4">
-            <div className="flex flex-col items-center text-center bg-white rounded-2xl px-6 py-8 shadow-sm">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 mb-4">
-                <Package size={22} />
+        <section className="mt-12 grid md:grid-cols-2 gap-8">
+          <div className="bg-white rounded-3xl border border-gray-100 p-8 shadow-sm">
+            <p className="text-xs font-black text-gray-500 uppercase tracking-widest">Welcome to</p>
+            <h3 className="mt-1 text-2xl font-black text-gray-900">Maa Kavita Laxmi Pvt. Ltd.</h3>
+            <p className="mt-3 text-sm text-gray-600">
+              We are a leading manufacturer, exporter and supplier of a wide range of
+              farsan and namkeens. Our offered readymade snacks have gained high
+              appreciation for their longer shelf life, freshness and exceptional taste.
+            </p>
+            <p className="mt-2 text-xs font-bold text-gray-500">Read More...</p>
+            <p className="mt-4 text-xs font-black text-gray-600 uppercase tracking-widest">
+              Get in touch with us for best deals
+            </p>
+            <button className="mt-4 inline-flex items-center justify-center rounded-xl bg-[#0b3b2a] text-white text-sm font-bold px-6 py-3">
+              Contact Us
+            </button>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {[
+              { icon: <Building2 className="w-5 h-5"/>, label: "Nature of Business", value: "Trader • Wholesaler/Distributor" },
+              { icon: <Users className="w-5 h-5"/>, label: "Total Number of Employees", value: "11 to 25 People" },
+              { icon: <CalendarDays className="w-5 h-5"/>, label: "GST Registration Date", value: "01-07-2017" },
+              { icon: <FileText className="w-5 h-5"/>, label: "Legal Status of Firm", value: "Proprietorship" },
+              { icon: <CircleDollarSign className="w-5 h-5"/>, label: "Annual Turnover", value: "5 – 25 Cr" },
+              { icon: <Truck className="w-5 h-5"/>, label: "Import Export Code", value: "ABPYBZ867R" },
+              { icon: <IdCard className="w-5 h-5"/>, label: "GST No.", value: "27ABPYBZ867R1Z2" },
+              { icon: <ShieldCheck className="w-5 h-5"/>, label: "Trustseal Verified", value: "Verified" },
+            ].map((item, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-gray-100 p-4 flex items-start gap-3 shadow-sm">
+                <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                  {item.icon}
+                </div>
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">{item.label}</p>
+                  <p className="text-sm font-bold text-gray-900">{item.value}</p>
+                </div>
               </div>
-              <h3 className="text-sm font-semibold text-[#0b3b2a] mb-2">Bulk Supply</h3>
-              <p className="text-xs text-gray-600">
-                Large-scale production capacity to fulfill small and high-volume wholesale orders.
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center text-center bg-white rounded-2xl px-6 py-8 shadow-sm">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 mb-4">
-                <CheckCircle2 size={22} />
-              </div>
-              <h3 className="text-sm font-semibold text-[#0b3b2a] mb-2">Custom Packaging</h3>
-              <p className="text-xs text-gray-600">
-                Flexible packaging sizes and private labelling options tailored to your brand.
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center text-center bg-white rounded-2xl px-6 py-8 shadow-sm">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 mb-4">
-                <ShieldCheck size={22} />
-              </div>
-              <h3 className="text-sm font-semibold text-[#0b3b2a] mb-2">Dedicated Support</h3>
-              <p className="text-xs text-gray-600">
-                A dedicated account manager to assist with pricing, dispatch and documentation.
-              </p>
-            </div>
-
-            <div className="flex flex-col items-center text-center bg-white rounded-2xl px-6 py-8 shadow-sm">
-              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 mb-4">
-                <Truck size={22} />
-              </div>
-              <h3 className="text-sm font-semibold text-[#0b3b2a] mb-2">Flexible Delivery</h3>
-              <p className="text-xs text-gray-600">
-                Strong logistics network for timely delivery to your location across regions.
-              </p>
-            </div>
+            ))}
           </div>
         </section>
+
+        <section className="mt-12">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-900">Our Products</h3>
+            <button className="text-xs font-black text-gray-500 uppercase tracking-widest hover:text-gray-900">View All categories</button>
+          </div>
+          <h4 className="text-sm font-bold text-gray-900 mb-4">Spicy Namkeen</h4>
+          <div className="grid md:grid-cols-4 gap-6">
+            {[
+              { id:"c1", title:"Classic Banana Chips", price:220, image:bananaChips, minQty:10, details:{ productType:"100% Vegetarian", brand:"Sonal Foods", shelfLife:"4 months" } },
+              { id:"c2", title:"Banana Powder", price:220, image:bananaPowder, minQty:10, details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
+              { id:"c3", title:"Banana Length Pepper", price:220, image:bananach5, minQty:10, details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
+              { id:"c4", title:"Banana Salti Chips", price:230, image:bananaSalti, minQty:10, details:{ ingredients:"Chana", flavour:"Masala Salted", shelfLife:"4 months" } },
+            ].map(p => <QuoteProductCard key={p.id} product={p} details={p.details} />)}
+          </div>
+          <div className="mt-10 flex items-center justify-between mb-4">
+            <h4 className="text-sm font-bold text-gray-900">Halka Fulka Snacks</h4>
+            <button className="text-xs font-black text-gray-500 uppercase tracking-widest hover:text-gray-900">View All</button>
+          </div>
+          <div className="grid md:grid-cols-4 gap-6">
+            {[
+              { id:"h1", title:"Banana Salti Chips", price:180, image:bananaSalti, minQty:10, details:{ flavour:"Masala Salted",  brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
+              { id:"h2", title:"Spicy Banana Chips", price:100, image:bananaChilli, minQty:10, details:{ packagingType:"Packet", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
+              { id:"h3", title:"Classic Banana Chips", price:200, image:bananaChips, minQty:10, details:{ flavour:"Tomato",  brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
+              { id:"h4", title:"Banana Length Pepper", price:230, image:bananach5, minQty:10, details:{ flavour:"Magic Masala", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
+            ].map(p => <QuoteProductCard key={p.id} product={p} details={p.details} />)}
+          </div>
+        </section>
+
+        <ReviewsSection />
+
+        
         {/* PRICE LIST SECTION */}
-        <section className="mt-16">
-          <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
-            Wholesale Price List (Jan 2026)
-          </h2>
-
-          <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
-            Latest wholesale pricing for bulk buyers.
-          </p>
-
-          <div className="mt-8 max-w-5xl mx-auto overflow-x-auto bg-white rounded-3xl border border-[#E5D7C3] shadow-sm">
-
-            <table className="w-full text-sm">
-
-              <thead className="bg-[#F7F1E6] text-[#0b3b2a]">
-                <tr>
-                  <th className="p-3 text-left">Product</th>
-                  <th className="p-3">Weight</th>
-                  <th className="p-3">Packing</th>
-                  <th className="p-3">MRP</th>
-                </tr>
-              </thead>
-
-              <tbody className="text-gray-700">
-
-                <tr className="border-t">
-                  <td className="p-3">Banana Bhujia</td>
-                  <td className="p-3 text-center">1kg</td>
-                  <td className="p-3 text-center">12x12</td>
-                  <td className="p-3 text-center">₹299</td>
-                </tr>
-
-                <tr className="border-t">
-                  <td className="p-3">Banana Chilli Chips</td>
-                  <td className="p-3 text-center">1kg</td>
-                  <td className="p-3 text-center">12x12</td>
-                  <td className="p-3 text-center">₹299</td>
-                </tr>
-
-                <tr className="border-t">
-                  <td className="p-3">Banana Salt Chips</td>
-                  <td className="p-3 text-center">1kg</td>
-                  <td className="p-3 text-center">12x12</td>
-                  <td className="p-3 text-center">₹290</td>
-                </tr>
-
-                <tr className="border-t">
-                  <td className="p-3">Banana Powder</td>
-                  <td className="p-3 text-center">1kg</td>
-                  <td className="p-3 text-center">48 Jar</td>
-                  <td className="p-3 text-center">₹550</td>
-                </tr>
-
-              </tbody>
-
-            </table>
-
-          </div>
-        </section>
-        <section className="mt-16 rounded-3xl bg-[#F7F1E6] px-6 sm:px-10 py-10 border border-[#E5D7C3]">
-          <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a] text-center">
-            Volume-Based Pricing
-          </h2>
-          <p className="mt-2 text-sm text-gray-600 text-center max-w-2xl mx-auto">
-            Competitive pricing tiers for different wholesale needs.
-          </p>
-
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            <div className="bg-white rounded-2xl border border-[#E5D7C3] px-6 py-7 text-center shadow-sm">
-              <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#0b3b2a]">
-                10% OFF
-              </p>
-              <p className="mt-2 text-lg font-semibold text-[#0b3b2a]">10–50 kg</p>
-              <p className="mt-2 text-xs text-gray-600">
-                Perfect for retail shops and boutique stores starting with trial orders.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl border-[1.5px] border-[#D8C7AE] px-6 py-7 text-center shadow-sm">
-              <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#0b3b2a]">
-                15% OFF
-              </p>
-              <p className="mt-2 text-lg font-semibold text-[#0b3b2a]">50–100 kg</p>
-              <p className="mt-2 text-xs text-gray-600">
-                Ideal for supermarkets, distributors and multi-outlet partners.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl border border-[#E5D7C3] px-6 py-7 text-center shadow-sm">
-              <p className="text-xs font-semibold tracking-[0.2em] uppercase text-[#0b3b2a]">
-                20% OFF
-              </p>
-              <p className="mt-2 text-lg font-semibold text-[#0b3b2a]">200+ kg</p>
-              <p className="mt-2 text-xs text-gray-600">
-                Best suited for large distributors, exporters and institutional buyers.
-              </p>
-            </div>
-          </div>
-
-          <p className="mt-6 text-xs text-gray-600 text-center">
-            Minimum Order Quantity (MOQ): 10 kg. Special rates available for export and contract orders.
-          </p>
-        </section>
+        
+        
 
 
         <section className="mt-16">
@@ -527,7 +592,7 @@ export default function B2B() {
 
         <section
           id="wholesale-form"
-          className="mt-16 grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-start"
+          className="hidden"
         >
           <div className="bg-white rounded-3xl px-6 sm:px-8 py-8 shadow-sm border border-[#E5D7C3]">
             <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a]">
@@ -723,6 +788,7 @@ export default function B2B() {
           </div>
         </section>
       </main>
+        <ContactForm/>
     </div>
   );
 }

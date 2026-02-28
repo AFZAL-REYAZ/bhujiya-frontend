@@ -34,8 +34,9 @@ import crousel3 from "../assets/carousel/crousel3.jpeg";
 import crousel4 from "../assets/carousel/crousel4.jpeg";
 import crousel5 from "../assets/carousel/crousel5.jpeg";
 import crousel6 from "../assets/carousel/crousel6.jpeg";
+import ContactForm from "../components/ContactForm";
 /* ================= PRODUCT CARD ================= */
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onOpen }) => {
   const navigate = useNavigate();
   const [isAdding, setIsAdding] = useState(false);
 
@@ -71,7 +72,10 @@ const ProductCard = ({ product }) => {
       whileHover={{ y: -6 }}
       className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden flex flex-col"
     >
-      <div className="h-72 bg-gray-50 flex items-center justify-center overflow-hidden">
+      <div
+        className="h-72 bg-gray-50 flex items-center justify-center overflow-hidden cursor-pointer"
+        onClick={() => onOpen && onOpen(product)}
+      >
         <img
           src={product.image}
           alt={product.title}
@@ -80,7 +84,10 @@ const ProductCard = ({ product }) => {
       </div>
 
       <div className="p-5 flex flex-col gap-3 flex-1">
-        <h3 className="text-base font-semibold text-gray-900 leading-snug line-clamp-2">
+        <h3
+          className="text-base font-semibold text-gray-900 leading-snug line-clamp-2 cursor-pointer"
+          onClick={() => onOpen && onOpen(product)}
+        >
           {product.title}
         </h3>
 
@@ -101,7 +108,7 @@ const ProductCard = ({ product }) => {
           ) : (
             <>
               <ShoppingCart className="w-4 h-4 mr-2" />
-              Add to Cart
+              Get Quate
             </>
           )}
         </button>
@@ -113,96 +120,96 @@ const ProductCard = ({ product }) => {
 /* ================= NEW SECTIONS ================= */
 
 /* 1. LIMITED TIME OFFER SECTION */
-const LimitedTimeOffer = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 4,
-    minutes: 30,
-    seconds: 0,
-  });
+// const LimitedTimeOffer = () => {
+//   const [timeLeft, setTimeLeft] = useState({
+//     hours: 4,
+//     minutes: 30,
+//     seconds: 0,
+//   });
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        const { hours, minutes, seconds } = prev;
-        if (seconds > 0) return { ...prev, seconds: seconds - 1 };
-        if (minutes > 0) return { hours, minutes: minutes - 1, seconds: 59 };
-        if (hours > 0) return { hours: hours - 1, minutes: 59, seconds: 59 };
-        return prev;
-      });
-    }, 1000);
+//   useEffect(() => {
+//     const timer = setInterval(() => {
+//       setTimeLeft(prev => {
+//         const { hours, minutes, seconds } = prev;
+//         if (seconds > 0) return { ...prev, seconds: seconds - 1 };
+//         if (minutes > 0) return { hours, minutes: minutes - 1, seconds: 59 };
+//         if (hours > 0) return { hours: hours - 1, minutes: 59, seconds: 59 };
+//         return prev;
+//       });
+//     }, 1000);
 
-    return () => clearInterval(timer);
-  }, []);
+//     return () => clearInterval(timer);
+//   }, []);
 
-  return (
-    <section className="py-20 bg-gradient-to-r from-orange-50 to-amber-50 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-orange-300 rounded-full -translate-x-32 -translate-y-32"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-300 rounded-full translate-x-48 translate-y-48"></div>
-      </div>
+//   return (
+//     <section className="py-20 bg-gradient-to-r from-orange-50 to-amber-50 relative overflow-hidden">
+//       {/* Background Pattern */}
+//       <div className="absolute inset-0 opacity-10">
+//         <div className="absolute top-0 left-0 w-64 h-64 bg-orange-300 rounded-full -translate-x-32 -translate-y-32"></div>
+//         <div className="absolute bottom-0 right-0 w-96 h-96 bg-amber-300 rounded-full translate-x-48 translate-y-48"></div>
+//       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="bg-white rounded-3xl shadow-2xl p-10 md:p-16 grid md:grid-cols-2 gap-12 items-center">
+//       <div className="max-w-7xl mx-auto px-6 relative z-10">
+//         <div className="bg-white rounded-3xl shadow-2xl p-10 md:p-16 grid md:grid-cols-2 gap-12 items-center">
           
-          {/* Left Content */}
-          <div>
-            <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-800 px-4 py-2 rounded-full mb-6">
-              <Zap className="w-4 h-4" />
-              <span className="text-sm font-semibold">FLASH SALE</span>
-            </div>
+//           {/* Left Content */}
+//           <div>
+//             <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-800 px-4 py-2 rounded-full mb-6">
+//               <Zap className="w-4 h-4" />
+//               <span className="text-sm font-semibold">FLASH SALE</span>
+//             </div>
 
-            <h2 className="text-5xl font-bold text-gray-900 mb-6">
-              40% OFF
-              <br />
-              <span className="text-orange-600">Limited Time Offer</span>
-            </h2>
+//             <h2 className="text-5xl font-bold text-gray-900 mb-6">
+//               40% OFF
+//               <br />
+//               <span className="text-orange-600">Limited Time Offer</span>
+//             </h2>
 
-            <p className="text-gray-600 text-lg mb-8">
-              Stock up on your favorite banana snacks. This offer ends soon!
-            </p>
+//             <p className="text-gray-600 text-lg mb-8">
+//               Stock up on your favorite banana snacks. This offer ends soon!
+//             </p>
 
-            {/* Timer */}
-            <div className="mb-10">
-              <p className="text-gray-500 mb-4">Offer ends in:</p>
-              <div className="flex gap-4">
-                {Object.entries(timeLeft).map(([unit, value]) => (
-                  <div key={unit} className="text-center">
-                    <div className="bg-gradient-to-b from-gray-900 to-black text-white text-3xl font-bold w-16 h-16 rounded-xl flex items-center justify-center">
-                      {value.toString().padStart(2, '0')}
-                    </div>
-                    <p className="text-gray-600 text-sm mt-2 capitalize">{unit}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+//             {/* Timer */}
+//             <div className="mb-10">
+//               <p className="text-gray-500 mb-4">Offer ends in:</p>
+//               <div className="flex gap-4">
+//                 {Object.entries(timeLeft).map(([unit, value]) => (
+//                   <div key={unit} className="text-center">
+//                     <div className="bg-gradient-to-b from-gray-900 to-black text-white text-3xl font-bold w-16 h-16 rounded-xl flex items-center justify-center">
+//                       {value.toString().padStart(2, '0')}
+//                     </div>
+//                     <p className="text-gray-600 text-sm mt-2 capitalize">{unit}</p>
+//                   </div>
+//                 ))}
+//               </div>
+//             </div>
 
-            <button className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-xl hover:scale-105 transition-all">
-              Shop Now & Save
-            </button>
-          </div>
+//             <button className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:shadow-xl hover:scale-105 transition-all">
+//               Shop Now & Save
+//             </button>
+//           </div>
 
-          {/* Right Image */}
-          <div className="relative">
-            <div className="relative">
-              <motion.img
-                animate={{ y: [0, -15, 0] }}
-                transition={{ repeat: Infinity, duration: 4 }}
-                src={chilliBana}
-                alt="Special Offer"
-                className="rounded-2xl shadow-2xl"
-              />
-              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-full font-bold shadow-lg">
-                Save ₹36
-              </div>
-            </div>
-          </div>
+//           {/* Right Image */}
+//           <div className="relative">
+//             <div className="relative">
+//               <motion.img
+//                 animate={{ y: [0, -15, 0] }}
+//                 transition={{ repeat: Infinity, duration: 4 }}
+//                 src={chilliBana}
+//                 alt="Special Offer"
+//                 className="rounded-2xl shadow-2xl"
+//               />
+//               <div className="absolute -top-4 -right-4 bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-full font-bold shadow-lg">
+//                 Save ₹36
+//               </div>
+//             </div>
+//           </div>
 
-        </div>
-      </div>
-    </section>
-  );
-};
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
 
 /* 2. HEALTH BENEFITS SECTION */
 const HealthBenefits = () => {
@@ -303,201 +310,6 @@ const HealthBenefits = () => {
   );
 };
 
-/* 3. TRENDING PRODUCTS CAROUSEL */
-// const TrendingProducts = () => {
-//   const [currentIndex, setCurrentIndex] = useState(0);
-//   const trendingProducts = [
-//     {
-//       id: "trend1",
-//       title: "Spicy Masala Chips",
-//       price: "95",
-//       image: bananaChilli,
-//       tag: "HOT",
-//       sales: "1.2K sold",
-//     },
-//     {
-//       id: "trend2",
-//       title: "Classic Salted Chips",
-//       price: "85",
-//       image: bananaChips,
-//       tag: "BEST VALUE",
-//       sales: "2.5K sold",
-//     },
-//     {
-//       id: "trend3",
-//       title: "Extra Crispy Chips",
-//       price: "110",
-//       image: bananach5,
-//       tag: "PREMIUM",
-//       sales: "850 sold",
-//     },
-//     {
-//       id: "trend4",
-//       title: "Sweet & Spicy Mix",
-//       price: "120",
-//       image: bananaPowder,
-//       tag: "NEW",
-//       sales: "320 sold",
-//     },
-//   ];
-
-//   const nextSlide = () => {
-//     setCurrentIndex((prev) => (prev + 1) % trendingProducts.length);
-//   };
-
-//   const prevSlide = () => {
-//     setCurrentIndex((prev) => (prev - 1 + trendingProducts.length) % trendingProducts.length);
-//   };
-
-//   return (
-//     <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
-//       <div className="max-w-7xl mx-auto px-6">
-        
-//         {/* Header with Controls */}
-//         <div className="flex flex-col md:flex-row justify-between items-center mb-2">
-//           <div>
-//             <div className="flex items-center gap-3 mb-2">
-//               <TrendingUp className="w-8 h-8 text-green-600" />
-//               <span className="text-green-600 font-semibold">TRENDING NOW</span>
-//             </div>
-//             <h2 className="text-2xl font-bold text-gray-900">
-//               Most Loved by
-//               <span className="text-green-600"> Foodies</span>
-//             </h2>
-//           </div>
-
-//           {/* Navigation Controls */}
-//           <div className="flex items-center gap-4 mt-0 md:mt-0">
-//             <button
-//               onClick={prevSlide}
-//               className="p-3 rounded-full bg-white shadow-lg hover:shadow-xl hover:scale-105 transition-all"
-//             >
-//               <ChevronLeft className="w-6 h-6 text-gray-700" />
-//             </button>
-//             <button
-//               onClick={nextSlide}
-//               className="p-3 rounded-full bg-white shadow-lg hover:shadow-xl hover:scale-105 transition-all"
-//             >
-//               <ChevronRight className="w-6 h-6 text-gray-700" />
-//             </button>
-//           </div>
-//         </div>
-
-//         {/* Carousel */}
-//         <div className="relative">
-//           <div className="overflow-hidden rounded-3xl">
-//             <motion.div
-//               animate={{ x: `-${currentIndex * 100}%` }}
-//               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-//               className="flex"
-//             >
-//               {trendingProducts.map((product) => (
-//                 <div key={product.id} className="w-full flex-shrink-0">
-//                   <div className="grid md:grid-cols-2 gap-12 items-center bg-gradient-to-r from-white to-gray-50 p-2 rounded-3xl">
-                    
-//                     {/* Product Info */}
-//                     <div>
-//                       {/* Tag */}
-//                       <span className="inline-block bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
-//                         {product.tag}
-//                       </span>
-
-//                       <h3 className="text-2xl font-bold text-gray-900 mb-6">
-//                         {product.title}
-//                       </h3>
-
-//                       {/* Features List */}
-//                       <ul className="space-y-4 mb-8">
-//                         {[
-//                           "Extra crispy texture",
-//                           "Perfect spice blend",
-//                           "Sealed for freshness",
-//                           "No MSG or additives",
-//                         ].map((feature, i) => (
-//                           <li key={i} className="flex items-center gap-3">
-//                             <CheckCircle className="w-5 h-5 text-green-500" />
-//                             <span className="text-gray-700">{feature}</span>
-//                           </li>
-//                         ))}
-//                       </ul>
-
-//                       {/* Price & Sales */}
-//                       <div className="flex items-center justify-between mb-2">
-//                         <div>
-//                           <div className="text-2xl font-bold text-gray-900 mb-2">
-//                             ₹ {product.price}
-//                           </div>
-//                           <div className="flex items-center text-gray-600">
-//                             <Users className="w-4 h-4 mr-2" />
-//                             <span>{product.sales} this month</span>
-//                           </div>
-//                         <div className="flex items-center pt-2">
-//                           {[1, 2, 3, 4, 5].map((star) => (
-//                             <Star
-//                               key={star}
-//                               className="w-5 h-5 fill-yellow-400 text-yellow-400"
-//                             />
-//                           ))}
-//                         </div>
-//                         </div>
-//                       </div>
-
-//                       <button className="bg-gradient-to-r from-gray-900 to-black text-white px-4 py-2 rounded-full font-bold  hover:shadow-2xl hover:scale-105 transition-all">
-//                         Try It Now
-//                       </button>
-//                     </div>
-
-//                     {/* Product Image */}
-//                     <motion.div
-//                       whileHover={{ scale: 1.02 }}
-//                       className="order-1 lg:order-2 relative flex justify-center"
-//                     >
-//                       <div className="relative w-full max-w-lg lg:max-w-none">
-//                         <img
-//                           src={product.image}
-//                           alt={product.title}
-//                           className="
-//                             w-full
-//                             h-auto
-//                             max-h-[70vh]
-//                             object-contain
-//                             rounded-2xl
-//                             shadow-2xl
-//                           "
-//                           style={{
-//                             maxHeight: 'min(70vh, 500px)'
-//                           }}
-//                         />
-
-//                       </div>
-//                     </motion.div>
-
-//                   </div>
-//                 </div>
-//               ))}
-//             </motion.div>
-//           </div>
-
-//           {/* Indicators */}
-//           <div className="flex justify-center gap-3 mt-12">
-//             {trendingProducts.map((_, index) => (
-//               <button
-//                 key={index}
-//                 onClick={() => setCurrentIndex(index)}
-//                 className={`w-3 h-3 rounded-full transition-all ${
-//                   index === currentIndex
-//                     ? "bg-green-600 w-10"
-//                     : "bg-gray-300 hover:bg-gray-400"
-//                 }`}
-//               />
-//             ))}
-//           </div>
-//         </div>
-
-//       </div>
-//     </section>
-//   );
-// };
 
 /* ================= LANDING PAGE ================= */
 export default function Landing() {
@@ -577,7 +389,24 @@ export default function Landing() {
   ];
 
   const [heroIndex, setHeroIndex] = useState(0);
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [quoteForm, setQuoteForm] = useState({ name: "", mobile: "", email: "", message: "" });
   const heroImages = [crousel1,crousel2,crousel3,crousel4,crousel5,crousel6];
+  const getProductDetails = (prod) => {
+    if (!prod) return {};
+    const byId = {
+      feat1: { brand: "Sonal Foods", packagingSize: "1 Kg", shelfLife: "6 Months", origin: "Made in India", ingredients: "Nendran Banana, Coconut Oil, Salt", vegetarian: "Yes" },
+      feat2: { brand: "Sonal Foods", packagingSize: "1 Kg", shelfLife: "6 Months", origin: "Made in India", ingredients: "Raw Banana Powder", vegetarian: "Yes" },
+      feat3: { brand: "Sonal Foods", packagingSize: "100 g", shelfLife: "6 Months", origin: "Made in India", ingredients: "Banana, Oil, Pepper, Salt", vegetarian: "Yes" },
+      best1: { brand: "Sonal Foods", packagingSize: "1 Kg", shelfLife: "6 Months", origin: "Made in India", ingredients: "Banana, Coconut Oil, Salt", vegetarian: "Yes" },
+      best2: { brand: "Sonal Foods", packagingSize: "100 g", shelfLife: "6 Months", origin: "Made in India", ingredients: "Banana, Oil, Red Chilli, Salt", vegetarian: "Yes" },
+      best3: { brand: "Sonal Foods", packagingSize: "100 g", shelfLife: "6 Months", origin: "Made in India", ingredients: "Banana, Oil, Sea Salt", vegetarian: "Yes" },
+      best4: { brand: "Sonal Foods", packagingSize: "100 g", shelfLife: "6 Months", origin: "Made in India", ingredients: "Banana, Oil, Salt", vegetarian: "Yes" },
+      best5: { brand: "Sonal Foods", packagingSize: "1 Kg", shelfLife: "6 Months", origin: "Made in India", ingredients: "Raw Banana Powder", vegetarian: "Yes" },
+    };
+    return byId[prod.id] || { brand: "Sonal Foods", packagingSize: prod.quantity || "200 g", shelfLife: "6 Months", origin: "Made in India", ingredients: "Maida, Ghee, Oil, Salt", vegetarian: "Yes" };
+  };
   useEffect(() => {
     const id = setInterval(() => {
       setHeroIndex((i) => (i + 1) % heroImages.length);
@@ -675,7 +504,7 @@ export default function Landing() {
 
           <div className="grid md:grid-cols-4 gap-8">
             {featuredProducts.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <ProductCard key={p.id} product={p} onOpen={(prod) => { setSelectedProduct(prod); setShowQuoteModal(true); }} />
             ))}
           </div>
         </div>
@@ -739,7 +568,7 @@ export default function Landing() {
 
           <div className="grid md:grid-cols-4 gap-8">
             {bestSellers.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <ProductCard key={p.id} product={p} onOpen={(prod) => { setSelectedProduct(prod); setShowQuoteModal(true); }} />
             ))}
           </div>
         </div>
@@ -812,6 +641,109 @@ export default function Landing() {
           </div>
         </div>
       </section>
+      {showQuoteModal && selectedProduct && (
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4">
+          <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div className="flex">
+              <div className="hidden md:block w-1/3 bg-gray-50 p-4">
+                <div className="rounded-xl overflow-hidden border border-gray-100">
+                  <img src={selectedProduct.image} alt={selectedProduct.title} className="w-full h-auto object-contain" />
+                </div>
+                <p className="mt-3 text-xs text-gray-600">
+                  {selectedProduct.title}
+                  <br />₹ {selectedProduct.price} / {selectedProduct.quantity}
+                </p>
+                <div className="mt-3 text-[11px] text-gray-700 space-y-4">
+                  {(() => { const d = getProductDetails(selectedProduct); return (
+                    <>
+                      <p><span className="font-bold">Brand</span>: {d.brand}</p>
+                      <p><span className="font-bold">Packaging Size</span>: {d.packagingSize}</p>
+                      <p><span className="font-bold">Shelf Life</span>: {d.shelfLife}</p>
+                      <p><span className="font-bold">Country of Origin</span>: {d.origin}</p>
+                      <p><span className="font-bold">Ingredients</span>: {d.ingredients}</p>
+                      <p><span className="font-bold">100% Vegetarian</span>: {d.vegetarian}</p>
+                    </>
+                  )})()}
+                </div>
+              </div>
+              <div className="flex-1 p-6">
+                <div className="flex items-start justify-between">
+                  <h3 className="text-lg font-bold text-gray-900">Get Best Quote and quick callback</h3>
+                  <button onClick={() => setShowQuoteModal(false)} className="text-gray-500 hover:text-gray-900">✕</button>
+                </div>
+                <form
+                  className="mt-4 grid gap-3"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const sellerNumber = "917366981951";
+                    const text = `Quote/Callback Request\nProduct: ${selectedProduct.title}\nPrice: ₹${selectedProduct.price} / ${selectedProduct.quantity}\nName: ${quoteForm.name}\nMobile: ${quoteForm.mobile}\nEmail: ${quoteForm.email}\nMessage: ${quoteForm.message}`;
+                    const wa = `https://wa.me/${sellerNumber}?text=${encodeURIComponent(text)}`;
+                    window.open(wa, "_blank");
+                    const subject = `Quote Request: ${selectedProduct.title}`;
+                    const body = encodeURIComponent(text);
+                    window.location.href = `mailto:maakavitalaxmi@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+                    setShowQuoteModal(false);
+                    setQuoteForm({ name: "", mobile: "", email: "", message: "" });
+                  }}
+                >
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-xs font-semibold text-gray-700">Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={quoteForm.name}
+                        onChange={(e) => setQuoteForm({ ...quoteForm, name: e.target.value })}
+                        className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600/30"
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs font-semibold text-gray-700">Mobile Number</label>
+                      <input
+                        type="tel"
+                        required
+                        value={quoteForm.mobile}
+                        onChange={(e) => setQuoteForm({ ...quoteForm, mobile: e.target.value })}
+                        className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600/30"
+                        placeholder="+91 XXXXX XXXXX"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-gray-700">Email (optional)</label>
+                    <input
+                      type="email"
+                      value={quoteForm.email}
+                      onChange={(e) => setQuoteForm({ ...quoteForm, email: e.target.value })}
+                      className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600/30"
+                      placeholder="you@example.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-gray-700">Message (optional)</label>
+                    <textarea
+                      rows={3}
+                      value={quoteForm.message}
+                      onChange={(e) => setQuoteForm({ ...quoteForm, message: e.target.value })}
+                      className="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600/30 resize-none"
+                      placeholder="Share any specific requirements"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="mt-2 w-full inline-flex items-center justify-center rounded-xl bg-[#0b3b2a] text-white text-sm font-bold px-6 py-3"
+                  >
+                    Submit Now
+                  </button>
+                  <p className="mt-2 text-[11px] text-gray-500">We will contact you on the provided number/email.</p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <ContactForm/>
     </div>
   );
 }

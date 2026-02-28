@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaBars, FaTimes, FaSignOutAlt, FaShoppingBasket, FaUserCircle, FaSearch, FaLock } from "react-icons/fa";
+import { FaBars, FaTimes, FaSignOutAlt, FaShoppingBasket, FaUserCircle, FaSearch, FaLock, FaPhone, FaEnvelope } from "react-icons/fa";
 import API from "../api/axios";
 import logo from "../assets/banana/logo2.png";
 
@@ -10,6 +10,7 @@ const Header = () => {
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false); 
   const [cartCount, setCartCount] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,112 +54,105 @@ const Header = () => {
     navigate("/auth");
   };
 
-  const navLinks = [
+  const primaryNav = [
+    { label: "", path: "/" },
     { label: "Home", path: "/" },
-    { label: "All Products", path: "/ProductDetail" },
-    { label: "Wholesale / B2B", path: "/b2b" },
-    { label: "About Us", path: "/about" },
+    { label: "B2B", path: "/b2b" },
+    { label: "Profile", path: "/about" },
     { label: "Contact Us", path: "/contactus" },
   ];
+  const handleSearch = () => {
+    if (!searchTerm.trim()) return;
+    navigate(`/ProductDetail?q=${encodeURIComponent(searchTerm.trim())}`);
+  };
+  useEffect(() => {
+    if (!searchTerm || searchTerm.trim().length === 0) return;
+    const id = setTimeout(() => {
+      navigate(`/ProductDetail?q=${encodeURIComponent(searchTerm.trim())}`);
+    }, 1000);
+    return () => clearTimeout(id);
+  }, [searchTerm, navigate]);
 
   return (
-    <header
-      className={`w-full fixed top-0 left-0 z-40 bg-white border-b border-gray-200 transition-shadow ${
-        scrolled ? "shadow-sm" : ""
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3">
-
-          <img
-            src={logo}
-            alt="Maa Kavita Laxmi Logo"
-            className="w-15 h-15 object-contain"
-          />
-
-          <span className="text-lg sm:text-xl font-bold text-green-900 tracking-tight">
-            Maa Kavita Laxmi Pvt. Ltd.
-          </span>
-
-        </Link>
-
-        <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              to={link.path}
-              className={`text-sm font-semibold transition-colors ${
-                location.pathname === link.path
-                  ? "text-green-800"
-                  : "text-gray-600 hover:text-green-900"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          {/* 🔥 Admin Dashboard Button (Desktop) */}
-          {isAdmin && (
-            <Link
-              to="/admin/dashboard"
-              className="hidden lg:flex items-center gap-2 bg-black text-white px-4 py-1.5 rounded-full text-xs font-bold hover:bg-gray-800 transition-all mr-2"
-            >
-              <FaLock size={10} />
-              Admin
-            </Link>
-          )}
-
-          <button
-            type="button"
-            className="hidden sm:inline-flex items-center justify-center w-8 h-8 rounded-full text-gray-500 hover:text-green-900 hover:bg-gray-100"
-          >
-            <FaSearch size={15} />
-          </button>
-
-          {user ? (
-            <div className="flex items-center gap-4">
-              <Link to="/orders" className="hidden md:block text-xs font-bold text-gray-500 hover:text-green-800">
-                My Orders
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="hidden md:inline-flex items-center gap-2 text-xs font-bold text-red-500 hover:text-red-700"
-              >
-                <FaSignOutAlt size={13} />
-                Logout
-              </button>
+    <header className={`w-full fixed top-0 left-0 z-40 transition-shadow ${scrolled ? "shadow-sm" : ""}`}>
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
+            <div>
+              <p className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">Maa Kavita Laxmi Pvt. Ltd.</p>
+              <div className="flex flex-wrap gap-3 text-[12px] text-gray-600">
+                <span>Malsalami, Shahadra, Patna</span>
+                <span className="flex items-center gap-1">
+                  <span className="inline-block w-2 h-2 rounded-full bg-green-600" />
+                  GST No.: 10AAOCM9571F1ZB
+                </span>
+              </div>
             </div>
-          ) : (
-            <Link
-              to="/auth"
-              className="hidden md:inline-flex items-center gap-2 text-sm font-bold text-gray-700 hover:text-green-900"
-            >
-              <FaUserCircle size={16} />
-              Login
-            </Link>
-          )}
-
-          <Link
-            to="/cart"
-            className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-all shadow-sm"
-          >
-            <FaShoppingBasket size={18} />
-            {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[20px] px-1 h-[20px] rounded-full bg-red-600 text-[10px] font-black text-white flex items-center justify-center border-2 border-white">
-                {cartCount > 99 ? "99+" : cartCount}
-              </span>
-            )}
           </Link>
-
-          <button
-            type="button"
-            className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-700"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
-          </button>
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center bg-white border border-gray-200 rounded-xl px-3 py-2">
+              <FaPhone className="text-green-700 mr-2" />
+              <div className="text-sm">
+                <p className="font-bold text-gray-900">Call 82527 53985</p>
+                <p className="text-[11px] text-gray-500">86% Response rate</p>
+              </div>
+            </div>
+            <a href="mailto:maakavitalaxmi@gmail.com" className="hidden sm:inline-flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-green-800">
+              <FaEnvelope />
+              Send Email
+            </a>
+            <Link
+              to="/cart"
+              className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-all shadow-sm"
+            >
+              <FaShoppingBasket size={18} />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[20px] px-1 h-[20px] rounded-full bg-red-600 text-[10px] font-black text-white flex items-center justify-center border-2 border-white">
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </Link>
+            <button
+              type="button"
+              className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-700"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="bg-[#1f2937]">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 h-12 flex items-center justify-between">
+          <nav className="hidden md:flex items-center gap-6 text-white">
+            <button className="inline-flex items-center gap-2 font-semibold">
+              <FaBars />
+            </button>
+            {primaryNav.slice(1).map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`text-sm font-semibold ${location.pathname === link.path ? "text-lime-300" : "text-gray-200 hover:text-white"}`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="flex items-center gap-2 w-full md:w-auto">
+            <input
+              type="text"
+              placeholder="Search Products/Services"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              className="flex-1 md:w-80 h-9 rounded-l-xl px-3 text-sm bg-white border border-gray-300 focus:outline-none"
+            />
+            <button onClick={handleSearch} className="h-9 px-3 rounded-r-xl bg-green-700 text-white text-sm font-bold flex items-center gap-2">
+              <FaSearch />
+              Search
+            </button>
+          </div>
         </div>
       </div>
 
@@ -177,7 +171,7 @@ const Header = () => {
               </Link>
             )}
 
-            {navLinks.map((link) => (
+            {primaryNav.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
