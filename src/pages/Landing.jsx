@@ -35,6 +35,7 @@ import crousel4 from "../assets/carousel/crousel4.jpeg";
 import crousel5 from "../assets/carousel/crousel5.jpeg";
 import crousel6 from "../assets/carousel/crousel6.jpeg";
 import ContactForm from "../components/ContactForm";
+import { sendEmail } from "../utils/email";
 /* ================= PRODUCT CARD ================= */
 const ProductCard = ({ product, onOpen }) => {
   const navigate = useNavigate();
@@ -71,10 +72,11 @@ const ProductCard = ({ product, onOpen }) => {
     <motion.div
       whileHover={{ y: -6 }}
       className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden flex flex-col"
+      onClick={() => onOpen && onOpen(product)}
     >
       <div
         className="h-72 bg-gray-50 flex items-center justify-center overflow-hidden cursor-pointer"
-        onClick={() => onOpen && onOpen(product)}
+        
       >
         <img
           src={product.image}
@@ -100,7 +102,8 @@ const ProductCard = ({ product, onOpen }) => {
 
         <button
           disabled={isAdding}
-          onClick={() => handleAdd(false)}
+          onClick={() => onOpen && onOpen(product)}
+          // onClick={() => handleAdd(false)}
           className="mt-2 w-full inline-flex items-center justify-center bg-[#0b3b2a] text-white text-sm font-semibold py-2.5 rounded-full hover:bg-green-800 disabled:opacity-60 transition-colors"
         >
           {isAdding ? (
@@ -673,15 +676,24 @@ export default function Landing() {
                 </div>
                 <form
                   className="mt-4 grid gap-3"
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
                     const sellerNumber = "917366981951";
-                    const text = `Quote/Callback Request\nProduct: ${selectedProduct.title}\nPrice: ₹${selectedProduct.price} / ${selectedProduct.quantity}\nName: ${quoteForm.name}\nMobile: ${quoteForm.mobile}\nEmail: ${quoteForm.email}\nMessage: ${quoteForm.message}`;
+                    const text = `Quote/Callback Request\nProduct: ${selectedProduct.title}\nPrice: ₹${selectedProduct.price} / ${selectedProduct.quantity}\nName: ${quoteForm.name}\nMobile: ${quoteForm.mobile}\nEmail: ${quoteForm.email || "N/A"}\nMessage: ${quoteForm.message || ""}`;
+                    const subject = `Quote Request: ${selectedProduct.title}`;
+                    try {
+                      await sendEmail({
+                        subject,
+                        message: text,
+                        fromName: quoteForm.name,
+                        fromEmail: quoteForm.email,
+                        phone: quoteForm.mobile,
+                      });
+                    } catch {
+                      // ignore - fallback is WhatsApp below
+                    }
                     const wa = `https://wa.me/${sellerNumber}?text=${encodeURIComponent(text)}`;
                     window.open(wa, "_blank");
-                    const subject = `Quote Request: ${selectedProduct.title}`;
-                    const body = encodeURIComponent(text);
-                    window.location.href = `mailto:maakavitalaxmi@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
                     setShowQuoteModal(false);
                     setQuoteForm({ name: "", mobile: "", email: "", message: "" });
                   }}

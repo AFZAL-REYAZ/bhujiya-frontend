@@ -1,6 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { sendEmail } from "../utils/email";
 
 const ContactForm = () => {
+  const [form, setForm] = useState({ name: "", phone: "", requirement: "", email: "" });
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.name || !form.phone || !form.requirement) {
+      alert("Please fill name, phone and requirement.");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const subject = "New Contact Enquiry";
+      const message = `Requirement: ${form.requirement}\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email || "N/A"}`;
+      await sendEmail({
+        subject,
+        message,
+        fromName: form.name,
+        fromEmail: form.email,
+        phone: form.phone,
+      });
+      alert("Thanks! Your message has been sent.");
+      setForm({ name: "", phone: "", requirement: "", email: "" });
+    } catch {
+      alert("Could not send message. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="bg-slate-800 text-white py-16 px-20 md:px-2">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 px-20">
@@ -52,7 +82,7 @@ const ContactForm = () => {
 
         {/* RIGHT SIDE */}
         <div className="md:w-1/2 bg-gray-100 text-black rounded-xl p-8 shadow-lg">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
 
             <div>
               <label className="block mb-2 font-medium">
@@ -62,6 +92,8 @@ const ContactForm = () => {
                 placeholder="I would like to..."
                 className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600"
                 rows="4"
+                value={form.requirement}
+                onChange={(e) => setForm((f) => ({ ...f, requirement: e.target.value }))}
               />
             </div>
 
@@ -73,6 +105,8 @@ const ContactForm = () => {
                   type="text"
                   placeholder="Enter Your Number"
                   className="w-full p-3 outline-none"
+                  value={form.phone}
+                  onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                 />
               </div>
             </div>
@@ -83,14 +117,28 @@ const ContactForm = () => {
                 type="text"
                 placeholder="Enter your name"
                 className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600"
+                value={form.name}
+                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 font-medium">Email (optional)</label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600"
+                value={form.email}
+                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg font-semibold transition"
+              className="w-full bg-green-700 hover:bg-green-800 text-white py-3 rounded-lg font-semibold transition disabled:opacity-60"
+              disabled={submitting}
             >
-              Submit
+              {submitting ? "Submitting..." : "Submit"}
             </button>
 
           </form>

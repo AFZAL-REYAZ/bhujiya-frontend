@@ -21,6 +21,7 @@ import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 import upiqr from "../assets/banana/upi-qr.jpeg";
 import ContactForm from "../components/ContactForm";
+import { sendEmail } from "../utils/email";
 function B2BPageOld() {
   const navigate = useNavigate();
   const [loadingId, setLoadingId] = useState(null);
@@ -458,10 +459,30 @@ export default function B2B() {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    toast.success("Wholesale enquiry submitted. Our team will contact you shortly.");
-    setForm(initialFormState);
+    const subject = "Wholesale Enquiry";
+    const message =
+      `Company: ${form.companyName}\n` +
+      `GST: ${form.gstNumber || "N/A"}\n` +
+      `Contact: ${form.contactName}\n` +
+      `Phone: ${form.phoneNumber}\n` +
+      `Email: ${form.email}\n` +
+      `Quantity: ${form.quantity || "N/A"}\n` +
+      `Message: ${form.message || ""}`;
+    try {
+      await sendEmail({
+        subject,
+        message,
+        fromName: form.contactName,
+        fromEmail: form.email,
+        phone: form.phoneNumber,
+      });
+      toast.success("Wholesale enquiry sent. We will contact you soon.");
+      setForm(initialFormState);
+    } catch {
+      toast.error("Could not send enquiry. Please try again.");
+    }
   };
 
   return (

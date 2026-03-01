@@ -5,7 +5,7 @@ export const getProfile = async () => {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("No token found");
 
-  return await axios.get("http://localhost:5000/api/auth/profile", {
+  return await axios.get("https://chips-backend-qmst.onrender.com/api/auth/profile", {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
@@ -15,7 +15,7 @@ export const updateProfile = async (data) => {
   const token = localStorage.getItem("token");
   if (!token) throw new Error("No token found");
 
-  return await axios.put("http://localhost:5000/api/auth/update", data, {
+  return await axios.put("https://chips-backend-qmst.onrender.com/api/auth/update", data, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };
