@@ -3,7 +3,7 @@ import axios from 'axios';
 console.log("API URL:", import.meta.env.VITE_API_URL);
 // Creating the instance with your Render URL
 const API = axios.create({ 
-  baseURL: import.meta.env.VITE_API_URL 
+  baseURL: "https://chips-backend-qmst.onrender.com/api" 
 });
 
 // REQUEST INTERCEPTOR: Automatically attach the token
