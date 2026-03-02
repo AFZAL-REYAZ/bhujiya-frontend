@@ -30,7 +30,7 @@ export default function Login({ onLogin }) {
         email: email.toLowerCase().trim(),
         password,
       });
-
+      console.log("LOGIN RESPONSE:", data);
       if (data.role === "admin") {
         localStorage.setItem("adminToken", data.token);
         localStorage.setItem("isAdmin", "true");
