@@ -10,7 +10,7 @@
     "client:preview": "npm --prefix client run preview",
     "server:dev": "npm --prefix server run dev",
     "server:start": "npm --prefix server run start",
-    "install:all": "npm --prefix client install && npm --prefix server install"
+    "install:all": "npm install && npm --prefix client install && npm --prefix server install"
   },
   "devDependencies": {
     "concurrently": "^9.0.1"
