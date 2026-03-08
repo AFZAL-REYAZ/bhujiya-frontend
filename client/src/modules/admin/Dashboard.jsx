@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Trash2, 
@@ -9,22 +9,52 @@ import {
   Info,
   ShoppingCart
 } from "lucide-react";
-import axios from "axios";
+import API from "../../config/api/apiconfig";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function Dashboard({ products, refreshProducts }) {
-  // Backend URL define karna zaroori hai
-  const API_BASE_URL = "http://localhost:5000";
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(true);
+  const [ordersError, setOrdersError] = useState("");
 
-  // Sabse powerful helper function path sahi karne ke liye
+  const fetchOrders = async () => {
+    try {
+      setOrdersLoading(true);
+      setOrdersError("");
+      const token = localStorage.getItem("adminToken") || localStorage.getItem("token");
+      const { data } = await API.get("/admin/orders", {
+        params: { limit: 120 },
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      setOrders(data.orders || []);
+    } catch (error) {
+      setOrdersError(error?.response?.data?.message || "Orders load failed. Check admin login/token.");
+    } finally {
+      setOrdersLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const orderStats = useMemo(() => {
+    const total = orders.length;
+    const featured = orders.filter((o) => o.source === "featured").length;
+    const b2b = orders.filter((o) => o.source === "b2b").length;
+    const product = orders.filter((o) => o.source === "product").length;
+    const bestseller = orders.filter((o) => o.source === "bestseller").length;
+    return { total, featured, b2b, product, bestseller };
+  }, [orders]);
+
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "https://via.placeholder.com/150?text=No+Image";
-    
-    // Agar path pehle se '/' se shuru hota hai toh theek, nahi toh '/' lagao
+
     const cleanPath = imagePath.startsWith("/") ? imagePath : `/${imagePath}`;
-    
-    // Final result: http://localhost:5000/uploads/image.jpg
-    return `${API_BASE_URL}${cleanPath}`;
+
+    const origin = API_BASE_URL.replace(/\/api\/?$/, "");
+    return `${origin}${cleanPath}`;
   };
 
   const handleDelete = async (id) => {
@@ -59,8 +89,8 @@ export default function Dashboard({ products, refreshProducts }) {
   const executeDelete = async (id) => {
     const loadingToast = toast.loading("Sanitizing inventory...");
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.delete(`${API_BASE_URL}/api/products/${id}`, {
+      const token = localStorage.getItem("adminToken") || localStorage.getItem("token");
+      await API.delete(`/products/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success("Product removed!", { id: loadingToast });
@@ -209,6 +239,127 @@ export default function Dashboard({ products, refreshProducts }) {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Orders & Quotes */}
+      <div className="bg-white rounded-[3.5rem] shadow-2xl shadow-slate-200/60 border border-slate-100 overflow-hidden">
+        <div className="p-8 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h3 className="text-2xl font-black text-slate-900">Orders & Quotes</h3>
+            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+              Source tracking (Featured vs B2B)
+            </p>
+          </div>
+          <button
+            onClick={fetchOrders}
+            className="px-5 py-2.5 rounded-2xl bg-slate-900 text-white text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition"
+          >
+            Refresh
+          </button>
+        </div>
+
+        <div className="p-8 space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { label: "Total Orders", value: orderStats.total },
+              { label: "Featured", value: orderStats.featured },
+              { label: "B2B", value: orderStats.b2b },
+              { label: "Product Page", value: orderStats.product },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-2xl border border-slate-100 p-5 bg-slate-50/40"
+              >
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                  {stat.label}
+                </p>
+                <p className="text-3xl font-black text-slate-900 mt-2">
+                  {stat.value}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {ordersLoading ? (
+            <div className="py-16 text-center text-slate-400 font-bold">
+              Loading orders...
+            </div>
+          ) : ordersError ? (
+            <div className="py-10 px-6 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-bold text-center">
+              {ordersError}
+            </div>
+          ) : orders.length === 0 ? (
+            <div className="py-16 text-center text-slate-400 font-bold">
+              No orders yet.
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-separate border-spacing-0">
+                <thead>
+                  <tr className="bg-slate-50/50">
+                    <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100">Source</th>
+                    <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100">Customer</th>
+                    <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100">Product</th>
+                    <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100">Qty</th>
+                    <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100">Date</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {orders.map((order) => {
+                    const consumer = order.consumer || {};
+                    const consumerName = consumer.companyName
+                      ? `${consumer.companyName} (${consumer.name || "Contact"})`
+                      : consumer.name || "Unknown";
+                    const productTitle =
+                      order.product?.title || "Wholesale Enquiry";
+                    const qty =
+                      order.requestedQty ||
+                      order.product?.quantity ||
+                      "-";
+                    return (
+                      <tr key={order._id} className="hover:bg-slate-50/40 transition">
+                        <td className="px-6 py-5">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-black uppercase tracking-widest border border-emerald-100">
+                            {order.sourceLabel || order.source || "other"}
+                          </span>
+                        </td>
+                        <td className="px-6 py-5">
+                          <div className="text-sm font-bold text-slate-900">{consumerName}</div>
+                          <div className="text-xs text-slate-400">{consumer.phone || "-"}</div>
+                          {consumer.email && (
+                            <div className="text-xs text-slate-400">{consumer.email}</div>
+                          )}
+                        </td>
+                        <td className="px-6 py-5">
+                          <div className="text-sm font-semibold text-slate-900">
+                            {productTitle}
+                          </div>
+                          {order.message && (
+                            <div className="text-xs text-slate-400 line-clamp-1">
+                              {order.message}
+                            </div>
+                          )}
+                        </td>
+                        <td className="px-6 py-5 text-sm font-bold text-slate-900">
+                          {qty}
+                        </td>
+                        <td className="px-6 py-5 text-xs text-slate-500 font-semibold">
+                          {order.createdAt
+                            ? new Date(order.createdAt).toLocaleDateString("en-IN", {
+                                day: "2-digit",
+                                month: "short",
+                                year: "numeric",
+                              })
+                            : "-"}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </motion.div>
   );

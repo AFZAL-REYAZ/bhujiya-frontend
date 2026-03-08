@@ -19,6 +19,7 @@ export default function Login({ onLogin }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,12 +27,13 @@ export default function Login({ onLogin }) {
     setError("");
 
     try {
-      const { data } = await axios.post("https://chips-backend-qmst.onrender.com/api/users/login", {
+      const { data } = await axios.post(`${API_BASE_URL}/auth/login`, {
         email: email.toLowerCase().trim(),
         password,
       });
       console.log("LOGIN RESPONSE:", data);
-      if (data.role === "admin") {
+      if (data.user?.role === "admin") {
+        localStorage.setItem("token", data.token);
         localStorage.setItem("adminToken", data.token);
         localStorage.setItem("isAdmin", "true");
         onLogin();
