@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdLocationOn, MdPhone, MdEmail, MdAccessTime } from "react-icons/md";
-import ContactForm from "../components/ContactForm";
+import ContactForm from "../components/layout/ContactForm";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({

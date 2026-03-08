@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { ShoppingBag, Heart, Star, Plus, Minus, Building2, CalendarDays, Users, CircleDollarSign, IdCard, FileText, Truck, ShieldCheck, ThumbsUp } from "lucide-react";
-import API from "../api/axios";
+import API from "../config/api/apiconfig";
 
 // Assets
 import bananaChilli from "../assets/banana/bananaChilli.jpeg";
@@ -223,7 +223,7 @@ export default function ProductDetail() {
   const handleAction = async (product, redirectToCart = false) => {
     const token = localStorage.getItem("token");
     if (!token) { 
-      navigate("/auth"); 
+      navigate("/auth/sign-in"); 
       return; 
     }
     

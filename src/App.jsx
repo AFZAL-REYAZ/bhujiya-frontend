@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import API from './api/axios'; // Use your custom axios instance
+import API from './config/api/apiconfig'; // Use your custom axios instance
 
-// Base Components
-import Header from './components/Header'
-import Footer from './components/Footer'
-import WhatsAppChat from './components/WhatsAppChat'
-import ScrollToTop from './components/ScrollToTop'
+import ScrollToTop from './components/layout/ScrollToTop'
+
+// Layouts
+import PublicLayout from './components/layout/PublicLayout'
+import UserLayout from './components/userlayout/UserLayout'
 
 // Customer Pages
 import Landing from './pages/Landing'
@@ -15,17 +15,18 @@ import ContactUs from './pages/ContactUs'
 import About from './pages/About'
 import Terms from './pages/Terms'
 import Privacy from './pages/Privacy'
-import B2B from './pages/B2B'
-import Auth from './pages/Auth'
-import Cart from './pages/Cart'
-import OrderSuccess from './pages/OrderSuccess'
-import Orders from './pages/Orders'
+import BusinessToBusiness from './pages/BusinessToBusiness'
+import SignIn from './modules/auth/SignIn'
+import SignUp from './modules/auth/SignUp'
+import Cart from './modules/users/Cart'
+import OrderSuccess from './modules/users/OrderSuccess'
+import Orders from './modules/users/Orders'
 
 // Admin Pages
-import AdminLayout from './components/layout/AdminLayout'
-import AdminLogin from './pages/Admin/Login'
-import Dashboard from './pages/Admin/Dashboard'
-import AddProduct from './pages/Admin/AddProduct'
+import AdminLayout from './components/adminlayout/AdminLayout'
+import AdminLogin from './modules/admin/Login'
+import Dashboard from './modules/admin/Dashboard'
+import AddProduct from './modules/admin/AddProduct'
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -76,44 +77,42 @@ const App = () => {
           <Route path="add-product" element={<AddProduct onAdd={fetchProducts} />} />
         </Route>
 
-        {/* ================= CUSTOMER SECTION (With Header/Footer) ================= */}
-        <Route path="/*" element={
-          <>
-            <Header />
-            <div className="min-h-[75vh]">
-              <Routes>
-                <Route path="/" element={<Landing products={products} />} />
-                
-                {/* Dynamic Product Routes */}
-                <Route path="/ProductDetail" element={<ProductDetail />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                
-                {/* Information Pages */}
-                <Route path="/contactus" element={<ContactUs />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/b2b" element={<B2B />} />
-                
-                {/* User Operations */}
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/order-success" element={<OrderSuccess />} />
-                <Route path="/orders" element={<Orders />} />
-                
-                {/* 404 Catch-all */}
-                <Route path="*" element={
-                  <div className="pt-40 pb-20 text-center">
-                    <h1 className="text-6xl font-black text-gray-200">404</h1>
-                    <p className="text-red-500 font-bold uppercase tracking-widest mt-2">Page Not Found</p>
-                  </div>
-                } />
-              </Routes>
-            </div>
-            <Footer />
-            <WhatsAppChat />
-          </>
-        } />
+        {/* ================= PUBLIC SECTION (With Header/Footer) ================= */}
+        <Route path="/" element={<PublicLayout />}>
+          <Route index element={<Landing />} />
+
+          {/* Dynamic Product Routes */}
+          <Route path="ProductDetail" element={<ProductDetail />} />
+          <Route path="product/:id" element={<ProductDetail />} />
+
+          {/* Information Pages */}
+          <Route path="contactus" element={<ContactUs />} />
+          <Route path="about" element={<About />} />
+          <Route path="terms" element={<Terms />} />
+          <Route path="privacy" element={<Privacy />} />
+          <Route path="b2b" element={<BusinessToBusiness />} />
+
+          {/* 404 Catch-all */}
+          <Route
+            path="*"
+            element={
+              <div className="pt-40 pb-20 text-center">
+                <h1 className="text-6xl font-black text-gray-200">404</h1>
+                <p className="text-red-500 font-bold uppercase tracking-widest mt-2">Page Not Found</p>
+              </div>
+            }
+          />
+        </Route>
+
+        {/* ================= USER SECTION (With Header/Footer) ================= */}
+        <Route path="/" element={<UserLayout />}>
+          <Route path="auth" element={<Navigate to="/auth/sign-in" replace />} />
+          <Route path="auth/sign-in" element={<SignIn />} />
+          <Route path="auth/sign-up" element={<SignUp />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="order-success" element={<OrderSuccess />} />
+          <Route path="orders" element={<Orders />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
