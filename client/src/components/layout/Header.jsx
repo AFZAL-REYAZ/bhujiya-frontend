@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaBars, FaTimes, FaSignOutAlt, FaShoppingBasket, FaUserCircle, FaSearch, FaLock, FaPhone, FaEnvelope } from "react-icons/fa";
 import API from "../../config/api/apiconfig";
 import logo from "../../assets/banana/logo2.png";
+import { submitQuote } from "../../utils/orderApi";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,6 +12,18 @@ const Header = () => {
   const [isAdmin, setIsAdmin] = useState(false); 
   const [cartCount, setCartCount] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showPartnerPanel, setShowPartnerPanel] = useState(false);
+  const [submittingPartner, setSubmittingPartner] = useState(false);
+  const [partnerStatus, setPartnerStatus] = useState({ type: "", message: "" });
+  const [partnerForm, setPartnerForm] = useState({
+    companyName: "",
+    gstNumber: "",
+    contactName: "",
+    phoneNumber: "",
+    email: "",
+    quantity: "",
+    message: "",
+  });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,6 +78,58 @@ const Header = () => {
     if (!searchTerm.trim()) return;
     navigate(`/ProductDetail?q=${encodeURIComponent(searchTerm.trim())}`);
   };
+
+  const handlePartnerFormChange = (event) => {
+    const { name, value } = event.target;
+    setPartnerForm((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handlePartnerSubmit = async (event) => {
+    event.preventDefault();
+    setSubmittingPartner(true);
+    setPartnerStatus({ type: "", message: "" });
+
+    try {
+      await submitQuote({
+        source: "b2b",
+        sourceLabel: "Header Partner Form",
+        customer: {
+          name: partnerForm.contactName,
+          phone: partnerForm.phoneNumber,
+          email: partnerForm.email,
+        },
+        company: {
+          name: partnerForm.companyName,
+          gstNumber: partnerForm.gstNumber,
+        },
+        quantity: partnerForm.quantity,
+        message: partnerForm.message,
+        page: "header",
+        section: "partner-form",
+      });
+
+      setPartnerStatus({
+        type: "success",
+        message: "Request submitted successfully. Our team will contact you shortly.",
+      });
+      setPartnerForm({
+        companyName: "",
+        gstNumber: "",
+        contactName: "",
+        phoneNumber: "",
+        email: "",
+        quantity: "",
+        message: "",
+      });
+    } catch (error) {
+      setPartnerStatus({
+        type: "error",
+        message: error?.message || "Could not submit request. Please try again.",
+      });
+    } finally {
+      setSubmittingPartner(false);
+    }
+  };
   useEffect(() => {
     if (!searchTerm || searchTerm.trim().length === 0) return;
     const id = setTimeout(() => {
@@ -91,17 +156,24 @@ const Header = () => {
             </div>
           </Link>
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center bg-white border border-gray-200 rounded-xl px-3 py-2">
+            <a
+              href="tel:+918252753985"
+              className="hidden sm:flex items-center bg-white border border-gray-200 rounded-xl px-3 py-2 hover:border-green-300 transition"
+            >
               <FaPhone className="text-green-700 mr-2" />
               <div className="text-sm">
                 <p className="font-bold text-gray-900">Call 82527 53985</p>
                 <p className="text-[11px] text-gray-500">86% Response rate</p>
               </div>
-            </div>
-            <a href="mailto:maakavitalaxmi@gmail.com" className="hidden sm:inline-flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-green-800">
+            </a>
+            <button
+              type="button"
+              onClick={() => setShowPartnerPanel(true)}
+              className="hidden sm:inline-flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-green-800"
+            >
               <FaEnvelope />
               Send Email
-            </a>
+            </button>
             <Link
               to="/cart"
               className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-all shadow-sm"
@@ -217,6 +289,143 @@ const Header = () => {
               )}
             </div>
           </nav>
+        </div>
+      )}
+
+      {/* Partner Form Side Panel */}
+      {showPartnerPanel && (
+        <div className="fixed inset-0 z-50">
+          <div
+            className="absolute inset-0 bg-black/35"
+            onClick={() => setShowPartnerPanel(false)}
+          />
+          <aside className="absolute right-0 top-0 h-full w-full sm:w-[420px] bg-white shadow-2xl flex flex-col">
+            <div className="px-4 sm:px-5 py-4 border-b border-slate-200 flex items-start justify-between gap-3">
+              <div>
+                <p className="text-lg font-black text-slate-900 leading-tight">Become a Wholesale Partner</p>
+                <p className="text-xs text-slate-500 mt-1">Share details and our team will connect quickly.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowPartnerPanel(false)}
+                className="h-9 w-9 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+              >
+                <FaTimes className="mx-auto" />
+              </button>
+            </div>
+
+            <div className="p-4 sm:p-5 overflow-y-auto">
+              {partnerStatus.message && (
+                <div
+                  className={`mb-3 rounded-lg border px-3 py-2 text-xs font-semibold ${
+                    partnerStatus.type === "success"
+                      ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+                      : "bg-red-50 border-red-200 text-red-700"
+                  }`}
+                >
+                  {partnerStatus.message}
+                </div>
+              )}
+
+              <form onSubmit={handlePartnerSubmit} className="grid grid-cols-1 gap-3">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Company Name</label>
+                  <input
+                    type="text"
+                    name="companyName"
+                    value={partnerForm.companyName}
+                    onChange={handlePartnerFormChange}
+                    required
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:border-green-600"
+                    placeholder="Enter company name"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">GST Number</label>
+                  <input
+                    type="text"
+                    name="gstNumber"
+                    value={partnerForm.gstNumber}
+                    onChange={handlePartnerFormChange}
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:border-green-600"
+                    placeholder="Optional"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Contact Person</label>
+                  <input
+                    type="text"
+                    name="contactName"
+                    value={partnerForm.contactName}
+                    onChange={handlePartnerFormChange}
+                    required
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:border-green-600"
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Phone Number</label>
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    value={partnerForm.phoneNumber}
+                    onChange={handlePartnerFormChange}
+                    required
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:border-green-600"
+                    placeholder="WhatsApp / mobile"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={partnerForm.email}
+                    onChange={handlePartnerFormChange}
+                    required
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:border-green-600"
+                    placeholder="Business email"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Required Quantity (Monthly)</label>
+                  <input
+                    type="text"
+                    name="quantity"
+                    value={partnerForm.quantity}
+                    onChange={handlePartnerFormChange}
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:border-green-600"
+                    placeholder="e.g. 200 Kg"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Message</label>
+                  <textarea
+                    rows={3}
+                    name="message"
+                    value={partnerForm.message}
+                    onChange={handlePartnerFormChange}
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm outline-none focus:border-green-600 resize-none"
+                    placeholder="Share product/category requirements"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={submittingPartner}
+                  className="mt-1 h-10 rounded-lg bg-green-700 text-white text-sm font-bold hover:bg-green-800 disabled:opacity-60"
+                >
+                  {submittingPartner ? "Submitting..." : "Submit Request"}
+                </button>
+              </form>
+            </div>
+          </aside>
         </div>
       )}
     </header>
