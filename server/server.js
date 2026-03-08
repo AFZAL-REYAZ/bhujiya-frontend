@@ -3,6 +3,7 @@ require("dotenv").config(); // MUST be first
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 const connectDB = require("./src/config/db");
 const routes = require("./src/routes/router");
@@ -18,6 +19,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // ===== DATABASE =====
 connectDB();

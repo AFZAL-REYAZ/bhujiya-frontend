@@ -8,12 +8,38 @@ import TestimonialsSection from "./TestimonialsSection";
 import QuoteModal from "./QuoteModal";
 import { bestSellers, featuredProducts, getProductDetails } from "./data";
 
-const LandingPage = () => {
+const normalizeProductImage = (imagePath) => {
+  if (!imagePath) return "";
+  if (/^https?:\/\//i.test(imagePath)) return imagePath;
+
+  const baseApi = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  const origin = baseApi.replace(/\/api\/?$/, "");
+  const cleanPath = imagePath.startsWith("/") ? imagePath : `/${imagePath}`;
+  return `${origin}${cleanPath}`;
+};
+
+const mapLiveProduct = (product, index) => ({
+  id: product._id || `live-${index}`,
+  title: product.name || "Untitled Product",
+  price: String(product.price ?? "0"),
+  image: normalizeProductImage(product.image),
+  quantity: product.qty ? `${product.qty} pcs` : "Available",
+});
+
+const LandingPage = ({ products = [] }) => {
   const [showQuoteModal, setShowQuoteModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quoteForm, setQuoteForm] = useState({ name: "", mobile: "", email: "", message: "" });
   const [quoteSource, setQuoteSource] = useState("featured");
   const [quoteSectionLabel, setQuoteSectionLabel] = useState("Featured Products");
+
+  const liveFeaturedProducts = Array.isArray(products)
+    ? products.slice(0, 8).map(mapLiveProduct)
+    : [];
+
+  const finalFeaturedProducts = liveFeaturedProducts.length > 0
+    ? liveFeaturedProducts
+    : featuredProducts;
 
   const handleOpenModal = (product, origin) => {
     const source = origin || "featured";
@@ -30,7 +56,7 @@ const LandingPage = () => {
   return (
     <div className="font-sans overflow-hidden bg-[#f3f2ee]">
       <HeroPage />
-      <FeaturedSection items={featuredProducts} onOpen={handleOpenModal} />
+      <FeaturedSection items={finalFeaturedProducts} onOpen={handleOpenModal} />
       <WhyChooseUsSection />
       <BestSellersSection items={bestSellers} onOpen={handleOpenModal} />
       <TestimonialsSection />

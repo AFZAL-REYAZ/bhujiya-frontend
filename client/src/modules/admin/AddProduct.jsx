@@ -3,12 +3,20 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import { FaPlus, FaCloudUploadAlt, FaTrash } from "react-icons/fa";
 
+const CATEGORY_OPTIONS = [
+  "Spicy Namkeen",
+  "Halka Fulka Snacks",
+  "Other",
+];
+
 export default function AddProduct({ onAdd }) {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
     qty: "",
     description: "",
+    category: "Spicy Namkeen",
+    customCategory: "",
   });
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -41,6 +49,11 @@ export default function AddProduct({ onAdd }) {
     data.append("price", formData.price);
     data.append("qty", formData.qty);
     data.append("description", formData.description);
+    const finalCategory =
+      formData.category === "Other"
+        ? (formData.customCategory || "Other").trim()
+        : formData.category;
+    data.append("category", finalCategory);
     if (image) data.append("image", image);
 
     try {
@@ -57,7 +70,14 @@ export default function AddProduct({ onAdd }) {
         message: "Product added successfully!",
       });
 
-      setFormData({ name: "", price: "", qty: "", description: "" });
+      setFormData({
+        name: "",
+        price: "",
+        qty: "",
+        description: "",
+        category: "Spicy Namkeen",
+        customCategory: "",
+      });
       setImage(null);
       setPreview(null);
       onAdd?.();
@@ -164,6 +184,7 @@ export default function AddProduct({ onAdd }) {
                 placeholder="e.g. Peri Peri Banana Chips" 
               />
             </div>
+
             <div className="space-y-2">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Price (Rs.)</label>
               <input 
@@ -176,6 +197,43 @@ export default function AddProduct({ onAdd }) {
                 placeholder="99" 
               />
             </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Category</label>
+              <select
+                value={formData.category}
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+              >
+                {CATEGORY_OPTIONS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {formData.category === "Other" ? (
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">New Category Name</label>
+                <input
+                  required
+                  value={formData.customCategory}
+                  onChange={(e) => setFormData({ ...formData, customCategory: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+                  placeholder="e.g. Festival Specials"
+                />
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Category Preview</label>
+                <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 h-[46px] flex items-center font-semibold">
+                  {formData.category}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">

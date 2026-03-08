@@ -455,9 +455,80 @@ function ReviewsSection() {
   );
 }
 
-export default function BusinessToBusiness() {
+const normalizeB2BImage = (imagePath) => {
+  if (!imagePath) return "";
+  if (/^https?:\/\//i.test(imagePath)) return imagePath;
+
+  const baseApi = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  const origin = baseApi.replace(/\/api\/?$/, "");
+  const cleanPath = imagePath.startsWith("/") ? imagePath : `/${imagePath}`;
+  return `${origin}${cleanPath}`;
+};
+
+const normalizeCategoryKey = (value) => {
+  const raw = String(value || "").trim().toLowerCase();
+  if (!raw) return "spicy-namkeen";
+
+  if (raw.includes("spicy") || raw.includes("namkeen")) return "spicy-namkeen";
+  if (raw.includes("halka") || raw.includes("snack")) return "halka-fulka-snacks";
+  return raw.replace(/\s+/g, "-");
+};
+
+const getCategoryLabel = (value) => {
+  const key = normalizeCategoryKey(value);
+  if (key === "spicy-namkeen") return "Spicy Namkeen";
+  if (key === "halka-fulka-snacks") return "Halka Fulka Snacks";
+  return String(value || "Other Category")
+    .trim()
+    .replace(/\b\w/g, (ch) => ch.toUpperCase());
+};
+
+const mapB2BProduct = (product, idx) => ({
+  id: product._id || `b2b-live-${idx}`,
+  title: product.name || "Untitled Product",
+  price: Number(product.price || 0),
+  image: normalizeB2BImage(product.image),
+  category: product.category || "Spicy Namkeen",
+  categoryKey: normalizeCategoryKey(product.category),
+  categoryLabel: getCategoryLabel(product.category),
+  minQty: 10,
+  details: {
+    brand: "Maa Kavita Laxmi",
+    packagingType: "Packet",
+    shelfLife: "4 months",
+  },
+});
+
+export default function BusinessToBusiness({ products = [] }) {
   const [form, setForm] = useState(initialFormState);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const fallbackProducts = [
+    { id:"c1", title:"Classic Banana Chips", price:220, image:bananaChips, minQty:10, category:"Spicy Namkeen", categoryKey:"spicy-namkeen", categoryLabel:"Spicy Namkeen", details:{ productType:"100% Vegetarian", brand:"Sonal Foods", shelfLife:"4 months" } },
+    { id:"c2", title:"Banana Powder", price:220, image:bananaPowder, minQty:10, category:"Spicy Namkeen", categoryKey:"spicy-namkeen", categoryLabel:"Spicy Namkeen", details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
+    { id:"c3", title:"Banana Length Pepper", price:220, image:bananach5, minQty:10, category:"Spicy Namkeen", categoryKey:"spicy-namkeen", categoryLabel:"Spicy Namkeen", details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
+    { id:"c4", title:"Banana Salti Chips", price:230, image:bananaSalti, minQty:10, category:"Halka Fulka Snacks", categoryKey:"halka-fulka-snacks", categoryLabel:"Halka Fulka Snacks", details:{ ingredients:"Chana", flavour:"Masala Salted", shelfLife:"4 months" } },
+    { id:"h1", title:"Spicy Banana Chips", price:100, image:bananaChilli, minQty:10, category:"Halka Fulka Snacks", categoryKey:"halka-fulka-snacks", categoryLabel:"Halka Fulka Snacks", details:{ packagingType:"Packet", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
+    { id:"h2", title:"Signature Banana Chips", price:200, image:chilliBana, minQty:10, category:"Halka Fulka Snacks", categoryKey:"halka-fulka-snacks", categoryLabel:"Halka Fulka Snacks", details:{ flavour:"Crispy", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
+  ];
+
+  const liveProducts = Array.isArray(products) && products.length > 0
+    ? products.map(mapB2BProduct)
+    : fallbackProducts;
+
+  const heroProducts = liveProducts.slice(0, 2);
+  const spicyProducts = liveProducts.filter((p) => p.categoryKey === "spicy-namkeen");
+  const snacksProducts = liveProducts.filter((p) => p.categoryKey === "halka-fulka-snacks");
+  const otherCategoryKeys = Array.from(
+    new Set(
+      liveProducts
+        .filter((p) => !["spicy-namkeen", "halka-fulka-snacks"].includes(p.categoryKey))
+        .map((p) => p.categoryKey)
+    )
+  );
+
+  const spicyProductsToShow = spicyProducts.length > 0 ? spicyProducts.slice(0, 8) : liveProducts.slice(0, 4);
+  const snacksProductsToShow = snacksProducts.length > 0 ? snacksProducts.slice(0, 8) : liveProducts.slice(4, 8).length > 0 ? liveProducts.slice(4, 8) : liveProducts.slice(0, 4);
 
   const handleQuoteRequest = (product) => {
     setSelectedProduct(product);
@@ -529,16 +600,19 @@ export default function BusinessToBusiness() {
           <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
             <CategoryThumbs />
             <div className="mt-6 grid lg:grid-cols-2 gap-6">
-              <WideQuoteCard
-                product={{ id:"w1", title:"Spicy Banana Chips", price:400, image:bananaChilli }}
-                details={{ brand:"Maa Kavita Laxmi", flavour:"Namkeen", packaging:"Packet", shelfLife:"4 months" }}
-                onQuote={handleQuoteRequest}
-              />
-              <WideQuoteCard
-                product={{ id:"w2", title:"Banana Length Pepper", price:400, image:bananach5 }}
-                details={{ brand:"Maa Kavita Laxmi", ingredient:"Besan", packagingSize:"1 kg",shelfLife:"4 months" }}
-                onQuote={handleQuoteRequest}
-              />
+              {heroProducts.map((product) => (
+                <WideQuoteCard
+                  key={product.id}
+                  product={product}
+                  details={{
+                    brand: "Maa Kavita Laxmi",
+                    flavour: "Premium",
+                    packaging: "Packet",
+                    shelfLife: "4 months",
+                  }}
+                  onQuote={handleQuoteRequest}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -587,43 +661,57 @@ export default function BusinessToBusiness() {
         <section className="mt-12">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-xl font-bold text-gray-900">Our Products</h3>
-            <button className="text-xs font-black text-gray-500 uppercase tracking-widest hover:text-gray-900">View All categories</button>
+            <span className="text-xs font-black text-emerald-700 uppercase tracking-widest">Live Inventory</span>
           </div>
           <h4 className="text-sm font-bold text-gray-900 mb-4">Spicy Namkeen</h4>
           <div className="grid md:grid-cols-4 gap-6">
-            {[
-              { id:"c1", title:"Classic Banana Chips", price:220, image:bananaChips, minQty:10, details:{ productType:"100% Vegetarian", brand:"Sonal Foods", shelfLife:"4 months" } },
-              { id:"c2", title:"Banana Powder", price:220, image:bananaPowder, minQty:10, details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
-              { id:"c3", title:"Banana Length Pepper", price:220, image:bananach5, minQty:10, details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
-              { id:"c4", title:"Banana Salti Chips", price:230, image:bananaSalti, minQty:10, details:{ ingredients:"Chana", flavour:"Masala Salted", shelfLife:"4 months" } },
-            ].map(p => (
+            {spicyProductsToShow.map((p) => (
               <QuoteProductCard
                 key={p.id}
                 product={p}
-                details={p.details}
+                details={p.details || { brand: "Maa Kavita Laxmi", shelfLife: "4 months" }}
                 onQuote={handleQuoteRequest}
               />
             ))}
           </div>
           <div className="mt-10 flex items-center justify-between mb-4">
             <h4 className="text-sm font-bold text-gray-900">Halka Fulka Snacks</h4>
-            <button className="text-xs font-black text-gray-500 uppercase tracking-widest hover:text-gray-900">View All</button>
+            <span className="text-xs font-black text-gray-500 uppercase tracking-widest">Freshly Added</span>
           </div>
           <div className="grid md:grid-cols-4 gap-6">
-            {[
-              { id:"h1", title:"Banana Salti Chips", price:180, image:bananaSalti, minQty:10, details:{ flavour:"Masala Salted",  brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
-              { id:"h2", title:"Spicy Banana Chips", price:100, image:bananaChilli, minQty:10, details:{ packagingType:"Packet", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
-              { id:"h3", title:"Classic Banana Chips", price:200, image:bananaChips, minQty:10, details:{ flavour:"Tomato",  brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
-              { id:"h4", title:"Banana Length Pepper", price:230, image:bananach5, minQty:10, details:{ flavour:"Magic Masala", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
-            ].map(p => (
+            {snacksProductsToShow.map((p) => (
               <QuoteProductCard
                 key={p.id}
                 product={p}
-                details={p.details}
+                details={p.details || { brand: "Maa Kavita Laxmi", shelfLife: "4 months" }}
                 onQuote={handleQuoteRequest}
               />
             ))}
           </div>
+
+          {otherCategoryKeys.map((categoryKey) => {
+            const items = liveProducts.filter((p) => p.categoryKey === categoryKey).slice(0, 8);
+            if (items.length === 0) return null;
+
+            return (
+              <div key={categoryKey} className="mt-10">
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-sm font-bold text-gray-900">{items[0].categoryLabel || getCategoryLabel(categoryKey)}</h4>
+                  <span className="text-xs font-black text-gray-500 uppercase tracking-widest">Dropdown Category</span>
+                </div>
+                <div className="grid md:grid-cols-4 gap-6">
+                  {items.map((p) => (
+                    <QuoteProductCard
+                      key={p.id}
+                      product={p}
+                      details={p.details || { brand: "Maa Kavita Laxmi", shelfLife: "4 months" }}
+                      onQuote={handleQuoteRequest}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </section>
 
         <ReviewsSection />

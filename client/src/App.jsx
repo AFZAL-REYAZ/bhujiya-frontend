@@ -39,7 +39,12 @@ const App = () => {
     try {
       // Use API instead of axios directly if you have an interceptor
       const { data } = await API.get('/products');
-      setProducts(data);
+      const normalizedProducts = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.products)
+          ? data.products
+          : [];
+      setProducts(normalizedProducts);
     } catch (error) {
       console.error("Products load fail:", error);
     }
@@ -82,7 +87,7 @@ const App = () => {
 
         {/* ================= PUBLIC SECTION (With Header/Footer) ================= */}
         <Route path="/" element={<PublicLayout />}>
-          <Route index element={<Landing />} />
+          <Route index element={<Landing products={products} />} />
 
           {/* Dynamic Product Routes */}
           <Route path="ProductDetail" element={<ProductDetail />} />
@@ -93,7 +98,7 @@ const App = () => {
           <Route path="about" element={<About />} />
           <Route path="terms" element={<Terms />} />
           <Route path="privacy" element={<Privacy />} />
-          <Route path="b2b" element={<BusinessToBusiness />} />
+          <Route path="b2b" element={<BusinessToBusiness products={products} />} />
 
           {/* 404 Catch-all */}
           <Route
