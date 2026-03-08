@@ -27,6 +27,7 @@ import AdminLayout from './components/adminlayout/AdminLayout'
 import AdminLogin from './modules/admin/Login'
 import Dashboard from './modules/admin/Dashboard'
 import AddProduct from './modules/admin/AddProduct'
+import ManageProducts from './modules/admin/ManageProducts'
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -83,6 +84,7 @@ const App = () => {
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard products={products} refreshProducts={fetchProducts} />} />
           <Route path="add-product" element={<AddProduct onAdd={fetchProducts} />} />
+          <Route path="live-products" element={<ManageProducts products={products} refreshProducts={fetchProducts} />} />
         </Route>
 
         {/* ================= PUBLIC SECTION (With Header/Footer) ================= */}

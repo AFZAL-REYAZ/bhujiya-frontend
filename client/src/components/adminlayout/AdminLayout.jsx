@@ -12,6 +12,7 @@ import {
   FaRegClock,
   FaChevronLeft,
   FaChevronRight,
+  FaEdit,
 } from "react-icons/fa";
 
 const AdminLayout = ({ onLogout }) => {
@@ -22,6 +23,7 @@ const AdminLayout = ({ onLogout }) => {
   const menuItems = [
     { path: "/admin/dashboard", icon: <FaBoxOpen />, label: "Dashboard" },
     { path: "/admin/add-product", icon: <FaPlusCircle />, label: "Add Product" },
+    { path: "/admin/live-products", icon: <FaEdit />, label: "Live Products" },
   ];
 
   const handleNavigateHome = () => {
