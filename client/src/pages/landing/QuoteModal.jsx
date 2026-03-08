@@ -1,9 +1,11 @@
 import React from "react";
-import { sendEmail } from "../../utils/email";
+import { submitQuote } from "../../utils/orderApi";
 
 const QuoteModal = ({
   open,
   product,
+  source,
+  sourceLabel,
   quoteForm,
   setQuoteForm,
   onClose,
@@ -61,25 +63,33 @@ const QuoteModal = ({
             <form
               className="mt-4 grid gap-3"
               onSubmit={async (e) => {
-                e.preventDefault();
-                const sellerNumber = "917366981951";
-                const text = `Quote/Callback Request\nProduct: ${product.title}\nPrice: ₹${product.price} / ${product.quantity}\nName: ${quoteForm.name}\nMobile: ${quoteForm.mobile}\nEmail: ${quoteForm.email || "N/A"}\nMessage: ${quoteForm.message || ""}`;
-                const subject = `Quote Request: ${product.title}`;
-                try {
-                  await sendEmail({
-                    subject,
-                    message: text,
-                    fromName: quoteForm.name,
-                    fromEmail: quoteForm.email,
-                    phone: quoteForm.mobile,
-                  });
-                } catch {
-                  // ignore - fallback is WhatsApp below
-                }
-                const wa = `https://wa.me/${sellerNumber}?text=${encodeURIComponent(text)}`;
-                window.open(wa, "_blank");
-                onClose();
-                setQuoteForm({ name: "", mobile: "", email: "", message: "" });
+                  e.preventDefault();
+                  try {
+                    await submitQuote({
+                      source: source || "featured",
+                      sourceLabel: sourceLabel || "Featured Products",
+                      product: {
+                        id: product.id,
+                        title: product.title,
+                        price: product.price,
+                        quantity: product.quantity,
+                        image: product.image,
+                      },
+                      customer: {
+                        name: quoteForm.name,
+                        phone: quoteForm.mobile,
+                        email: quoteForm.email,
+                      },
+                      message: quoteForm.message,
+                      page: "home",
+                      section: sourceLabel || "",
+                    });
+                    alert("Your order is confirmed.");
+                    onClose();
+                    setQuoteForm({ name: "", mobile: "", email: "", message: "" });
+                  } catch (error) {
+                    alert(error.message || "Could not submit your order.");
+                  }
               }}
             >
               <div className="grid sm:grid-cols-2 gap-3">

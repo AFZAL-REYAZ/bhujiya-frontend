@@ -20,7 +20,7 @@ import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 import upiqr from "../assets/banana/upi-qr.jpeg";
 import ContactForm from "./ContactForm";
-import { sendEmail } from "../utils/email";
+import { submitQuote } from "../utils/orderApi";
 function BusinessToBusinessPageOld() {
   const navigate = useNavigate();
   const [loadingId, setLoadingId] = useState(null);
@@ -231,9 +231,13 @@ const initialFormState = {
   message: "",
 };
 
-function QuoteProductCard({ product, details }) {
+function QuoteProductCard({ product, details, onQuote }) {
   const navigate = useNavigate();
   const requestQuote = () => {
+    if (onQuote) {
+      onQuote(product);
+      return;
+    }
     const subject = encodeURIComponent(`Quote Request: ${product.title}`);
     const body = encodeURIComponent(`Product: ${product.title}\nPreferred quantity: ${product.minQty} kg+\nPlease share best wholesale pricing and dispatch timeline.`);
     window.location.href = `mailto:maakavitalaxmi@gmail.com?subject=${subject}&body=${body}`;
@@ -325,8 +329,12 @@ function CategoryThumbs() {
   );
 }
 
-function WideQuoteCard({ product, details }) {
+function WideQuoteCard({ product, details, onQuote }) {
   const requestQuote = () => {
+    if (onQuote) {
+      onQuote(product);
+      return;
+    }
     const subject = encodeURIComponent(`Quote Request: ${product.title}`);
     const body = encodeURIComponent(`Product: ${product.title}\nPlease share wholesale pricing, packaging, and dispatch timeline.`);
     window.location.href = `mailto:maakavitalaxmi@gmail.com?subject=${subject}&body=${body}`;
@@ -449,6 +457,22 @@ function ReviewsSection() {
 
 export default function BusinessToBusiness() {
   const [form, setForm] = useState(initialFormState);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleQuoteRequest = (product) => {
+    setSelectedProduct(product);
+    setForm((previous) => ({
+      ...previous,
+      quantity: previous.quantity || (product.minQty ? `${product.minQty} kg` : ""),
+      message:
+        previous.message ||
+        `Interested in ${product.title}. Please share best wholesale pricing and dispatch timeline.`,
+    }));
+    const formEl = document.getElementById("wholesale-form");
+    if (formEl) {
+      formEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -460,28 +484,40 @@ export default function BusinessToBusiness() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const subject = "Wholesale Enquiry";
-    const message =
-      `Company: ${form.companyName}\n` +
-      `GST: ${form.gstNumber || "N/A"}\n` +
-      `Contact: ${form.contactName}\n` +
-      `Phone: ${form.phoneNumber}\n` +
-      `Email: ${form.email}\n` +
-      `Quantity: ${form.quantity || "N/A"}\n` +
-      `Message: ${form.message || ""}`;
     try {
-      await sendEmail({
-        subject,
-        message,
-        fromName: form.contactName,
-        fromEmail: form.email,
-        phone: form.phoneNumber,
+      await submitQuote({
+        source: "b2b",
+        sourceLabel: "B2B Page",
+        product: selectedProduct
+          ? {
+              id: selectedProduct.id,
+              title: selectedProduct.title,
+              price: selectedProduct.price,
+              quantity: selectedProduct.minQty ? `${selectedProduct.minQty} kg` : "",
+              image: selectedProduct.image,
+            }
+          : undefined,
+        customer: {
+          name: form.contactName,
+          phone: form.phoneNumber,
+          email: form.email,
+        },
+        company: {
+          name: form.companyName,
+          gstNumber: form.gstNumber,
+        },
+        quantity: form.quantity,
+        message: form.message,
+        page: "b2b",
+        section: "B2B",
       });
-      toast.success("Wholesale enquiry sent. We will contact you soon.");
-      setForm(initialFormState);
     } catch {
-      toast.error("Could not send enquiry. Please try again.");
+      toast.error("Could not submit enquiry. Please try again.");
+      return;
     }
+    toast.success("Your order is confirmed.");
+    setForm(initialFormState);
+    setSelectedProduct(null);
   };
 
   return (
@@ -496,10 +532,12 @@ export default function BusinessToBusiness() {
               <WideQuoteCard
                 product={{ id:"w1", title:"Spicy Banana Chips", price:400, image:bananaChilli }}
                 details={{ brand:"Maa Kavita Laxmi", flavour:"Namkeen", packaging:"Packet", shelfLife:"4 months" }}
+                onQuote={handleQuoteRequest}
               />
               <WideQuoteCard
                 product={{ id:"w2", title:"Banana Length Pepper", price:400, image:bananach5 }}
                 details={{ brand:"Maa Kavita Laxmi", ingredient:"Besan", packagingSize:"1 kg",shelfLife:"4 months" }}
+                onQuote={handleQuoteRequest}
               />
             </div>
           </div>
@@ -558,7 +596,14 @@ export default function BusinessToBusiness() {
               { id:"c2", title:"Banana Powder", price:220, image:bananaPowder, minQty:10, details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
               { id:"c3", title:"Banana Length Pepper", price:220, image:bananach5, minQty:10, details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
               { id:"c4", title:"Banana Salti Chips", price:230, image:bananaSalti, minQty:10, details:{ ingredients:"Chana", flavour:"Masala Salted", shelfLife:"4 months" } },
-            ].map(p => <QuoteProductCard key={p.id} product={p} details={p.details} />)}
+            ].map(p => (
+              <QuoteProductCard
+                key={p.id}
+                product={p}
+                details={p.details}
+                onQuote={handleQuoteRequest}
+              />
+            ))}
           </div>
           <div className="mt-10 flex items-center justify-between mb-4">
             <h4 className="text-sm font-bold text-gray-900">Halka Fulka Snacks</h4>
@@ -570,7 +615,14 @@ export default function BusinessToBusiness() {
               { id:"h2", title:"Spicy Banana Chips", price:100, image:bananaChilli, minQty:10, details:{ packagingType:"Packet", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
               { id:"h3", title:"Classic Banana Chips", price:200, image:bananaChips, minQty:10, details:{ flavour:"Tomato",  brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
               { id:"h4", title:"Banana Length Pepper", price:230, image:bananach5, minQty:10, details:{ flavour:"Magic Masala", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
-            ].map(p => <QuoteProductCard key={p.id} product={p} details={p.details} />)}
+            ].map(p => (
+              <QuoteProductCard
+                key={p.id}
+                product={p}
+                details={p.details}
+                onQuote={handleQuoteRequest}
+              />
+            ))}
           </div>
         </section>
 
@@ -612,7 +664,7 @@ export default function BusinessToBusiness() {
 
         <section
           id="wholesale-form"
-          className="hidden"
+          className="mt-16"
         >
           <div className="bg-white rounded-3xl px-6 sm:px-8 py-8 shadow-sm border border-[#E5D7C3]">
             <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a]">
