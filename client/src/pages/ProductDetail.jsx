@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { ShoppingBag, Heart, Star, Plus, Minus, Building2, CalendarDays, Users, CircleDollarSign, IdCard, FileText, Truck, ShieldCheck, ThumbsUp } from "lucide-react";
 import API from "../config/api/apiconfig";
+import { submitQuote } from "../utils/orderApi";
 
 // Assets
 import bananaChilli from "../assets/banana/bananaChilli.jpeg";
@@ -323,17 +324,34 @@ export default function ProductDetail() {
                     </div>
                     <form
                       className="mt-4 grid gap-3"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        const sellerNumber = "917366981951";
-                        const text = `Quote/Callback Request\nProduct: ${detailProduct.title}\nPrice: ₹${detailProduct.price} / ${detailProduct.unit}\nName: ${quoteForm.name}\nMobile: ${quoteForm.mobile}\nEmail: ${quoteForm.email}\nMessage: ${quoteForm.message}`;
-                        const wa = `https://wa.me/${sellerNumber}?text=${encodeURIComponent(text)}`;
-                        window.open(wa, "_blank");
-                        const subject = `Quote Request: ${detailProduct.title}`;
-                        const body = encodeURIComponent(text);
-                        window.location.href = `mailto:maakavitalaxmi@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-                        setShowQuoteModal(false);
-                        setQuoteForm({ name: "", mobile: "", email: "", message: "" });
+                      onSubmit={async (e) => {
+                          e.preventDefault();
+                          try {
+                            await submitQuote({
+                              source: "product",
+                              sourceLabel: "Product Detail",
+                              product: {
+                                id: detailProduct.id || id,
+                                title: detailProduct.title,
+                                price: detailProduct.price,
+                                quantity: detailProduct.unit,
+                                image: detailProduct.image,
+                              },
+                              customer: {
+                                name: quoteForm.name,
+                                phone: quoteForm.mobile,
+                                email: quoteForm.email,
+                              },
+                              message: quoteForm.message,
+                              page: "product",
+                              section: "Product Detail",
+                            });
+                            alert("Your order is confirmed.");
+                            setShowQuoteModal(false);
+                            setQuoteForm({ name: "", mobile: "", email: "", message: "" });
+                          } catch (error) {
+                            alert(error.message || "Could not submit your order.");
+                          }
                       }}
                     >
                       <div className="grid sm:grid-cols-2 gap-3">

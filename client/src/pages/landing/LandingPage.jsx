@@ -12,9 +12,18 @@ const LandingPage = () => {
   const [showQuoteModal, setShowQuoteModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [quoteForm, setQuoteForm] = useState({ name: "", mobile: "", email: "", message: "" });
+  const [quoteSource, setQuoteSource] = useState("featured");
+  const [quoteSectionLabel, setQuoteSectionLabel] = useState("Featured Products");
 
-  const handleOpenModal = (product) => {
+  const handleOpenModal = (product, origin) => {
+    const source = origin || "featured";
+    const sectionLabelMap = {
+      featured: "Featured Products",
+      bestseller: "Best Sellers",
+    };
     setSelectedProduct(product);
+    setQuoteSource(source);
+    setQuoteSectionLabel(sectionLabelMap[source] || "Featured Products");
     setShowQuoteModal(true);
   };
 
@@ -28,6 +37,8 @@ const LandingPage = () => {
       <QuoteModal
         open={showQuoteModal}
         product={selectedProduct}
+        source={quoteSource}
+        sourceLabel={quoteSectionLabel}
         quoteForm={quoteForm}
         setQuoteForm={setQuoteForm}
         onClose={() => setShowQuoteModal(false)}

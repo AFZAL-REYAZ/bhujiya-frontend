@@ -31,6 +31,8 @@ import AddProduct from './modules/admin/AddProduct'
 const App = () => {
   const [products, setProducts] = useState([]);
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem('isAdmin') === 'true');
+  const adminOpen = true; // allow admin access without login
+  const canAccessAdmin = adminOpen || isAdmin;
 
   // Fetch products for both Admin and Customer view
   const fetchProducts = async () => {
@@ -49,7 +51,8 @@ const App = () => {
 
   // Admin Logout Logic
   const handleAdminLogout = () => {
-    localStorage.removeItem('token'); // Clear admin token too
+    localStorage.removeItem('token');
+    localStorage.removeItem('adminToken');
     localStorage.removeItem('isAdmin');
     setIsAdmin(false);
   };
@@ -63,13 +66,13 @@ const App = () => {
         {/* Admin Login Route */}
         <Route 
           path="/admin/login" 
-          element={isAdmin ? <Navigate to="/admin/dashboard" /> : <AdminLogin onLogin={() => setIsAdmin(true)} />} 
+          element={canAccessAdmin ? <Navigate to="/admin/dashboard" /> : <AdminLogin onLogin={() => setIsAdmin(true)} />} 
         />
 
         {/* Protected Admin Routes */}
         <Route 
           path="/admin" 
-          element={isAdmin ? <AdminLayout onLogout={handleAdminLogout} /> : <Navigate to="/admin/login" />}
+          element={canAccessAdmin ? <AdminLayout onLogout={handleAdminLogout} /> : <Navigate to="/admin/login" />}
         >
           {/* Default admin path leads to dashboard */}
           <Route index element={<Navigate to="dashboard" />} />

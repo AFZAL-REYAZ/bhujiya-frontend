@@ -16,7 +16,7 @@ const FeaturedSection = ({ items, onOpen }) => {
 
         <div className="grid md:grid-cols-4 gap-8">
           {items.map((p) => (
-            <ProductCard key={p.id} product={p} onOpen={onOpen} />
+            <ProductCard key={p.id} product={p} onOpen={onOpen} origin="featured" />
           ))}
         </div>
       </div>

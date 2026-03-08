@@ -14,6 +14,7 @@ export default function AddProduct({ onAdd }) {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef();
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
   const [toast, setToast] = useState({
   show: false,
   type: "",
@@ -33,7 +34,7 @@ export default function AddProduct({ onAdd }) {
   e.preventDefault();
   setLoading(true);
 
-  const token = localStorage.getItem("adminToken");
+  const token = localStorage.getItem("adminToken") || localStorage.getItem("token");
 
   const data = new FormData();
   data.append("name", formData.name);
@@ -43,7 +44,7 @@ export default function AddProduct({ onAdd }) {
   if (image) data.append("image", image);
 
   try {
-    await axios.post("http://localhost:5000/api/products/add", data, {
+    await axios.post(`${API_BASE_URL}/products/add`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
