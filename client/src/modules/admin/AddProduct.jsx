@@ -100,12 +100,12 @@ export default function AddProduct({ onAdd }) {
     <motion.div 
       initial={{ opacity: 0, y: 20 }} 
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-[1150px] mx-auto pb-16"
+      className="max-w-[1120px] mx-auto pb-8"
     >
-      <div className="mb-5 sm:mb-6">
+      <div className="mb-3 sm:mb-4">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">Add New Snack</h2>
-          <p className="text-slate-500 text-sm sm:text-base font-medium">Inventory me naya product add karein with clean details.</p>
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Add New Snack</h2>
+          <p className="text-slate-500 text-xs sm:text-sm font-medium">Inventory me naya product add karein with clean details.</p>
         </div>
       </div>
 
@@ -121,11 +121,11 @@ export default function AddProduct({ onAdd }) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 xl:grid-cols-12 gap-4 sm:gap-5">
-        <div className="xl:col-span-4 space-y-4">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 xl:grid-cols-12 gap-3 sm:gap-4">
+        <div className="xl:col-span-4 space-y-3">
           <div 
             onClick={() => fileInputRef.current.click()}
-            className="group relative h-64 sm:h-72 xl:h-[360px] w-full bg-slate-100 rounded-3xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center overflow-hidden cursor-pointer hover:border-emerald-500 transition-all"
+            className="group relative h-52 sm:h-60 xl:h-[300px] w-full bg-slate-100 rounded-2xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center overflow-hidden cursor-pointer hover:border-emerald-500 transition-all"
           >
             {preview ? (
               <>
@@ -135,10 +135,10 @@ export default function AddProduct({ onAdd }) {
                 </div>
               </>
             ) : (
-              <div className="text-center p-6">
-                <FaCloudUploadAlt className="text-slate-300 text-5xl mx-auto mb-3" />
+              <div className="text-center p-4">
+                <FaCloudUploadAlt className="text-slate-300 text-4xl mx-auto mb-2" />
                 <p className="text-slate-600 font-extrabold text-xs uppercase tracking-widest">Upload Product Image</p>
-                <p className="text-[11px] text-slate-400 mt-2">PNG/JPG, recommended square image</p>
+                <p className="text-[10px] text-slate-400 mt-1">PNG/JPG, recommended square image</p>
               </div>
             )}
             <input 
@@ -162,9 +162,9 @@ export default function AddProduct({ onAdd }) {
             </button>
           )}
 
-          <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm">
+          <div className="bg-white border border-slate-100 rounded-xl p-3 shadow-sm">
             <p className="text-[11px] font-black uppercase tracking-wider text-slate-400">Quick Tips</p>
-            <ul className="mt-2 text-xs text-slate-500 space-y-1.5">
+            <ul className="mt-1.5 text-xs text-slate-500 space-y-1">
               <li>Use clear product name and exact price.</li>
               <li>Keep description short and benefit-focused.</li>
               <li>Upload clean front-facing product image.</li>
@@ -172,20 +172,20 @@ export default function AddProduct({ onAdd }) {
           </div>
         </div>
 
-        <div className="xl:col-span-8 bg-white p-4 sm:p-6 lg:p-7 rounded-3xl shadow-sm border border-slate-100 space-y-5">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
+        <div className="xl:col-span-8 bg-white p-3 sm:p-4 lg:p-5 rounded-2xl shadow-sm border border-slate-100 space-y-3.5">
+          <div className="grid md:grid-cols-2 gap-3">
+            <div className="space-y-1.5">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Snack Name</label>
               <input 
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all" 
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all" 
                 placeholder="e.g. Peri Peri Banana Chips" 
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Price (Rs.)</label>
               <input 
                 type="number"
@@ -193,19 +193,19 @@ export default function AddProduct({ onAdd }) {
                 required
                 value={formData.price}
                 onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all" 
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all" 
                 placeholder="99" 
               />
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
+          <div className="grid md:grid-cols-2 gap-3">
+            <div className="space-y-1.5">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Category</label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
               >
                 {CATEGORY_OPTIONS.map((option) => (
                   <option key={option} value={option}>
@@ -216,28 +216,28 @@ export default function AddProduct({ onAdd }) {
             </div>
 
             {formData.category === "Other" ? (
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">New Category Name</label>
                 <input
                   required
                   value={formData.customCategory}
                   onChange={(e) => setFormData({ ...formData, customCategory: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+                  className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
                   placeholder="e.g. Festival Specials"
                 />
               </div>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Category Preview</label>
-                <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 h-[46px] flex items-center font-semibold">
+                <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 h-[42px] flex items-center font-semibold">
                   {formData.category}
                 </div>
               </div>
             )}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-2">
+          <div className="grid md:grid-cols-2 gap-3">
+            <div className="space-y-1.5">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Stock Quantity</label>
               <input 
                 type="number"
@@ -245,26 +245,26 @@ export default function AddProduct({ onAdd }) {
                 required
                 value={formData.qty}
                 onChange={(e) => setFormData({ ...formData, qty: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all" 
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all" 
                 placeholder="How many packets?" 
               />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Preview Summary</label>
-              <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs text-slate-600 h-[46px] flex items-center">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-600 h-[42px] flex items-center">
                 {(formData.name || "New Product") + " | Qty: " + (formData.qty || "0")}
               </div>
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Product Description</label>
             <textarea 
               required
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm h-32 resize-none transition-all" 
+              className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm h-24 resize-none transition-all" 
               placeholder="Tell the customers about the taste and ingredients..." 
             />
           </div>
@@ -273,7 +273,7 @@ export default function AddProduct({ onAdd }) {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             disabled={loading}
-            className={`w-full py-3.5 rounded-xl font-black text-sm sm:text-base shadow-sm flex items-center justify-center gap-3 transition-all ${
+            className={`w-full py-3 rounded-xl font-black text-sm shadow-sm flex items-center justify-center gap-2.5 transition-all ${
               loading ? "bg-slate-300 text-slate-100" : "bg-emerald-600 hover:bg-emerald-700 text-white"
             }`}
           >
