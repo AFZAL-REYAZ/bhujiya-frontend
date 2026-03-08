@@ -152,7 +152,7 @@
 
 
 import React, { useState } from "react";
-import { sendEmail } from "../../utils/email"; 
+import { sendEmail } from "../utils/email"; 
 import { 
   FaPhoneAlt, 
   FaEnvelope, 

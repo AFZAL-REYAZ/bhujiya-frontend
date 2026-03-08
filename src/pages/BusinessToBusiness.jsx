@@ -19,7 +19,7 @@ import bananaSalti from "../assets/banana/bananaSalti.jpeg";
 import chilliBana from "../assets/banana/chilliBana.jpeg";
 import bananach5 from "../assets/banana/bananach5.jpeg";
 import upiqr from "../assets/banana/upi-qr.jpeg";
-import ContactForm from "../components/layout/ContactForm";
+import ContactForm from "./ContactForm";
 import { sendEmail } from "../utils/email";
 function BusinessToBusinessPageOld() {
   const navigate = useNavigate();
