@@ -174,7 +174,7 @@ const Header = () => {
               <FaEnvelope />
               Send Email
             </button>
-            <Link
+            {/* <Link
               to="/cart"
               className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-all shadow-sm"
             >
@@ -184,7 +184,7 @@ const Header = () => {
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
-            </Link>
+            </Link> */}
             <button
               type="button"
               className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-700"

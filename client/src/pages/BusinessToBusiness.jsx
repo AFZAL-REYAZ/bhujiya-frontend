@@ -257,22 +257,27 @@ function QuoteProductCard({ product, details, onQuote }) {
         >
           {product.title}
         </h3>
-        <p className="text-sm font-semibold text-gray-800 mt-1">₹ {product.price}/kg</p>
+        <p className="text-sm font-semibold text-gray-800 mt-1">₹ {product.price} / {product.weight || "100 g"}</p>
         {details ? (
           <div className="mt-2 text-xs text-gray-600 space-y-1">
             {details.flavour && <p>Flavour: {details.flavour}</p>}
             {details.packagingType && <p>Packaging Type: {details.packagingType}</p>}
-            {details.packagingSize && <p>Packaging Size: {details.packagingSize}</p>}
+            {details.weight && <p>Weight: {details.weight}</p>}
             {details.shelfLife && <p>Shelf Life: {details.shelfLife}</p>}
             {details.brand && <p>Brand: {details.brand}</p>}
             {details.productType && <p>Product Type: {details.productType}</p>}
             {details.ingredients && <p>Ingredients: {details.ingredients}</p>}
+            {details.origin && <p>Country of Origin: {details.origin}</p>}
+            {details.vegetarian && <p>100% Vegetarian: {details.vegetarian}</p>}
           </div>
         ) : (
           <div className="mt-2 text-xs text-gray-600 space-y-1">
-            <p>Flavour: Premium</p>
-            <p>Packaging Size: 200 gm</p>
+            <p>Brand: Sonal Foods</p>
+            <p>Weight: {product.weight || "100 g"}</p>
             <p>Shelf Life: 6 Months</p>
+            <p>Country of Origin: Made in India</p>
+            <p>Ingredients: Maida, Ghee, Oil, Salt</p>
+            <p>100% Vegetarian: Yes</p>
           </div>
         )}
         <button
@@ -504,12 +509,12 @@ export default function BusinessToBusiness({ products = [] }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const fallbackProducts = [
-    { id:"c1", title:"Classic Banana Chips", price:220, image:bananaChips, minQty:10, category:"Spicy Namkeen", categoryKey:"spicy-namkeen", categoryLabel:"Spicy Namkeen", details:{ productType:"100% Vegetarian", brand:"Sonal Foods", shelfLife:"4 months" } },
-    { id:"c2", title:"Banana Powder", price:220, image:bananaPowder, minQty:10, category:"Spicy Namkeen", categoryKey:"spicy-namkeen", categoryLabel:"Spicy Namkeen", details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
-    { id:"c3", title:"Banana Length Pepper", price:220, image:bananach5, minQty:10, category:"Spicy Namkeen", categoryKey:"spicy-namkeen", categoryLabel:"Spicy Namkeen", details:{ flavour:"Magic Masala", packagingType:"Packet", shelfLife:"4 months" } },
-    { id:"c4", title:"Banana Salti Chips", price:230, image:bananaSalti, minQty:10, category:"Halka Fulka Snacks", categoryKey:"halka-fulka-snacks", categoryLabel:"Halka Fulka Snacks", details:{ ingredients:"Chana", flavour:"Masala Salted", shelfLife:"4 months" } },
-    { id:"h1", title:"Spicy Banana Chips", price:100, image:bananaChilli, minQty:10, category:"Halka Fulka Snacks", categoryKey:"halka-fulka-snacks", categoryLabel:"Halka Fulka Snacks", details:{ packagingType:"Packet", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
-    { id:"h2", title:"Signature Banana Chips", price:200, image:chilliBana, minQty:10, category:"Halka Fulka Snacks", categoryKey:"halka-fulka-snacks", categoryLabel:"Halka Fulka Snacks", details:{ flavour:"Crispy", brand:"Maa Kavita Laxmi", shelfLife:"4 months" } },
+    { id:"c1", title:"Classic Banana Chips", price:220, image:bananaChips, weight:"100 g", minQty:10, category:"Spicy Namkeen", categoryKey:"spicy-namkeen", categoryLabel:"Spicy Namkeen", details:{ brand:"Sonal Foods", weight:"100 g", shelfLife:"6 Months", origin:"Made in India", ingredients:"Maida, Ghee, Oil, Salt", vegetarian:"Yes" } },
+    { id:"c2", title:"Banana Powder", price:220, image:bananaPowder, weight:"1 kg", minQty:10, category:"Spicy Namkeen", categoryKey:"spicy-namkeen", categoryLabel:"Spicy Namkeen", details:{ brand:"Sonal Foods", weight:"1 kg", shelfLife:"6 Months", origin:"Made in India", ingredients:"Maida, Ghee, Oil, Salt", vegetarian:"Yes" } },
+    { id:"c3", title:"Banana Length Pepper", price:220, image:bananach5, weight:"250 g", minQty:10, category:"Spicy Namkeen", categoryKey:"spicy-namkeen", categoryLabel:"Spicy Namkeen", details:{ brand:"Sonal Foods", weight:"250 g", shelfLife:"6 Months", origin:"Made in India", ingredients:"Maida, Ghee, Oil, Salt", vegetarian:"Yes" } },
+    { id:"c4", title:"Banana Salti Chips", price:230, image:bananaSalti, weight:"100 g", minQty:10, category:"Halka Fulka Snacks", categoryKey:"halka-fulka-snacks", categoryLabel:"Halka Fulka Snacks", details:{ brand:"Sonal Foods", weight:"100 g", shelfLife:"6 Months", origin:"Made in India", ingredients:"Maida, Ghee, Oil, Salt", vegetarian:"Yes" } },
+    { id:"h1", title:"Spicy Banana Chips", price:100, image:bananaChilli, weight:"100 g", minQty:10, category:"Halka Fulka Snacks", categoryKey:"halka-fulka-snacks", categoryLabel:"Halka Fulka Snacks", details:{ brand:"Sonal Foods", weight:"100 g", shelfLife:"6 Months", origin:"Made in India", ingredients:"Maida, Ghee, Oil, Salt", vegetarian:"Yes" } },
+    { id:"h2", title:"Signature Banana Chips", price:200, image:chilliBana, weight:"5 pcs", minQty:10, category:"Halka Fulka Snacks", categoryKey:"halka-fulka-snacks", categoryLabel:"Halka Fulka Snacks", details:{ brand:"Sonal Foods", weight:"5 pcs", shelfLife:"6 Months", origin:"Made in India", ingredients:"Maida, Ghee, Oil, Salt", vegetarian:"Yes" } },
   ];
 
   const liveProducts = Array.isArray(products) && products.length > 0
@@ -669,7 +674,7 @@ export default function BusinessToBusiness({ products = [] }) {
               <QuoteProductCard
                 key={p.id}
                 product={p}
-                details={p.details || { brand: "Maa Kavita Laxmi", shelfLife: "4 months" }}
+                details={p.details || { brand: "Sonal Foods", weight: p.weight || "100 g", shelfLife: "6 Months", origin: "Made in India", ingredients: "Maida, Ghee, Oil, Salt", vegetarian: "Yes" }}
                 onQuote={handleQuoteRequest}
               />
             ))}
@@ -683,7 +688,7 @@ export default function BusinessToBusiness({ products = [] }) {
               <QuoteProductCard
                 key={p.id}
                 product={p}
-                details={p.details || { brand: "Maa Kavita Laxmi", shelfLife: "4 months" }}
+                details={p.details || { brand: "Sonal Foods", weight: p.weight || "100 g", shelfLife: "6 Months", origin: "Made in India", ingredients: "Maida, Ghee, Oil, Salt", vegetarian: "Yes" }}
                 onQuote={handleQuoteRequest}
               />
             ))}
@@ -704,7 +709,7 @@ export default function BusinessToBusiness({ products = [] }) {
                     <QuoteProductCard
                       key={p.id}
                       product={p}
-                      details={p.details || { brand: "Maa Kavita Laxmi", shelfLife: "4 months" }}
+                      details={p.details || { brand: "Sonal Foods", weight: p.weight || "100 g", shelfLife: "6 Months", origin: "Made in India", ingredients: "Maida, Ghee, Oil, Salt", vegetarian: "Yes" }}
                       onQuote={handleQuoteRequest}
                     />
                   ))}

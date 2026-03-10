@@ -23,7 +23,7 @@ const mapLiveProduct = (product, index) => ({
   title: product.name || "Untitled Product",
   price: String(product.price ?? "0"),
   image: normalizeProductImage(product.image),
-  quantity: product.qty ? `${product.qty} pcs` : "Available",
+  quantity: product.weight || "100 g",
 });
 
 const LandingPage = ({ products = [] }) => {
@@ -33,8 +33,12 @@ const LandingPage = ({ products = [] }) => {
   const [quoteSource, setQuoteSource] = useState("featured");
   const [quoteSectionLabel, setQuoteSectionLabel] = useState("Featured Products");
 
-  const liveFeaturedProducts = Array.isArray(products)
-    ? products.slice(0, 8).map(mapLiveProduct)
+  const homeProducts = Array.isArray(products)
+    ? products.filter((product) => (product?.showOnPage || "home") === "home")
+    : [];
+
+  const liveFeaturedProducts = Array.isArray(homeProducts)
+    ? homeProducts.slice(0, 8).map(mapLiveProduct)
     : [];
 
   const finalFeaturedProducts = liveFeaturedProducts.length > 0

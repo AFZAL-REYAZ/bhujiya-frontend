@@ -42,6 +42,7 @@ export default function ManageProducts({ products = [], refreshProducts }) {
       name: product.name || "",
       price: String(product.price ?? ""),
       qty: String(product.qty ?? ""),
+      weight: product.weight || "100 g",
       description: product.description || "",
       category:
         product.category && ["Spicy Namkeen", "Halka Fulka Snacks"].includes(product.category)
@@ -51,6 +52,7 @@ export default function ManageProducts({ products = [], refreshProducts }) {
         product.category && ["Spicy Namkeen", "Halka Fulka Snacks"].includes(product.category)
           ? ""
           : product.category || "",
+      showOnPage: product.showOnPage === "b2b" ? "b2b" : "home",
       imageFile: null,
     });
   };
@@ -71,6 +73,8 @@ export default function ManageProducts({ products = [], refreshProducts }) {
       payload.append("price", form.price);
       payload.append("qty", form.qty);
       payload.append("description", form.description);
+      payload.append("weight", form.weight);
+      payload.append("showOnPage", form.showOnPage);
       payload.append(
         "category",
         form.category === "Other" ? (form.customCategory || "Other").trim() : form.category
@@ -174,8 +178,9 @@ export default function ManageProducts({ products = [], refreshProducts }) {
                       <p className="text-xs text-slate-500 mt-1 line-clamp-2">{product.description}</p>
                       <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
                         <span className="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">Rs. {product.price}</span>
-                        <span className="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">Qty {product.qty}</span>
+                        <span className="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">{product.weight || "100 g"}</span>
                         <span className="px-2 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-bold">{product.category || "Spicy Namkeen"}</span>
+                        <span className="px-2 py-1 rounded-lg bg-amber-50 text-amber-700 font-bold">{product.showOnPage === "b2b" ? "B2B" : "Home"}</span>
                       </div>
                     </div>
 
@@ -279,6 +284,28 @@ export default function ManageProducts({ products = [], refreshProducts }) {
                           onChange={(e) => setForm((prev) => ({ ...prev, qty: e.target.value }))}
                           className="w-full h-10 rounded-xl border border-slate-200 px-3 text-sm font-semibold"
                         />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Packaging Size</label>
+                        <input
+                          value={form?.weight || ""}
+                          onChange={(e) => setForm((prev) => ({ ...prev, weight: e.target.value }))}
+                          className="w-full h-10 rounded-xl border border-slate-200 px-3 text-sm font-semibold"
+                          placeholder="e.g. 100 g, 1 kg"
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Show On Page</label>
+                        <select
+                          value={form?.showOnPage || "home"}
+                          onChange={(e) => setForm((prev) => ({ ...prev, showOnPage: e.target.value }))}
+                          className="w-full h-10 rounded-xl border border-slate-200 px-3 text-sm font-semibold"
+                        >
+                          <option value="home">Home</option>
+                          <option value="b2b">B2B</option>
+                        </select>
                       </div>
 
                       <div className="space-y-1.5 md:col-span-2">

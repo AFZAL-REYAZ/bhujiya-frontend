@@ -14,9 +14,11 @@ export default function AddProduct({ onAdd }) {
     name: "",
     price: "",
     qty: "",
+    weight: "100 g",
     description: "",
     category: "Spicy Namkeen",
     customCategory: "",
+    showOnPage: "home",
   });
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -49,6 +51,8 @@ export default function AddProduct({ onAdd }) {
     data.append("price", formData.price);
     data.append("qty", formData.qty);
     data.append("description", formData.description);
+    data.append("weight", formData.weight);
+    data.append("showOnPage", formData.showOnPage);
     const finalCategory =
       formData.category === "Other"
         ? (formData.customCategory || "Other").trim()
@@ -74,9 +78,11 @@ export default function AddProduct({ onAdd }) {
         name: "",
         price: "",
         qty: "",
+        weight: "100 g",
         description: "",
         category: "Spicy Namkeen",
         customCategory: "",
+        showOnPage: "home",
       });
       setImage(null);
       setPreview(null);
@@ -253,8 +259,33 @@ export default function AddProduct({ onAdd }) {
             <div className="space-y-1.5">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Preview Summary</label>
               <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-600 h-[42px] flex items-center">
-                {(formData.name || "New Product") + " | Qty: " + (formData.qty || "0")}
+                {(formData.name || "New Product") + " | " + (formData.weight || "100 g")}
               </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Packaging Size</label>
+              <input
+                required
+                value={formData.weight}
+                onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+                placeholder="e.g. 100 g, 250 g, 1 kg"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Show On Page</label>
+              <select
+                value={formData.showOnPage}
+                onChange={(e) => setFormData({ ...formData, showOnPage: e.target.value })}
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+              >
+                <option value="home">Home</option>
+                <option value="b2b">B2B</option>
+              </select>
             </div>
           </div>
 
