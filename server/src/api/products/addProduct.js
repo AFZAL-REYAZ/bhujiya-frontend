@@ -26,14 +26,17 @@ const uploadSingleImage = upload.single("image");
 
 async function addProduct(req, res) {
   try {
-    const { name, price, qty, description, category } = req.body || {};
+    const { name, price, qty, description, category, showOnPage, weight, brand, shelfLife, ingredients } = req.body || {};
 
-    if (!name || !price || !qty || !description) {
+    if (!name || !price || !description) {
       return res.status(400).json({ success: false, message: "All required fields are missing." });
     }
 
     const parsedPrice = Number(price);
-    const parsedQty = Number(qty);
+    const parsedQty = qty === undefined || qty === "" ? 0 : Number(qty);
+    const normalizedShelfLife = String(shelfLife || "4 Months").toLowerCase().includes("5")
+      ? "5 Months"
+      : "4 Months";
 
     if (Number.isNaN(parsedPrice) || Number.isNaN(parsedQty)) {
       return res.status(400).json({ success: false, message: "Price and quantity must be valid numbers." });
@@ -47,6 +50,11 @@ async function addProduct(req, res) {
       qty: parsedQty,
       description: String(description).trim(),
       category: String(category || "Spicy Namkeen").trim(),
+      showOnPage: showOnPage === "b2b" ? "b2b" : "home",
+      weight: String(weight || "100 g").trim(),
+      brand: String(brand || "jaldichips").trim(),
+      shelfLife: normalizedShelfLife,
+      ingredients: String(ingredients || "G9 Banana + Rice Oil + flavour - salty").trim(),
       image: imagePath,
     });
 

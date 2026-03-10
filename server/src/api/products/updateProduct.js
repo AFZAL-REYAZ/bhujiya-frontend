@@ -38,6 +38,28 @@ async function updateProduct(req, res) {
       product.category = String(payload.category || "Spicy Namkeen").trim();
     }
 
+    if (payload.showOnPage !== undefined) {
+      product.showOnPage = payload.showOnPage === "b2b" ? "b2b" : "home";
+    }
+
+    if (payload.weight !== undefined) {
+      product.weight = String(payload.weight || "100 g").trim();
+    }
+
+    if (payload.brand !== undefined) {
+      product.brand = String(payload.brand || "jaldichips").trim();
+    }
+
+    if (payload.shelfLife !== undefined) {
+      product.shelfLife = String(payload.shelfLife || "4 Months").toLowerCase().includes("5")
+        ? "5 Months"
+        : "4 Months";
+    }
+
+    if (payload.ingredients !== undefined) {
+      product.ingredients = String(payload.ingredients || "G9 Banana + Rice Oil + flavour - salty").trim();
+    }
+
     if (req.file) {
       if (product.image && product.image.startsWith("/uploads/")) {
         const existingPath = path.join(process.cwd(), product.image.replace(/^\//, ""));

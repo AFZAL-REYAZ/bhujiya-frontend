@@ -14,7 +14,8 @@ const productSchema = new mongoose.Schema(
     },
     qty: {
       type: Number,
-      required: true,
+      required: false,
+      default: 0,
       min: 0,
     },
     description: {
@@ -26,6 +27,31 @@ const productSchema = new mongoose.Schema(
       type: String,
       trim: true,
       default: "Spicy Namkeen",
+    },
+    showOnPage: {
+      type: String,
+      enum: ["home", "b2b"],
+      default: "home",
+    },
+    weight: {
+      type: String,
+      trim: true,
+      default: "100 g",
+    },
+    brand: {
+      type: String,
+      trim: true,
+      default: "jaldichips",
+    },
+    shelfLife: {
+      type: String,
+      trim: true,
+      default: "4 Months",
+    },
+    ingredients: {
+      type: String,
+      trim: true,
+      default: "G9 Banana + Rice Oil + flavour - salty",
     },
     image: {
       type: String,
