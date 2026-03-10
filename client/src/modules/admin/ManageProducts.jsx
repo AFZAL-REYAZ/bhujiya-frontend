@@ -4,6 +4,15 @@ import { Edit3, ImagePlus, Save, Trash2, X } from "lucide-react";
 
 const CATEGORY_OPTIONS = ["Spicy Namkeen", "Halka Fulka Snacks", "Other"];
 
+const parseWeight = (weight = "100 g") => {
+  const cleaned = String(weight || "").trim();
+  const match = cleaned.match(/^(\d+(?:\.\d+)?)\s*(kg|g)$/i);
+  if (match) {
+    return { weightValue: match[1], weightUnit: match[2].toLowerCase() };
+  }
+  return { weightValue: "100", weightUnit: "g" };
+};
+
 const getImageUrl = (imagePath) => {
   if (!imagePath) return "";
   if (/^https?:\/\//i.test(imagePath)) return imagePath;
@@ -37,12 +46,16 @@ export default function ManageProducts({ products = [], refreshProducts }) {
   }, [status]);
 
   const startEditing = (product) => {
+    const parsedWeight = parseWeight(product.weight);
     setEditing(product._id);
     setForm({
       name: product.name || "",
       price: String(product.price ?? ""),
-      qty: String(product.qty ?? ""),
-      weight: product.weight || "100 g",
+      weightValue: parsedWeight.weightValue,
+      weightUnit: parsedWeight.weightUnit,
+      brand: product.brand || "jaldichips",
+      shelfLife: product.shelfLife || "4 Months",
+      ingredients: product.ingredients || "G9 Banana + Rice Oil + flavour - salty",
       description: product.description || "",
       category:
         product.category && ["Spicy Namkeen", "Halka Fulka Snacks"].includes(product.category)
@@ -71,9 +84,12 @@ export default function ManageProducts({ products = [], refreshProducts }) {
       const payload = new FormData();
       payload.append("name", form.name);
       payload.append("price", form.price);
-      payload.append("qty", form.qty);
+      payload.append("qty", "0");
       payload.append("description", form.description);
-      payload.append("weight", form.weight);
+      payload.append("weight", `${form.weightValue} ${form.weightUnit}`);
+      payload.append("brand", form.brand);
+      payload.append("shelfLife", form.shelfLife);
+      payload.append("ingredients", form.ingredients);
       payload.append("showOnPage", form.showOnPage);
       payload.append(
         "category",
@@ -131,7 +147,7 @@ export default function ManageProducts({ products = [], refreshProducts }) {
       <div className="bg-white border border-slate-100 rounded-2xl px-4 py-4 sm:px-5 sm:py-5 shadow-sm">
         <h2 className="text-2xl font-black text-slate-900 tracking-tight">Live Product Manager</h2>
         <p className="text-sm text-slate-500 mt-1">
-          Edit product image, name, price, quantity, category, description and save instantly.
+          Edit product image, name, price, packaging size, category, description and save instantly.
         </p>
       </div>
 
@@ -179,6 +195,8 @@ export default function ManageProducts({ products = [], refreshProducts }) {
                       <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
                         <span className="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">Rs. {product.price}</span>
                         <span className="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">{product.weight || "100 g"}</span>
+                        <span className="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">{product.brand || "jaldichips"}</span>
+                        <span className="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">{product.shelfLife || "4 Months"}</span>
                         <span className="px-2 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-bold">{product.category || "Spicy Namkeen"}</span>
                         <span className="px-2 py-1 rounded-lg bg-amber-50 text-amber-700 font-bold">{product.showOnPage === "b2b" ? "B2B" : "Home"}</span>
                       </div>
@@ -276,24 +294,27 @@ export default function ManageProducts({ products = [], refreshProducts }) {
                       </div>
 
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Quantity</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Packaging Size</label>
                         <input
                           type="number"
-                          min="0"
-                          value={form?.qty || ""}
-                          onChange={(e) => setForm((prev) => ({ ...prev, qty: e.target.value }))}
+                          min="1"
+                          value={form?.weightValue || ""}
+                          onChange={(e) => setForm((prev) => ({ ...prev, weightValue: e.target.value }))}
                           className="w-full h-10 rounded-xl border border-slate-200 px-3 text-sm font-semibold"
+                          placeholder="Enter value"
                         />
                       </div>
 
                       <div className="space-y-1.5">
-                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Packaging Size</label>
-                        <input
-                          value={form?.weight || ""}
-                          onChange={(e) => setForm((prev) => ({ ...prev, weight: e.target.value }))}
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Unit</label>
+                        <select
+                          value={form?.weightUnit || "g"}
+                          onChange={(e) => setForm((prev) => ({ ...prev, weightUnit: e.target.value }))}
                           className="w-full h-10 rounded-xl border border-slate-200 px-3 text-sm font-semibold"
-                          placeholder="e.g. 100 g, 1 kg"
-                        />
+                        >
+                          <option value="g">g</option>
+                          <option value="kg">kg</option>
+                        </select>
                       </div>
 
                       <div className="space-y-1.5">
@@ -306,6 +327,39 @@ export default function ManageProducts({ products = [], refreshProducts }) {
                           <option value="home">Home</option>
                           <option value="b2b">B2B</option>
                         </select>
+                      </div>
+
+                      <div className="space-y-1.5 md:col-span-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Brand</label>
+                        <input
+                          value={form?.brand || ""}
+                          onChange={(e) => setForm((prev) => ({ ...prev, brand: e.target.value }))}
+                          className="w-full h-10 rounded-xl border border-slate-200 px-3 text-sm font-semibold"
+                          placeholder="e.g. jaldichips"
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Shelf Life</label>
+                        <select
+                          value={form?.shelfLife || ""}
+                          onChange={(e) => setForm((prev) => ({ ...prev, shelfLife: e.target.value }))}
+                          className="w-full h-10 rounded-xl border border-slate-200 px-3 text-sm font-semibold"
+                        >
+                          <option value="4 Months">4 Months</option>
+                          <option value="5 Months">5 Months</option>
+                        </select>
+                      </div>
+
+                      <div className="space-y-1.5 md:col-span-2">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Ingredients</label>
+                        <textarea
+                          rows={2}
+                          value={form?.ingredients || ""}
+                          onChange={(e) => setForm((prev) => ({ ...prev, ingredients: e.target.value }))}
+                          className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold resize-none"
+                          placeholder="e.g. G9 Banana + Rice Oil + flavour - salty"
+                        />
                       </div>
 
                       <div className="space-y-1.5 md:col-span-2">

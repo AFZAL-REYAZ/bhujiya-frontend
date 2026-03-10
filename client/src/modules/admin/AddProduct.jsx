@@ -13,8 +13,11 @@ export default function AddProduct({ onAdd }) {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
-    qty: "",
-    weight: "100 g",
+    weightValue: "100",
+    weightUnit: "g",
+    brand: "jaldichips",
+    shelfLife: "4 Months",
+    ingredients: "G9 Banana + Rice Oil + flavour - salty",
     description: "",
     category: "Spicy Namkeen",
     customCategory: "",
@@ -49,9 +52,12 @@ export default function AddProduct({ onAdd }) {
     const data = new FormData();
     data.append("name", formData.name);
     data.append("price", formData.price);
-    data.append("qty", formData.qty);
+    data.append("qty", "0");
     data.append("description", formData.description);
-    data.append("weight", formData.weight);
+    data.append("weight", `${formData.weightValue} ${formData.weightUnit}`);
+    data.append("brand", formData.brand);
+    data.append("shelfLife", formData.shelfLife);
+    data.append("ingredients", formData.ingredients);
     data.append("showOnPage", formData.showOnPage);
     const finalCategory =
       formData.category === "Other"
@@ -77,8 +83,11 @@ export default function AddProduct({ onAdd }) {
       setFormData({
         name: "",
         price: "",
-        qty: "",
-        weight: "100 g",
+        weightValue: "100",
+        weightUnit: "g",
+        brand: "jaldichips",
+        shelfLife: "4 Months",
+        ingredients: "G9 Banana + Rice Oil + flavour - salty",
         description: "",
         category: "Spicy Namkeen",
         customCategory: "",
@@ -244,36 +253,10 @@ export default function AddProduct({ onAdd }) {
 
           <div className="grid md:grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Stock Quantity</label>
-              <input 
-                type="number"
-                min="0"
-                required
-                value={formData.qty}
-                onChange={(e) => setFormData({ ...formData, qty: e.target.value })}
-                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all" 
-                placeholder="How many packets?" 
-              />
-            </div>
-
-            <div className="space-y-1.5">
               <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Preview Summary</label>
               <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-600 h-[42px] flex items-center">
-                {(formData.name || "New Product") + " | " + (formData.weight || "100 g")}
+                {(formData.name || "New Product") + " | " + `${formData.weightValue || "100"} ${formData.weightUnit || "g"}`}
               </div>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-3">
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Packaging Size</label>
-              <input
-                required
-                value={formData.weight}
-                onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
-                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
-                placeholder="e.g. 100 g, 250 g, 1 kg"
-              />
             </div>
 
             <div className="space-y-1.5">
@@ -287,6 +270,70 @@ export default function AddProduct({ onAdd }) {
                 <option value="b2b">B2B</option>
               </select>
             </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Packaging Size</label>
+              <input
+                required
+                type="number"
+                min="1"
+                value={formData.weightValue}
+                onChange={(e) => setFormData({ ...formData, weightValue: e.target.value })}
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+                placeholder="Enter value"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Unit</label>
+              <select
+                value={formData.weightUnit}
+                onChange={(e) => setFormData({ ...formData, weightUnit: e.target.value })}
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+              >
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Brand</label>
+              <input
+                required
+                value={formData.brand}
+                onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+                placeholder="e.g. jaldichips"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Shelf Life</label>
+              <select
+                required
+                value={formData.shelfLife}
+                onChange={(e) => setFormData({ ...formData, shelfLife: e.target.value })}
+                className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
+              >
+                <option value="4 Months">4 Months</option>
+                <option value="5 Months">5 Months</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1.5">Ingredients</label>
+            <textarea
+              required
+              value={formData.ingredients}
+              onChange={(e) => setFormData({ ...formData, ingredients: e.target.value })}
+              className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm h-20 resize-none transition-all"
+              placeholder="e.g. G9 Banana + Rice Oil + flavour - salty"
+            />
           </div>
 
           <div className="space-y-1.5">
