@@ -36,7 +36,7 @@ export default function Terms() {
           </h1>
           <p className="text-slate-500 font-medium max-w-3xl leading-relaxed">
             Please read these terms carefully before using our services. By placing an order with 
-            <strong> Zafar Suits Designer</strong>, you enter into a legally binding agreement 
+            <strong> Maa Kavita Laxmi Pvt. Ltd.</strong>, you enter into a legally binding agreement 
             governed by the laws of India.
           </p>
           <p className="mt-4 text-xs font-bold text-slate-400">VERSION 2.4 • LAST UPDATED: {lastUpdated}</p>
@@ -164,16 +164,16 @@ export default function Terms() {
               </div>
               <div className="prose prose-slate max-w-none text-slate-500 italic text-sm">
                 <p>
-                  In no event shall Zafar Suits Designer be liable for any special, direct, indirect, 
+                  In no event shall Maa Kavita Laxmi Pvt. Ltd. be liable for any special, direct, indirect, 
                   consequential, or incidental damages or any damages whatsoever, whether in an action 
                   of contract, negligence or other tort, arising out of or in connection with the 
-                  use of our products. All disputes are subject to the jurisdiction of the courts in Palghar/Maharashtra.
+                  use of our products. All disputes are subject to the jurisdiction of the courts in Patna.
                 </p>
               </div>
             </section>
 
             {/* Support Footer */}
-            <div className="mt-12 p-8 rounded-[2rem] bg-slate-900 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* <div className="mt-12 p-8 rounded-[2rem] bg-slate-900 text-white flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
                 <h3 className="text-xl font-bold">Still have questions?</h3>
                 <p className="text-slate-400 text-sm">Our support team is available Mon-Sat (10AM - 7PM)</p>
@@ -186,7 +186,7 @@ export default function Terms() {
                   Contact Form
                 </a>
               </div>
-            </div>
+            </div> */}
 
           </main>
         </div>

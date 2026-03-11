@@ -10,7 +10,7 @@ const FeaturedSection = ({ items, onOpen }) => {
             Featured Products
           </h2>
           <p className="text-sm sm:text-base text-gray-600">
-            Curated selection of our most loved banana snacks.
+            Explore Our Curated Selection of Fresh, Crispy and Premium Banana Chips.
           </p>
         </div>
 

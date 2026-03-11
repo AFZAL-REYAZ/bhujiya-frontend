@@ -10,7 +10,7 @@ const BestSellersSection = ({ items, onOpen }) => {
             Best Sellers
           </h2>
           <p className="text-sm sm:text-base text-gray-600">
-            Our customersâ€™ favorite crunchy treats.
+            Our customers favorite crunchy teast.
           </p>
         </div>
 

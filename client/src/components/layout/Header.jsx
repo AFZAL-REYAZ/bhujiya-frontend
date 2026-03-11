@@ -162,8 +162,8 @@ const Header = () => {
             >
               <FaPhone className="text-green-700 mr-2" />
               <div className="text-sm">
-                <p className="font-bold text-gray-900">Call 82527 53985</p>
-                <p className="text-[11px] text-gray-500">86% Response rate</p>
+                <p className="font-bold text-gray-900">Call 8492995999</p>
+                <p className="text-[11px] text-gray-500">100% Response rate</p>
               </div>
             </a>
             <button
@@ -174,17 +174,7 @@ const Header = () => {
               <FaEnvelope />
               Send Email
             </button>
-            {/* <Link
-              to="/cart"
-              className="relative inline-flex items-center justify-center w-10 h-10 rounded-full bg-yellow-400 text-gray-900 hover:bg-yellow-300 transition-all shadow-sm"
-            >
-              <FaShoppingBasket size={18} />
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[20px] px-1 h-[20px] rounded-full bg-red-600 text-[10px] font-black text-white flex items-center justify-center border-2 border-white">
-                  {cartCount > 99 ? "99+" : cartCount}
-                </span>
-              )}
-            </Link> */}
+
             <button
               type="button"
               className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-700"
@@ -198,9 +188,9 @@ const Header = () => {
       <div className="bg-[#1f2937]">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 h-12 flex items-center justify-between">
           <nav className="hidden md:flex items-center gap-6 text-white">
-            <button className="inline-flex items-center gap-2 font-semibold">
+            {/* <button className="inline-flex items-center gap-2 font-semibold">
               <FaBars />
-            </button>
+            </button> */}
             {primaryNav.slice(1).map((link) => (
               <Link
                 key={link.path}

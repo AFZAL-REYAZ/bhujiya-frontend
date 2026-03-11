@@ -186,7 +186,7 @@ export default function About() {
                 Modern Facilities
               </p>
             </div>
-            <FaBuilding className="text-gray-200" size={48} />
+            {/* <FaBuilding className="text-gray-200" size={48} /> */}
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">

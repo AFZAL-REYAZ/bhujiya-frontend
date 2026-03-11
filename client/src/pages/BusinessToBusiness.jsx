@@ -631,27 +631,24 @@ export default function BusinessToBusiness({ products = [] }) {
             <p className="text-xs font-black text-gray-500 uppercase tracking-widest">Welcome to</p>
             <h3 className="mt-1 text-2xl font-black text-gray-900">Maa Kavita Laxmi Pvt. Ltd.</h3>
             <p className="mt-3 text-sm text-gray-600">
-              We are a leading manufacturer, exporter and supplier of a wide range of
-              farsan and namkeens. Our offered readymade snacks have gained high
-              appreciation for their longer shelf life, freshness and exceptional taste.
+              MAA Kavita Laxmi Pvt. Ltd. Is A Premium Banana Chips Manufacturer In Patna, Bihar, Dedicated To Delivering Fresh, Crispy, And Authentic Snacks. We Carefully Select Farm-Fresh Bananas And Process Them Using Hygienic Methods To Maintain Natural Taste And Quality. Our Banana Chips Are Made Without Artificial Flavors Or Taste Enhancers, Ensuring A Pure And Healthy Snacking Experience. From Slicing And Seasoning To Packaging, Every Step Follows Strict Quality Control And Modern Food Safety Standards. We Offer A Variety Of Flavors Including Salted, Masala, And Spicy Banana Chips For Customers Across India. Our Mission Is To Provide Delicious, High-Quality Banana Chips That Combine Traditional Taste With Trusted Manufacturing Excellence.
             </p>
-            <p className="mt-2 text-xs font-bold text-gray-500">Read More...</p>
             <p className="mt-4 text-xs font-black text-gray-600 uppercase tracking-widest">
               Get in touch with us for best deals
             </p>
-            <button className="mt-4 inline-flex items-center justify-center rounded-xl bg-[#0b3b2a] text-white text-sm font-bold px-6 py-3">
+            {/* <button className="mt-4 inline-flex items-center justify-center rounded-xl bg-[#0b3b2a] text-white text-sm font-bold px-6 py-3">
               Contact Us
-            </button>
+            </button> */}
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { icon: <Building2 className="w-5 h-5"/>, label: "Nature of Business", value: "Trader • Wholesaler/Distributor" },
+              { icon: <Building2 className="w-5 h-5"/>, label: "Nature of Business", value: "Factory / Manufacturing,Wholesale Business,Retail Business,Distributor" },
               { icon: <Users className="w-5 h-5"/>, label: "Total Number of Employees", value: "11 to 25 People" },
-              { icon: <CalendarDays className="w-5 h-5"/>, label: "GST Registration Date", value: "01-07-2017" },
+              // { icon: <CalendarDays className="w-5 h-5"/>, label: "GST Registration Date", value: "01-07-2017" },
               { icon: <FileText className="w-5 h-5"/>, label: "Legal Status of Firm", value: "Proprietorship" },
-              { icon: <CircleDollarSign className="w-5 h-5"/>, label: "Annual Turnover", value: "5 – 25 Cr" },
-              { icon: <Truck className="w-5 h-5"/>, label: "Import Export Code", value: "ABPYBZ867R" },
-              { icon: <IdCard className="w-5 h-5"/>, label: "GST No.", value: "27ABPYBZ867R1Z2" },
+              { icon: <CircleDollarSign className="w-5 h-5"/>, label: "Annual Turnover", value: "0-40 L" },
+              // { icon: <Truck className="w-5 h-5"/>, label: "Import Export Code", value: "ABPYBZ867R" },
+              { icon: <IdCard className="w-5 h-5"/>, label: "GST No.", value: "10AAOCM9571F1ZB" },
               { icon: <ShieldCheck className="w-5 h-5"/>, label: "Trustseal Verified", value: "Verified" },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-2xl border border-gray-100 p-4 flex items-start gap-3 shadow-sm">
@@ -723,7 +720,7 @@ export default function BusinessToBusiness({ products = [] }) {
           })}
         </section>
 
-        <ReviewsSection />
+        {/* <ReviewsSection /> */}
 
         
         {/* PRICE LIST SECTION */}
@@ -765,7 +762,7 @@ export default function BusinessToBusiness({ products = [] }) {
         >
           <div className="bg-white rounded-3xl px-6 sm:px-8 py-8 shadow-sm border border-[#E5D7C3]">
             <h2 className="text-xl sm:text-2xl font-semibold text-[#0b3b2a]">
-              Become a Wholesale Partner
+              Become a Wholesaler/Distributor Partner
             </h2>
             <p className="mt-2 text-sm text-gray-600 max-w-xl">
               Fill out the form below and our B2B team will get in touch with you
@@ -886,15 +883,15 @@ export default function BusinessToBusiness({ products = [] }) {
             </form>
           </div>
 
-          <div className="bg-[#F7F1E6] rounded-3xl px-6 sm:px-8 py-8 border border-[#E5D7C3]">
+          <div className="flex flex-row justify-between bg-[#F7F1E6] rounded-3xl px-6 sm:px-8 py-8 border border-[#E5D7C3]">
+            
+            <div className="mt-6 space-y-4">
             <h3 className="text-base sm:text-lg font-semibold text-[#0b3b2a]">
               Direct Contact
             </h3>
             <p className="mt-2 text-sm text-gray-600">
               For immediate assistance, reach out to our B2B team using the details below.
             </p>
-
-            <div className="mt-6 space-y-4">
               <div className="flex items-start gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#0b3b2a] border border-[#DCCCB6]">
                   <Phone size={18} />
@@ -904,10 +901,10 @@ export default function BusinessToBusiness({ products = [] }) {
                     Call / WhatsApp
                   </p>
                   <a
-                    href="tel:+918252753850"
+                    href="tel:+918492995999"
                     className="block mt-1 text-sm font-medium text-[#0b3b2a]"
                   >
-                    +91 82527 53850
+                    +91-8492995999
                   </a>
                 </div>
 
@@ -937,7 +934,7 @@ export default function BusinessToBusiness({ products = [] }) {
                 <p className="mt-1 text-xs text-gray-700 leading-relaxed">
                   Maa Kavita Lakxmi Pvt. Ltd.
                   <br />
-                  Kerala, India
+                  Ward No.-71, Holding No.- 171/225/182A, Circle No.-226, Simlli Murarour, Sahdara, Patna, Bihar - 800008
                 </p>
               </div>
             </div>

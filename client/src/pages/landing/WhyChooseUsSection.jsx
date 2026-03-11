@@ -10,7 +10,7 @@ const WhyChooseUsSection = () => {
           Why Choose Us
         </h2>
         <p className="text-sm sm:text-base text-gray-600 mb-10">
-          Quality, authentic, and traditional in every bite.
+          Premium Banana Chips Manufacturer in Patna – Fresh, Crispy and Authentic Taste
         </p>
 
         <div className="grid gap-8 md:grid-cols-3">
@@ -18,17 +18,17 @@ const WhyChooseUsSection = () => {
             {
               icon: <Leaf className="w-8 h-8" />,
               title: "100% Homemade",
-              desc: "Made fresh in small batches with traditional recipes.",
+              desc: "Freshly Made in Small Batches Using Traditional Recipes for Authentic Taste.",
             },
             {
               icon: <ShieldCheck className="w-8 h-8" />,
               title: "No Artificial Preservatives",
-              desc: "Pure ingredients, no artificial colors or flavors.",
+              desc: "Our Banana Chips In Patna Are Made With Natural Ingredients, Free From Artificial Colors, Flavors, And Preservatives For Pure Taste And Healthy Snacking.",
             },
             {
               icon: <Truck className="w-8 h-8" />,
               title: "Direct From Kitchen",
-              desc: "Fresh snacks shipped straight from our kitchen to you.",
+              desc: "Freshly Prepared Banana Chips Delivered Directly From Our Kitchen In Patna, Bihar For Authentic Taste And Quality.",
             },
           ].map((item, i) => (
             <motion.div

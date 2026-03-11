@@ -55,7 +55,7 @@ const ProductCard = ({ product, onOpen, origin }) => {
 
         <div className="flex items-baseline justify-between">
           <p className="text-lg font-bold text-gray-900">₹ {product.price}</p>
-          <span className="text-xs text-gray-500">{product.quantity}</span>
+          <span className="text-xs font-bold text-gray-800">{product.quantity}</span>
         </div>
 
         <button
@@ -69,7 +69,7 @@ const ProductCard = ({ product, onOpen, origin }) => {
           ) : (
             <>
               <ShoppingCart className="w-4 h-4 mr-2" />
-              Get Quate
+              Buy Now
             </>
           )}
         </button>

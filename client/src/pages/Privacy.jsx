@@ -36,7 +36,7 @@ export default function Privacy() {
             Privacy <span className="text-emerald-600">Policy</span>
           </h1>
           <p className="text-slate-500 font-medium max-w-2xl">
-            At Zafar Suits Designer, we value your trust. This policy outlines how we handle your data with the same care we put into our craftsmanship.
+            At Maa Kavita Laxmi Pvt. Ltd., we value your trust. This policy outlines how we handle your data with the same care we put into our craftsmanship.
           </p>
           <div className="mt-8 flex items-center gap-4 text-sm text-slate-400 font-bold border-t border-slate-200 pt-6">
             <span className="flex items-center gap-1"><RefreshCcw size={14}/> Last Updated: {lastUpdated}</span>
@@ -70,7 +70,7 @@ export default function Privacy() {
               </h2>
               <div className="prose prose-slate max-w-none text-slate-600 leading-relaxed font-medium">
                 <p>
-                  Welcome to <strong>Zafar Suits Designer</strong>. This Privacy Policy governs your visit to our website and explains how we collect, safeguard, and disclose information that results from your use of our Service. We use your data to provide and improve our specialized tailoring and retail services.
+                  Welcome to <strong>Maa Kavita Laxmi Pvt. Ltd.</strong>. This Privacy Policy governs your visit to our website and explains how we collect, safeguard, and disclose information that results from your use of our Service. We use your data to provide and improve our specialized tailoring and retail services.
                 </p>
               </div>
             </section>
@@ -146,13 +146,13 @@ export default function Privacy() {
               <p className="text-slate-600 font-medium mb-8">
                 Depending on your location, you have rights to access, delete, or limit the use of your data. If you wish to be informed what personal data we hold about you or want it removed, please contact us.
               </p>
-              <a 
+              {/* <a 
                 href="mailto:zafardesigner339@gmail.com"
                 className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-white border border-slate-200 text-slate-900 font-black hover:bg-slate-50 hover:border-emerald-500 transition-all shadow-sm"
               >
                 <Mail className="text-emerald-600" size={20} />
                 zafardesigner339@gmail.com
-              </a>
+              </a> */}
             </section>
 
           </main>

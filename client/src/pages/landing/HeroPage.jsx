@@ -20,14 +20,13 @@ const HeroPage = () => {
           <div>
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-100">
               <Leaf className="w-4 h-4" />
-              Premium Kerala Snacks
+              Banana Chips Manufacturer in Patna, Bihar | Wholesale Supplier Across India
             </span>
             <h1 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-white">
-              खाओ जल्दी <span className="block text-lime-300">रहो Healthy</span>
+              खाओ जल्दी , <span className="text-lime-300">रहो Healthy</span>
             </h1>
             <p className="mt-4 text-sm sm:text-base lg:text-lg text-emerald-100 max-w-xl">
-              Handcrafted in small batches using traditional recipes and pure oil.
-              Crispy, light and full of authentic South Indian flavour.
+              Premium Banana Chips Manufacturer In India Supplying Fresh, Crispy And Hygienic Banana Chips For Wholesale, Distribution And Bulk Orders
             </p>
             <div className="mt-6 flex flex-wrap gap-4 text-xs sm:text-sm text-emerald-100">
               <div className="flex items-center gap-2">

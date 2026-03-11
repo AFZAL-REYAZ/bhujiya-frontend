@@ -12,8 +12,8 @@ const Footer = () => {
               Maa Kavita Lakxmi
             </h3>
             <p className="text-sm text-emerald-100/90 leading-relaxed">
-              Authentic homemade banana chips and traditional snacks, crafted with
-              love and delivered fresh to your doorstep.
+              Authentic Homemade Banana Chips & Traditional Snacks Manufacturer in Patna
+              Fresh, crispy and authentic homemade banana chips and traditional snacks, carefully crafted with natural ingredients and delivered fresh to your doorstep across Patna and India.
             </p>
             <div className="flex gap-3">
               <SocialIcon link="https://www.facebook.com/profile.php?id=61584024615846">
@@ -36,18 +36,21 @@ const Footer = () => {
 
           <FooterColumn title="Quick Links">
             <FooterLink to="/">Home</FooterLink><br/>
-            <FooterLink to="/ProductDetail">All Products</FooterLink><br/>
-            <FooterLink to="/b2b">Wholesale</FooterLink><br/>
+            {/* <FooterLink to="/ProductDetail">All Products</FooterLink><br/> */}
+            <FooterLink to="/b2b">Wholesaler / B2B</FooterLink><br/>
             <FooterLink to="/about">About Us</FooterLink><br/>
             <FooterLink to="/contactus">Contact Us</FooterLink>
           </FooterColumn>
 
-          <FooterColumn title="Categories">
-            <span className="footer-link">Banana Chips</span><br/>
-            <span className="footer-link">Traditional Snacks</span><br/>
-            <span className="footer-link">Spice Powders</span><br/>
-            <span className="footer-link">Packaged Items</span><br/>
-            <span className="footer-link">Seasonal Specials</span>
+          <FooterColumn title="Categories ">
+            <span className="">Banana Chips</span><br/>
+            <span className="">Banana Powder</span><br/>
+            <span className="">Sweet Potato Powder</span><br/>
+            <span className="">Sweet Potato Chips</span><br/>
+            <span className="">Mashrom Chips</span><br/>
+            <span className="">Mashrom Powder</span><br/>
+            <span className="">Makhana Kheer Powder</span><br/>
+            <span className="">Badam Powder</span><br/>
           </FooterColumn>
 
           <FooterColumn title="Direct Contact">
@@ -59,7 +62,7 @@ const Footer = () => {
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200">
                   Call / WhatsApp
                 </p>
-                <a href="tel:+918252753850" className="footer-link block mt-1"><FaPhoneAlt size={12}/> +91 9142514241</a>
+                <a href="tel:+918252753850" className="footer-link block mt-1"><FaPhoneAlt size={12}/> +91-8492995999</a>
               </div>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200">
@@ -72,7 +75,7 @@ const Footer = () => {
                   Office Address
                 </p>
                 <p className="text-sm text-emerald-100 mt-1 flex items-center gap-2"><FaMapMarkerAlt size={12}/> Maa Kavita Lakxmi Pvt. Ltd.</p>
-                <p className="text-sm text-emerald-100 pl-4">Kerala, India</p>
+                <p className="text-sm text-emerald-100 pl-4">Ward No - 71, Holding No.- 171/225/182A, Circle No-226, Simlli Murarour, Sahdara, Patna, Bihar - 800008</p>
               </div>
             </div>
           </FooterColumn>
@@ -87,7 +90,6 @@ const Footer = () => {
         <div className="flex gap-6">
           <FooterLink to="/privacy">Privacy Policy</FooterLink>
           <FooterLink to="/terms">Terms of Service</FooterLink>
-          <span className="footer-link">Shipping Policy</span>
         </div>
       </div>
     </footer>

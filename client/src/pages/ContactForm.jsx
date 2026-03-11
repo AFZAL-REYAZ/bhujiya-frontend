@@ -222,19 +222,16 @@ const ContactForm = () => {
                 <p className="text-xs font-black uppercase tracking-widest text-green-500 mb-1">Our Location</p>
                 <h3 className="text-xl font-bold mb-2">Maa Kavita Laxmi Pvt. Ltd.</h3>
                 <p className="text-gray-400 leading-relaxed text-sm md:text-base italic">
-                  Gala No. B-14, 15, 16, 17, 18, Floor Ground, First Floor,<br />
-                  Building Name Hira Hari Industrial Estate, Block Sector,<br />
-                  Vasai East, Road Palshicya Pada, City Pelhar, District Palghar,<br />
-                  Maharashtra - 401208, India
+                  Ward No.-71, Holding No.- 171/225/182A, Circle No.-226, Simlli Murarour, Sahdara, Patna, Bihar - 800008
                 </p>
-                <a 
+                {/* <a 
                   href="https://www.google.com/maps" 
                   target="_blank" 
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 text-green-500 font-bold text-sm mt-3 hover:underline"
                 >
                   Get Directions <FaExternalLinkAlt size={12}/>
-                </a>
+                </a> */}
               </div>
             </div>
 
@@ -243,7 +240,7 @@ const ContactForm = () => {
                 <div className="bg-blue-500/10 p-3 rounded-xl">
                   <FaPhoneAlt className="text-blue-400" size={18} />
                 </div>
-                <p className="font-bold text-gray-200">+91 8048962778</p>
+                <p className="font-bold text-gray-200">+91-8492995999</p>
               </div>
               <div className="flex items-center gap-4">
                 <div className="bg-red-500/10 p-3 rounded-xl">
@@ -274,14 +271,14 @@ const ContactForm = () => {
               >
                 <FaTwitter size={20} />
               </a>
-              <a 
+              {/* <a 
                 href="#" 
                 target="_blank" 
                 rel="noreferrer"
                 className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center hover:bg-[#0A66C2] hover:-translate-y-1 transition-all duration-300"
               >
                 <FaLinkedinIn size={20} />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
