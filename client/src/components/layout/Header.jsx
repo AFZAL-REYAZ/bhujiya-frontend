@@ -141,29 +141,29 @@ const Header = () => {
   return (
     <header className={`w-full fixed top-0 left-0 z-40 transition-shadow ${scrolled ? "shadow-sm" : ""}`}>
       <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 h-20 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
             <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
             <div>
-              <p className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight">Maa Kavita Laxmi Pvt. Ltd.</p>
-              <div className="flex flex-wrap gap-3 text-[12px] text-gray-600">
-                <span>Malsalami, Shahadra, Patna</span>
-                <span className="flex items-center gap-1">
-                  <span className="inline-block w-2 h-2 rounded-full bg-green-600" />
+              <p className="text-lg md:text-l font-bold text-gray-900 tracking-tight">Maa Kavita Laxmi Pvt. Ltd.</p>
+              <div className="flex flex-wrap gap-1 text-[12px] text-gray-600">
+                <span className="md:text-2px">Malsalami, Shahadra, Patna</span>
+                <span className="flex items-center gap-1 md:">
+                  <span className=" md:text-2px inline-block w-2 h-2 rounded-full bg-green-600" />
                   GST No.: 10AAOCM9571F1ZB
                 </span>
               </div>
             </div>
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex h items-center gap-3">
             <a
               href="tel:+918252753985"
               className="hidden sm:flex items-center bg-white border border-gray-200 rounded-xl px-3 py-2 hover:border-green-300 transition"
             >
               <FaPhone className="text-green-700 mr-2" />
-              <div className="text-sm">
+              <div className="text-[11px]">
                 <p className="font-bold text-gray-900">Call 8492995999</p>
-                <p className="text-[11px] text-gray-500">100% Response rate</p>
+                <p className="text-[7px] text-gray-500">100% Response rate</p>
               </div>
             </a>
             <button
