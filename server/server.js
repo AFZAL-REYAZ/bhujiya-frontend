@@ -11,11 +11,22 @@ const routes = require("./src/routes/router");
 const app = express();
 
 // ===== MIDDLEWARE =====
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://jaldichips.netlify.app"
+];
+
 app.use(
-	cors({
-		origin: process.env.CLIENT_URL || "http://localhost:5173",
-		credentials: true,
-	})
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
 );
 app.use(express.json());
 app.use(cookieParser());
