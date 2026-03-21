@@ -60,9 +60,9 @@ const LandingPage = ({ products = [] }) => {
   return (
     <div className="font-sans overflow-hidden bg-[#f3f2ee]">
       <HeroPage />
-      <FeaturedSection items={finalFeaturedProducts} onOpen={handleOpenModal} />
+      <FeaturedSection items={finalFeaturedProducts} />
       <WhyChooseUsSection />
-      <BestSellersSection items={bestSellers} onOpen={handleOpenModal} />
+      <BestSellersSection items={bestSellers} />
       <TestimonialsSection />
       <QuoteModal
         open={showQuoteModal}
