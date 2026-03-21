@@ -6,33 +6,11 @@ import API from "../../config/api/apiconfig";
 
 const ProductCard = ({ product, onOpen, origin }) => {
   const navigate = useNavigate();
-  const [isAdding, setIsAdding] = useState(false);
 
-  const handleAdd = async (redirect = false) => {
-    const token = localStorage.getItem("token");
-    if (!token) return navigate("/auth/sign-in");
-
-    setIsAdding(true);
-
-    try {
-      await API.post(
-        "/cart/add",
-        {
-          productId: product.id,
-          name: product.title,
-          price: Number(product.price),
-          image: product.image,
-          quantity: 1,
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      redirect ? navigate("/cart") : alert("Added to cart");
-    } catch {
-      alert("Something went wrong");
-    } finally {
-      setIsAdding(false);
-    }
+  const handleBuyNow = (e) => {
+    e.stopPropagation();
+    // Bypassing login, sending the product directly to Cart view via state
+    navigate("/cart", { state: { directProduct: product } });
   };
 
   return (
@@ -59,19 +37,11 @@ const ProductCard = ({ product, onOpen, origin }) => {
         </div>
 
         <button
-          disabled={isAdding}
-          onClick={() => onOpen && onOpen(product, origin)}
-          // onClick={() => handleAdd(false)}
-          className="mt-2 w-full inline-flex items-center justify-center bg-[#0b3b2a] text-white text-sm font-semibold py-2.5 rounded-full hover:bg-green-800 disabled:opacity-60 transition-colors"
+          onClick={handleBuyNow}
+          className="mt-2 w-full inline-flex items-center justify-center bg-[#0b3b2a] text-white text-sm font-semibold py-2.5 rounded-full hover:bg-green-800 transition-colors"
         >
-          {isAdding ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            <>
-              <ShoppingCart className="w-4 h-4 mr-2" />
-              Buy Now
-            </>
-          )}
+          <ShoppingCart className="w-4 h-4 mr-2" />
+          Buy Now
         </button>
       </div>
     </motion.div>
