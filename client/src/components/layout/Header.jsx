@@ -156,6 +156,20 @@ const Header = () => {
             </div>
           </Link>
           <div className="flex h items-center gap-3">
+            {/* Cart Icon Desktop */}
+            <button
+              type="button"
+              className="hidden md:inline-flex items-center justify-center relative w-10 h-10 rounded-full border border-gray-200 text-gray-700 hover:bg-green-50 transition"
+              onClick={() => navigate('/cart')}
+              aria-label="Cart"
+            >
+              <FaShoppingBasket size={20} />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5 min-w-[18px] text-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
             <a
               href="tel:+918252753985"
               className="hidden sm:flex items-center bg-white border border-gray-200 rounded-xl px-3 py-2 hover:border-green-300 transition"
@@ -175,6 +189,21 @@ const Header = () => {
               Send Email
             </button>
 
+            {/* Cart Icon Mobile */}
+            <button
+              type="button"
+              className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-700 hover:bg-green-50 transition relative"
+              onClick={() => navigate('/cart')}
+              aria-label="Cart"
+            >
+              <FaShoppingBasket size={20} />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5 min-w-[18px] text-center">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+            {/* Hamburger Menu */}
             <button
               type="button"
               className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-700"

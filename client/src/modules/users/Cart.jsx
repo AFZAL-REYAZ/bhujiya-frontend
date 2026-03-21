@@ -1,26 +1,77 @@
+
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Trash2, Plus, Minus, ShoppingBag, ArrowLeft, Phone, 
   Loader2, CreditCard, ShieldCheck, Truck, Wallet, CheckCircle2, MapPin 
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import API from "../../config/api/apiconfig";
 import AddressSection from "../../components/userlayout/AddressSection"; 
 
 export default function Cart() {
+  const [orderForm, setOrderForm] = useState({ name: "", email: "", phone: "", location: "" });
+  const [orderSubmitting, setOrderSubmitting] = useState(false);
+  const [orderConfirmation, setOrderConfirmation] = useState("");
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [paymentMethod, setPaymentMethod] = useState("online");
   const [showAddress, setShowAddress] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const confirmationMsg = "";
   const navigate = useNavigate();
+  const location = useLocation();
+  const directProduct = location.state?.directProduct;
 
   // Function to fetch current items in cart
   const fetchCart = async () => {
     try {
+      // If directProduct is present, save to localStorage for persistence
+      if (directProduct) {
+        // Get existing cart from localStorage
+        let cartArr = [];
+        const cartStr = localStorage.getItem("cart");
+        if (cartStr) {
+          try { cartArr = JSON.parse(cartStr) || []; } catch { cartArr = []; }
+        }
+        // Check if product already exists
+        const exists = cartArr.some(
+          (item) => item.productId === (directProduct._id || directProduct.id)
+        );
+        if (!exists) {
+          cartArr.push({
+            productId: directProduct._id || directProduct.id,
+            name: directProduct.title,
+            price: directProduct.price,
+            quantity: directProduct.minQuantity || 1,
+            image: directProduct.image,
+            isLocal: true
+          });
+          localStorage.setItem("cart", JSON.stringify(cartArr));
+        }
+        setCartItems(cartArr);
+        setLoading(false);
+        return;
+      }
+
+      // If cart is in localStorage, show all products
+      const cartStr = localStorage.getItem("cart");
+      if (cartStr) {
+        try {
+          setCartItems(JSON.parse(cartStr));
+        } catch {
+          setCartItems([]);
+        }
+        setLoading(false);
+        return;
+      }
+
       const token = localStorage.getItem("token");
-      const { data } = await API.get("/cart", {
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      const { data } = await API.get("/users/cart", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCartItems(data.items || []);
@@ -31,39 +82,39 @@ export default function Cart() {
     }
   };
 
- useEffect(() => {
-  fetchCart();
+  useEffect(() => {
+    fetchCart();
 
-  const fetchUserAddress = async () => {
-    // 1. Check LocalStorage first (Instant UI)
-    const localAddr = localStorage.getItem("saved_address");
-    if (localAddr) {
-      setSelectedAddress(JSON.parse(localAddr));
-      setShowAddress(false);
-    }
-
-    // 2. Fetch from Database (Source of Truth)
-    const token = localStorage.getItem("token");
-    if (!token) return;
-
-    try {
-      const { data } = await API.get("/users/profile", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (data.address && data.address.firstName) {
-        setSelectedAddress(data.address);
+    const fetchUserAddress = async () => {
+      // 1. Check LocalStorage first (Instant UI)
+      const localAddr = localStorage.getItem("saved_address");
+      if (localAddr) {
+        setSelectedAddress(JSON.parse(localAddr));
         setShowAddress(false);
-        // Sync local storage
-        localStorage.setItem("saved_address", JSON.stringify(data.address));
       }
-    } catch (err) {
-      console.log("Database fetch failed or no address saved.");
-    }
-  };
 
-  fetchUserAddress();
-}, []);
+      // 2. Fetch from Database (Source of Truth)
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const { data } = await API.get("/users/profile", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (data.address && data.address.firstName) {
+          setSelectedAddress(data.address);
+          setShowAddress(false);
+          // Sync local storage
+          localStorage.setItem("saved_address", JSON.stringify(data.address));
+        }
+      } catch (err) {
+        console.log("Database fetch failed or no address saved.");
+      }
+    };
+
+    fetchUserAddress();
+  }, []);
 
   /**
    * FIXED: This function now sends all required fields (productId, name, price, image)
@@ -81,19 +132,25 @@ export default function Cart() {
     
     const qtyChange = actionType === 'plus' ? 1 : -1;
 
+    if (item.isLocal) {
+      setCartItems(prev => prev.map(cartItem => 
+         cartItem.productId === item.productId 
+            ? { ...cartItem, quantity: cartItem.quantity + qtyChange }
+            : cartItem
+      ));
+      return;
+    }
+
+    if (!token) return;
+
     try {
-      // POSTing all required fields to /cart/add for validation
-      await API.post("/cart/add", { 
+      await API.post("/users/cart/add", { 
         productId: item.productId, 
-        name: item.name,           
-        price: item.price,         
-        image: item.image,         
         quantity: qtyChange 
       }, { 
         headers: { Authorization: `Bearer ${token}` } 
       });
-
-      fetchCart(); // Refresh UI after successful DB update
+      fetchCart();
     } catch (err) {
       console.error("Update Error:", err.response?.data);
       alert(err.response?.data?.message || "Failed to update quantity.");
@@ -102,11 +159,20 @@ export default function Cart() {
 
   // Function to completely remove an item from the cart
   const removeItem = async (productId) => {
-    const token = localStorage.getItem("token");
     if (!window.confirm("Remove this item from basket?")) return;
 
+    const item = cartItems.find(i => i.productId === productId);
+    if (item?.isLocal) {
+      setCartItems(prev => prev.filter(i => i.productId !== productId));
+      window.history.replaceState({}, document.title);
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
     try {
-      await API.delete(`/cart/remove/${productId}`, { 
+      await API.delete(`/users/cart/remove/${productId}`, { 
         headers: { Authorization: `Bearer ${token}` } 
       });
       setCartItems(prev => prev.filter(item => item.productId !== productId));
@@ -121,9 +187,11 @@ export default function Cart() {
     const token = localStorage.getItem("token");
     
     // Save to Database
-    const { data } = await API.post("/cart/address", addressData, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+
+    // Address saving for cart is not implemented in backend, skipping API call
+    setSelectedAddress(addressData);
+    setShowAddress(false);
+    localStorage.setItem("saved_address", JSON.stringify(addressData));
 
     // Update Local State with data from Database
     setSelectedAddress(data.address);
@@ -137,29 +205,48 @@ export default function Cart() {
   }
 };
 
-  const handleFinalCheckout = async () => {
-    if (!selectedAddress) {
-      setShowAddress(true);
-      window.scrollTo({ top: 500, behavior: 'smooth' });
+  const handleFinalCheckout = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!orderForm.name || !orderForm.phone || !orderForm.location) {
+      setOrderConfirmation("Please fill in Name, Phone, and Location in the form before confirming.");
       return;
     }
-
-    const token = localStorage.getItem("token");
-    const orderData = {
-      items: cartItems,
-      address: selectedAddress,
-      totalAmount: total,
-      paymentMethod: paymentMethod,
-    };
-
+    setOrderSubmitting(true);
+    setOrderConfirmation("");
     try {
-      const { data } = await API.post("/cart/checkout", orderData, {
-        headers: { Authorization: `Bearer ${token}` }
+      const { data } = await API.post("/orders/quote", {
+        product: cartItems.length > 0 ? {
+          id: cartItems[0].productId,
+          title: cartItems[0].name,
+          price: cartItems[0].price,
+          quantity: cartItems[0].quantity,
+          image: cartItems[0].image,
+        } : {},
+        customer: {
+          name: orderForm.name,
+          email: orderForm.email,
+          phone: orderForm.phone,
+        },
+        message: "Order from cart page. Address: " + orderForm.location,
+        source: "cart",
+        sourceLabel: "Cart Page",
       });
-      alert("🎉 Order Placed Successfully!");
-      navigate("/order-success", { state: { orderId: data.order._id } });
+      // Cart clear (frontend only)
+      setCartItems([]);
+      localStorage.removeItem("cart");
+      setOrderForm({ name: "", email: "", phone: "", location: "" });
+      // Remove directProduct from location.state so that on revisit, cart is empty
+      if (window.history.replaceState) {
+        const newState = { ...location.state };
+        delete newState.directProduct;
+        window.history.replaceState({ ...window.history.state, usr: newState }, document.title);
+      }
+      // Redirect to OrderSuccess with orderId (if available)
+      navigate("/order-success", { state: { orderId: data?.orderId || "N/A" } });
     } catch (err) {
-      alert("Order failed: " + (err.response?.data?.message || "Server Error"));
+      setOrderConfirmation(err?.response?.data?.message || "Something went wrong");
+    } finally {
+      setOrderSubmitting(false);
     }
   };
 
@@ -175,6 +262,11 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] pt-28 pb-20 px-4 md:px-8">
+      {confirmationMsg && (
+        <div className={`fixed top-24 left-1/2 transform -translate-x-1/2 z-50 px-6 py-4 rounded-xl shadow-lg font-bold text-center transition-all duration-300 ${confirmationMsg.includes('Successfully') ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}`}>
+          {confirmationMsg}
+        </div>
+      )}
       <div className="max-w-7xl mx-auto">
         <motion.button 
           whileHover={{ x: -5 }}
@@ -199,7 +291,6 @@ export default function Cart() {
             {/* Left Side: Items List */}
             <div className="lg:col-span-7">
               <h1 className="text-4xl font-black text-gray-900 tracking-tighter mb-10">My Shopping <span className="text-green-600">Basket</span></h1>
-              
               <div className="space-y-4">
                 <AnimatePresence mode="popLayout">
                   {cartItems.map((item) => (
@@ -211,11 +302,9 @@ export default function Cart() {
                       <div className="w-24 h-24 bg-gray-50 rounded-2xl p-3 flex-shrink-0 flex items-center justify-center">
                         <img src={item.image} className="max-h-full object-contain" alt={item.name} />
                       </div>
-
                       <div className="flex-1 min-w-0">
                         <h3 className="text-md font-black text-gray-800 truncate">{item.name}</h3>
                         <p className="text-green-600 font-bold text-sm">₹{item.price} / unit</p>
-                        
                         <div className="flex items-center mt-3 gap-6">
                           <div className="flex items-center bg-gray-50 rounded-lg p-1 border border-gray-100">
                             <button 
@@ -235,7 +324,6 @@ export default function Cart() {
                           <div className="text-gray-900 font-black text-sm">₹{item.price * item.quantity}</div>
                         </div>
                       </div>
-
                       <button onClick={() => removeItem(item.productId)} className="p-2 text-gray-300 hover:text-red-500 transition-colors">
                         <Trash2 size={18} />
                       </button>
@@ -243,123 +331,90 @@ export default function Cart() {
                   ))}
                 </AnimatePresence>
               </div>
-
-              {/* Address Section */}
-              <div className="mt-10">
-  {!showAddress && !selectedAddress ? (
-    /* 1. Initial State: No address and form is closed */
-    <button 
-      onClick={() => setShowAddress(true)}
-      className="w-full py-10 border-2 border-dashed border-gray-200 rounded-[2.5rem] flex flex-col items-center justify-center gap-2 text-gray-400 hover:border-green-400 hover:text-green-600 transition-all bg-white/50"
-    >
-      <MapPin size={24} />
-      <span className="font-black uppercase tracking-widest text-[10px]">Set Delivery Address</span>
-    </button>
-  ) : showAddress ? (
-    /* 2. Form State: Adding NEW or EDITING existing */
-    <div className="bg-white p-2 rounded-[2.5rem] shadow-sm border border-gray-100">
-      <AddressSection 
-        onAddressComplete={handleAddressComplete} 
-        initialData={selectedAddress} 
-      />
-      {/* Optional: Cancel button to go back to summary */}
-      {selectedAddress && (
-        <button 
-          onClick={() => setShowAddress(false)}
-          className="w-full py-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest hover:text-red-500 transition-colors"
-        >
-          Cancel Edit
-        </button>
-      )}
-    </div>
-  ) : (
-    /* 3. Summary State: Using updated field names (firstName, lastName, houseNo) */
-    <div className="p-6 bg-green-50 rounded-[2rem] border border-green-100 relative overflow-hidden">
-      <div className="absolute top-0 right-0 p-4 opacity-10"><MapPin size={80}/></div>
-      <h4 className="text-green-800 font-black uppercase text-[10px] tracking-widest mb-3 flex items-center gap-2">
-         <CheckCircle2 size={14}/> Shipping To:
-         <span className="bg-green-200 px-2 py-0.5 rounded text-[8px]">{selectedAddress.addressType || 'Home'}</span>
-      </h4>
-      
-      {/* Displaying split names */}
-      <p className="font-black text-gray-900">
-        {selectedAddress.firstName} {selectedAddress.lastName}
-      </p>
-      
-      {/* Displaying detailed address fields */}
-      <p className="text-gray-600 text-xs leading-relaxed mt-1">
-        {selectedAddress.houseNo}, {selectedAddress.street}<br/>
-        {selectedAddress.landmark && <span>Near {selectedAddress.landmark}, </span>}
-        {selectedAddress.city}, {selectedAddress.district}<br/>
-        {selectedAddress.state} - <span className="font-bold">{selectedAddress.pincode}</span>
-      </p>
-
-      <div className="flex items-center gap-4 mt-4">
-        <button 
-          onClick={() => setShowAddress(true)} 
-          className="text-[10px] font-black text-[#0b3b2a] underline uppercase tracking-tighter hover:text-green-900"
-        >
-          Edit Address
-        </button>
-        
-        <p className="text-[10px] font-bold text-gray-500 flex items-center gap-1">
-          <Phone size={10}/> {selectedAddress.phone}
-        </p>
-      </div>
-    </div>
-  )}
-</div>
             </div>
 
-            {/* Right Side: Order Summary */}
+            {/* Right Side: Unified Order Section */}
             <div className="lg:col-span-5">
-              <div className="bg-white p-8 rounded-[3rem] shadow-xl shadow-gray-200/50 border border-gray-50 sticky top-32">
-                <h2 className="text-xl font-black text-gray-900 mb-8 uppercase tracking-tight">Order Summary</h2>
-                
-                <div className="space-y-6 mb-8">
-                  <div>
-                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">Payment Method</p>
-                    <div className="flex gap-3">
-                      <button 
-                        onClick={() => setPaymentMethod("online")}
-                        className={`flex-1 py-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${paymentMethod === 'online' ? 'border-green-600 bg-green-50' : 'border-gray-50 bg-gray-50/50'}`}
-                      >
-                        <CreditCard size={18} className={paymentMethod === 'online' ? 'text-green-600' : 'text-gray-400'} />
-                        <span className="text-[9px] font-black uppercase tracking-widest">Online</span>
-                      </button>
-                      <button 
-                        onClick={() => setPaymentMethod("cod")}
-                        className={`flex-1 py-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${paymentMethod === 'cod' ? 'border-green-600 bg-green-50' : 'border-gray-50 bg-gray-50/50'}`}
-                      >
-                        <Wallet size={18} className={paymentMethod === 'cod' ? 'text-green-600' : 'text-gray-400'} />
-                        <span className="text-[9px] font-black uppercase tracking-widest">C.O.D</span>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3 pt-6 border-t border-gray-50">
-                    <div className="flex justify-between text-xs font-bold text-gray-400"><span>Bag Subtotal</span><span className="text-gray-900">₹{subtotal}</span></div>
-                    <div className="flex justify-between text-xs font-bold text-gray-400"><span>Delivery Charges</span><span className="text-green-600 font-black">FREE</span></div>
-                    <div className="flex justify-between items-center pt-4">
-                      <span className="text-xs font-black text-gray-900 uppercase tracking-widest">Grand Total</span>
-                      <span className="text-3xl font-black text-gray-900">₹{total}</span>
-                    </div>
+              <form onSubmit={handleFinalCheckout} className="bg-white p-8 rounded-[3rem] shadow-xl shadow-gray-200/50 border border-gray-50 sticky top-32 flex flex-col gap-6">
+                <h2 className="text-xl font-black text-gray-900 mb-2 uppercase tracking-tight">Order Summary</h2>
+                <div className="space-y-3">
+                  <div className="flex justify-between text-xs font-bold text-gray-400"><span>Bag Subtotal</span><span className="text-gray-900">₹{subtotal}</span></div>
+                  <div className="flex justify-between text-xs font-bold text-gray-400"><span>Delivery Charges</span><span className="text-green-600 font-black">FREE</span></div>
+                  <div className="flex justify-between items-center pt-2">
+                    <span className="text-xs font-black text-gray-900 uppercase tracking-widest">Grand Total</span>
+                    <span className="text-3xl font-black text-gray-900">₹{total}</span>
                   </div>
                 </div>
-
-                <button 
-                  onClick={handleFinalCheckout}
-                  className="w-full bg-black text-white py-5 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:bg-[#0b3b2a] transition-all shadow-lg active:scale-95"
+                <div className="pt-2">
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Payment Method</p>
+                  <div className="flex gap-3">
+                    <button 
+                      type="button"
+                      onClick={() => setPaymentMethod("online")}
+                      className={`flex-1 py-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${paymentMethod === 'online' ? 'border-green-600 bg-green-50' : 'border-gray-50 bg-gray-50/50'}`}
+                    >
+                      <CreditCard size={18} className={paymentMethod === 'online' ? 'text-green-600' : 'text-gray-400'} />
+                      <span className="text-[9px] font-black uppercase tracking-widest">Online</span>
+                    </button>
+                    <button 
+                      type="button"
+                      onClick={() => setPaymentMethod("cod")}
+                      className={`flex-1 py-4 rounded-xl border-2 transition-all flex flex-col items-center gap-2 ${paymentMethod === 'cod' ? 'border-green-600 bg-green-50' : 'border-gray-50 bg-gray-50/50'}`}
+                    >
+                      <Wallet size={18} className={paymentMethod === 'cod' ? 'text-green-600' : 'text-gray-400'} />
+                      <span className="text-[9px] font-black uppercase tracking-widest">C.O.D</span>
+                    </button>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3 pt-2">
+                  <input
+                    type="text"
+                    required
+                    value={orderForm.name}
+                    onChange={e => setOrderForm({ ...orderForm, name: e.target.value })}
+                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm"
+                    placeholder="Your Name"
+                  />
+                  <input
+                    type="tel"
+                    required
+                    value={orderForm.phone}
+                    onChange={e => setOrderForm({ ...orderForm, phone: e.target.value })}
+                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm"
+                    placeholder="Phone Number"
+                  />
+                  <input
+                    type="email"
+                    value={orderForm.email}
+                    onChange={e => setOrderForm({ ...orderForm, email: e.target.value })}
+                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm"
+                    placeholder="Email (Optional)"
+                  />
+                  <input
+                    type="text"
+                    required
+                    value={orderForm.location}
+                    onChange={e => setOrderForm({ ...orderForm, location: e.target.value })}
+                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm"
+                    placeholder="Delivery Location"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={orderSubmitting}
+                  className="w-full bg-black text-white py-5 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:bg-[#0b3b2a] transition-all shadow-lg active:scale-95 mt-2 disabled:opacity-60"
                 >
-                  {selectedAddress ? "Confirm & Pay" : "Set Address First"}
+                  {orderSubmitting ? "Submitting..." : "Confirm Order"}
                 </button>
-
+                {orderConfirmation && (
+                  <div className={`text-center text-sm mt-2 font-semibold ${orderConfirmation.includes('Confirmed') ? 'text-green-600' : 'text-red-600'}`}>{orderConfirmation}</div>
+                )}
                 <div className="mt-8 flex justify-between items-center px-4">
                   <div className="flex flex-col items-center gap-1 opacity-40"><ShieldCheck size={16}/><span className="text-[7px] font-black uppercase">Secure</span></div>
                   <div className="flex flex-col items-center gap-1 opacity-40"><Truck size={16}/><span className="text-[7px] font-black uppercase">Fast</span></div>
                   <div className="flex flex-col items-center gap-1 opacity-40"><CheckCircle2 size={16}/><span className="text-[7px] font-black uppercase">Original</span></div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         )}
