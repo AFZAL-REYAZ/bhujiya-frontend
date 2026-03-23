@@ -100,7 +100,7 @@ async function createQuote(req, res) {
       },
     });
 
-    return res.status(201).json({ success: true, order });
+    return res.status(201).json({ success: true, orderId: order._id, order });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }

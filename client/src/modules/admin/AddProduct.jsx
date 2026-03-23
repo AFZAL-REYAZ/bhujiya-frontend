@@ -4,8 +4,14 @@ import axios from "axios";
 import { FaPlus, FaCloudUploadAlt, FaTrash } from "react-icons/fa";
 
 const CATEGORY_OPTIONS = [
-  "Spicy Namkeen",
-  "Halka Fulka Snacks",
+  "Banana Chips",
+  "Banana Powder",
+  "Sweet Potato Powder",
+  "Sweet Potato Chips",
+  "Mashrom Chips",
+  "Mashrom Powder",
+  "Makhana Kheer Powder",
+  "Badam Powder",
   "Other",
 ];
 
@@ -319,8 +325,9 @@ export default function AddProduct({ onAdd }) {
                 onChange={(e) => setFormData({ ...formData, shelfLife: e.target.value })}
                 className="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:border-emerald-500 focus:bg-white outline-none font-semibold text-sm transition-all"
               >
-                <option value="4 Months">4 Months</option>
-                <option value="5 Months">5 Months</option>
+                {[...Array(9)].map((_, i) => (
+                  <option key={i+1} value={`${i+1} Months`}>{i+1} Months</option>
+                ))}
               </select>
             </div>
           </div>

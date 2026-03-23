@@ -10,7 +10,14 @@ import API from "../../config/api/apiconfig";
 import AddressSection from "../../components/userlayout/AddressSection"; 
 
 export default function Cart() {
-  const [orderForm, setOrderForm] = useState({ name: "", email: "", phone: "", location: "" });
+  const location = useLocation();
+  const userInfo = location.state?.userInfo;
+  const [orderForm, setOrderForm] = useState({
+    name: userInfo?.name || "",
+    email: userInfo?.email || "",
+    phone: userInfo?.mobile || userInfo?.phone || "",
+    location: ""
+  });
   const [orderSubmitting, setOrderSubmitting] = useState(false);
   const [orderConfirmation, setOrderConfirmation] = useState("");
   const [cartItems, setCartItems] = useState([]);
@@ -20,7 +27,6 @@ export default function Cart() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const confirmationMsg = "";
   const navigate = useNavigate();
-  const location = useLocation();
   const directProduct = location.state?.directProduct;
 
   // Function to fetch current items in cart
@@ -371,23 +377,23 @@ export default function Cart() {
                     type="text"
                     required
                     value={orderForm.name}
-                    onChange={e => setOrderForm({ ...orderForm, name: e.target.value })}
-                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm"
+                    disabled={!!userInfo}
+                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm bg-gray-100 cursor-not-allowed"
                     placeholder="Your Name"
                   />
                   <input
                     type="tel"
                     required
                     value={orderForm.phone}
-                    onChange={e => setOrderForm({ ...orderForm, phone: e.target.value })}
-                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm"
+                    disabled={!!userInfo}
+                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm bg-gray-100 cursor-not-allowed"
                     placeholder="Phone Number"
                   />
                   <input
                     type="email"
                     value={orderForm.email}
-                    onChange={e => setOrderForm({ ...orderForm, email: e.target.value })}
-                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm"
+                    disabled={!!userInfo}
+                    className="w-full rounded border border-gray-200 px-3 py-2 text-sm bg-gray-100 cursor-not-allowed"
                     placeholder="Email (Optional)"
                   />
                   <input
