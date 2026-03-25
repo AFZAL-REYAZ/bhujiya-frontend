@@ -159,25 +159,25 @@ function QuoteProductCard({ product, details, onQuote }) {
   );
 }
 
-function PromoRangeCard() {
-  return (
-    <div className="relative bg-[#0b3b2a] rounded-2xl overflow-hidden">
-      <img
-        src={bananaChips}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover opacity-30"
-      />
-      <div className="relative p-6 h-full flex flex-col justify-end">
-        <p className="text-white text-lg font-bold">
-          View Complete <br /> Range Of Products
-        </p>
-        <button className="mt-4 inline-flex items-center justify-center rounded-xl bg-white text-[#0b3b2a] text-sm font-bold px-4 py-2">
-          Explore
-        </button>
-      </div>
-    </div>
-  );
-}
+// function PromoRangeCard() {
+//   return (
+//     <div className="relative bg-[#0b3b2a] rounded-2xl overflow-hidden">
+//       <img
+//         src={bananaChips}
+//         alt=""
+//         className="absolute inset-0 w-full h-full object-cover opacity-30"
+//       />
+//       <div className="relative p-6 h-full flex flex-col justify-end">
+//         <p className="text-white text-lg font-bold">
+//           View Complete <br /> Range Of Products
+//         </p>
+//         <button className="mt-4 inline-flex items-center justify-center rounded-xl bg-white text-[#0b3b2a] text-sm font-bold px-4 py-2">
+//           Explore
+//         </button>
+//       </div>
+//     </div>
+//   );
+// }
 
 function CategoryThumbs() {
   const cats = [
@@ -499,7 +499,7 @@ export default function BusinessToBusiness({ products = [] }) {
             <p className="text-xs font-black text-gray-500 uppercase tracking-widest">Welcome to</p>
             <h3 className="mt-1 text-2xl font-black text-gray-900">Maa Kavita Laxmi Pvt. Ltd.</h3>
             <p className="mt-3 text-sm text-gray-600">
-              MAA Kavita Laxmi Pvt. Ltd. Is A Premium Banana Chips Manufacturer In Patna, Bihar, Dedicated To Delivering Fresh, Crispy, And Authentic Snacks. We Carefully Select Farm-Fresh Bananas And Process Them Using Hygienic Methods To Maintain Natural Taste And Quality. Our Banana Chips Are Made Without Artificial Flavors Or Taste Enhancers, Ensuring A Pure And Healthy Snacking Experience. From Slicing And Seasoning To Packaging, Every Step Follows Strict Quality Control And Modern Food Safety Standards. We Offer A Variety Of Flavors Including Salted, Masala, And Spicy Banana Chips For Customers Across India. Our Mission Is To Provide Delicious, High-Quality Banana Chips That Combine Traditional Taste With Trusted Manufacturing Excellence.
+              MAA Kavita Laxmi Pvt. Ltd. Is A Premium Banana Food Products Manufacturer In Patna, Bihar, Dedicated To Delivering Fresh, Crispy and Snacks. We Carefully Select Farm-Fresh Bananas And Process Them Using Hygienic Methods To Maintain Natural Taste And Quality. Our Banana Chips Are Made Without Artificial Flavors Or Taste Enhancers, Ensuring A Pure And Healthy Snacking Experience. From Slicing And Seasoning To Packaging, Every Step Follows Strict Quality Control And Modern Food Safety Standards. We Offer A Variety Of Flavors Including Salted, Masala, And Spicy Banana Chips For Customers Across India. Our Mission Is To Provide Delicious, High-Quality Banana Chips That Combine Traditional Taste With Trusted Manufacturing Excellence.
             </p>
             <p className="mt-4 text-xs font-black text-gray-600 uppercase tracking-widest">
               Get in touch with us for best deals
@@ -510,10 +510,10 @@ export default function BusinessToBusiness({ products = [] }) {
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
             {[
-              { icon: <Building2 className="w-5 h-5"/>, label: "Nature of Business", value: "Factory / Manufacturing,Wholesale Business,Retail Business,Distributor" },
+              { icon: <Building2 className="w-5 h-5"/>, label: "Nature of Business", value: "Factory / Manufacturing,Wholesale Business,Retail Business,Distributor & Exporter" },
               { icon: <Users className="w-5 h-5"/>, label: "Total Number of Employees", value: "11 to 25 People" },
               // { icon: <CalendarDays className="w-5 h-5"/>, label: "GST Registration Date", value: "01-07-2017" },
-              { icon: <FileText className="w-5 h-5"/>, label: "Legal Status of Firm", value: "Proprietorship" },
+              { icon: <FileText className="w-5 h-5"/>, label: "Legal Status of Firm", value: "Private Limited Company" },
               { icon: <CircleDollarSign className="w-5 h-5"/>, label: "Annual Turnover", value: "0-40 L" },
               // { icon: <Truck className="w-5 h-5"/>, label: "Import Export Code", value: "ABPYBZ867R" },
               { icon: <IdCard className="w-5 h-5"/>, label: "GST No.", value: "10AAOCM9571F1ZB" },
@@ -802,7 +802,7 @@ export default function BusinessToBusiness({ products = [] }) {
                 <p className="mt-1 text-xs text-gray-700 leading-relaxed">
                   Maa Kavita Lakxmi Pvt. Ltd.
                   <br />
-                  Ward No.-71, Holding No.- 171/225/182A, Circle No.-226, Simlli Murarour, Sahdara, Patna, Bihar - 800008
+                  GROUND FLOOR, Simli Sardra, Yadav Building, Simali Murarpur Tola, New Mamta Photostat, Malsalami, Patna, Patna, Bihar, 800008
                 </p>
               </div>
             </div>

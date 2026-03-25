@@ -5,21 +5,21 @@ import bananaSalti from "../../assets/banana/bananaSalti.jpeg";
 import chilliBana from "../../assets/banana/chilliBana.jpeg";
 import bananach5 from "../../assets/banana/bananach5.jpeg";
 
-import crousel1 from "../../assets/carousel/crousel1.jpeg";
-import crousel2 from "../../assets/carousel/crousel2.jpeg";
-import crousel3 from "../../assets/carousel/crousel3.jpeg";
-import crousel4 from "../../assets/carousel/crousel4.jpeg";
-import crousel5 from "../../assets/carousel/crousel5.jpeg";
-import crousel6 from "../../assets/carousel/crousel6.jpeg";
+// import crousel1 from "../../assets/carousel/crousel1.jpeg";
+// import crousel2 from "../../assets/carousel/crousel2.jpeg";
+// import crousel3 from "../../assets/carousel/crousel3.jpeg";
+// import crousel4 from "../../assets/carousel/crousel4.jpeg";
+// import crousel5 from "../../assets/carousel/crousel5.jpeg";
+// import crousel6 from "../../assets/carousel/crousel6.jpeg";
 
-export const heroImages = [
-  crousel1,
-  crousel2,
-  crousel3,
-  crousel4,
-  crousel5,
-  crousel6,
-];
+// export const heroImages = [
+//   crousel1,
+//   crousel2,
+//   crousel3,
+//   crousel4,
+//   crousel5,
+//   crousel6,
+// ];
 
 export const featuredProducts = [
   {

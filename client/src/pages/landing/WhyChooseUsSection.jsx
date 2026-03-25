@@ -10,25 +10,25 @@ const WhyChooseUsSection = () => {
           Why Choose Us
         </h2>
         <p className="text-sm sm:text-base text-gray-600 mb-10">
-          Premium Banana Chips Manufacturer in Patna – Fresh, Crispy and Authentic Taste
+          Premium Banana Food Products Manufacturer in Patna – Fresh, Crispy and Authentic Taste
         </p>
 
         <div className="grid gap-8 md:grid-cols-3">
           {[
             {
-              icon: <Leaf className="w-8 h-8" />,
-              title: "100% Homemade",
-              desc: "Freshly Made in Small Batches Using Traditional Recipes for Authentic Taste.",
-            },
+  icon: <Leaf className="w-8 h-8" />,
+  title: "100% Homemade",
+  desc: "Freshly prepared in small batches using traditional methods for authentic taste. Crafted from premium banana varieties including Alpan, Basita, Muthiya, and Singapuri (Nendran) for superior crunch and flavor.",
+},
             {
               icon: <ShieldCheck className="w-8 h-8" />,
               title: "No Artificial Preservatives",
-              desc: "Our Banana Chips In Patna Are Made With Natural Ingredients, Free From Artificial Colors, Flavors, And Preservatives For Pure Taste And Healthy Snacking.",
+              desc: "Our Banana Food Products In Patna Are Made With Natural Ingredients, Free From Artificial Colors, Flavors, And Preservatives For Pure Taste And Healthy Snacking.",
             },
             {
               icon: <Truck className="w-8 h-8" />,
               title: "Direct From Kitchen",
-              desc: "Freshly Prepared Banana Chips Delivered Directly From Our Kitchen In Patna, Bihar For Authentic Taste And Quality.",
+              desc: "Freshly Prepared Banana Food Products Delivered Directly From Our Kitchen In Patna, Bihar For Authentic Taste And Quality.",
             },
           ].map((item, i) => (
             <motion.div

@@ -12,7 +12,7 @@ const Footer = () => {
               Maa Kavita Lakxmi
             </h3>
             <p className="text-sm text-emerald-100/90 leading-relaxed">
-              Authentic Homemade Banana Chips & Traditional Snacks Manufacturer in Patna
+              Authentic Homemade Banana Food Products & Traditional Snacks Manufacturer in Patna
               Fresh, crispy and authentic homemade banana chips and traditional snacks, carefully crafted with natural ingredients and delivered fresh to your doorstep across Patna and India.
             </p>
             <div className="flex gap-3">
