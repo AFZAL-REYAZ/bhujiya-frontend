@@ -21,6 +21,7 @@ import bananach5 from "../assets/banana/bananach5.jpeg";
 import upiqr from "../assets/banana/upi-qr.jpeg";
 import ContactForm from "./ContactForm";
 import { submitQuote } from "../utils/orderApi";
+import { submitContactEnquiry } from "../utils/contactApi";
 function BusinessToBusinessPageOld() {
   const navigate = useNavigate();
   const [loadingId, setLoadingId] = useState(null);
@@ -463,6 +464,15 @@ export default function BusinessToBusiness({ products = [] }) {
         message: form.message,
         page: "b2b",
         section: "B2B",
+      });
+
+      // Also submit as a contact enquiry so it shows up in "Contact Enquiries" admin page
+      await submitContactEnquiry({
+        name: form.contactName,
+        phone: form.phoneNumber,
+        email: form.email,
+        message: `[B2B Partner Request] Company: ${form.companyName}. Message: ${form.message}`,
+        source: "order",
       });
     } catch {
       toast.error("Could not submit enquiry. Please try again.");

@@ -4,6 +4,7 @@ import { FaBars, FaTimes, FaSignOutAlt, FaShoppingBasket, FaUserCircle, FaSearch
 import API from "../../config/api/apiconfig";
 import logo from "../../assets/banana/logo2.png";
 import { submitQuote } from "../../utils/orderApi";
+import { submitContactEnquiry } from "../../utils/contactApi";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -92,7 +93,7 @@ const Header = () => {
     try {
       await submitQuote({
         source: "b2b",
-        sourceLabel: "Header Partner Form",
+        sourceLabel: "B2B Page",
         customer: {
           name: partnerForm.contactName,
           phone: partnerForm.phoneNumber,
@@ -106,6 +107,15 @@ const Header = () => {
         message: partnerForm.message,
         page: "header",
         section: "partner-form",
+      });
+
+      // Also submit as a contact enquiry so it shows up in "Contact Enquiries" admin page
+      await submitContactEnquiry({
+        name: partnerForm.contactName,
+        phone: partnerForm.phoneNumber,
+        email: partnerForm.email,
+        message: `[Header Wholesale Partner] Company: ${partnerForm.companyName}. Message: ${partnerForm.message}`,
+        source: "order",
       });
 
       setPartnerStatus({

@@ -1,5 +1,6 @@
 import React from "react";
 import { submitQuote } from "../../utils/orderApi";
+import { submitContactEnquiry } from "../../utils/contactApi";
 
 const QuoteModal = ({
   open,
@@ -66,8 +67,8 @@ const QuoteModal = ({
                   e.preventDefault();
                   try {
                     await submitQuote({
-                      source: source || "featured",
-                      sourceLabel: sourceLabel || "Featured Products",
+                      source: "home",
+                      sourceLabel: "Home Page",
                       product: {
                         id: product.id,
                         title: product.title,
@@ -84,6 +85,16 @@ const QuoteModal = ({
                       page: "home",
                       section: sourceLabel || "",
                     });
+                    
+                    // Also submit as a contact enquiry so it shows up in "Contact Enquiries" admin page
+                    await submitContactEnquiry({
+                      name: quoteForm.name,
+                      phone: quoteForm.mobile,
+                      email: quoteForm.email,
+                      message: `[Product: ${product.title}] ${quoteForm.message}`,
+                      source: "order",
+                    });
+
                     alert("Your order is confirmed.");
                     onClose();
                     setQuoteForm({ name: "", mobile: "", email: "", message: "" });

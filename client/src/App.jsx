@@ -28,6 +28,8 @@ import AdminLogin from './modules/admin/Login'
 import Dashboard from './modules/admin/Dashboard'
 import AddProduct from './modules/admin/AddProduct'
 import ManageProducts from './modules/admin/ManageProducts'
+import ContactEnquiriesPage from './modules/admin/ContactEnquiriesPage'
+import ContactUsEnquiriesPage from './modules/admin/ContactUsEnquiriesPage'
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -85,6 +87,8 @@ const App = () => {
           <Route path="dashboard" element={<Dashboard products={products} refreshProducts={fetchProducts} />} />
           <Route path="add-product" element={<AddProduct onAdd={fetchProducts} />} />
           <Route path="live-products" element={<ManageProducts products={products} refreshProducts={fetchProducts} />} />
+          <Route path="contact-enquiries" element={<ContactEnquiriesPage />} />
+          <Route path="contactus-enquiries" element={<ContactUsEnquiriesPage />} />
         </Route>
 
         {/* ================= PUBLIC SECTION (With Header/Footer) ================= */}

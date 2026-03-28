@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
+// import ContactEnquiriesTable from "./ContactEnquiriesTable";
+// import ContactUsEnquiriesTable from "./ContactUsEnquiriesTable";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   RefreshCw,
@@ -66,16 +68,14 @@ const getCompactQty = (order) => {
 };
 
 const SOURCE_STYLES = {
-  featured: "bg-amber-50 text-amber-700 border-amber-200",
   b2b: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  product: "bg-indigo-50 text-indigo-700 border-indigo-200",
+  home: "bg-cyan-50 text-cyan-700 border-cyan-200",
   other: "bg-slate-50 text-slate-600 border-slate-200",
 };
 
 const SOURCE_LABELS = {
-  featured: "Featured",
   b2b: "B2B",
-  product: "Product",
+  home: "Home",
   other: "Other",
 };
 
@@ -126,17 +126,16 @@ export default function Dashboard({ products, refreshProducts }) {
 
   const orderStats = useMemo(() => {
     const total = orders.length;
-    const featured = orders.filter((o) => getOrderSource(o) === "featured").length;
     const b2b = orders.filter((o) => getOrderSource(o) === "b2b").length;
-    const product = orders.filter((o) => getOrderSource(o) === "product").length;
-    return { total, featured, b2b, product };
+    const home = orders.filter((o) => getOrderSource(o) === "home").length;
+    const other = orders.filter((o) => !["b2b","home"].includes(getOrderSource(o))).length;
+    return { total, b2b, home, other };
   }, [orders]);
 
   const filterOptions = [
     { key: "all", label: "All Orders", count: orderStats.total },
-    { key: "featured", label: "Featured", count: orderStats.featured },
+    { key: "home", label: "Home", count: orderStats.home },
     { key: "b2b", label: "B2B", count: orderStats.b2b },
-    { key: "product", label: "Product", count: orderStats.product },
   ];
 
   const handleSort = (key) => {
@@ -321,6 +320,8 @@ export default function Dashboard({ products, refreshProducts }) {
           </div>
         ) : (
           <div className="w-full">
+            {/* Overview only. Tables moved to their own pages. */}
+            {/* Add summary cards or stats here if needed. */}
             <table className="w-full table-fixed text-left border-separate border-spacing-0 text-sm">
               <thead className="bg-slate-50/70 sticky top-0 z-10">
                 <tr>

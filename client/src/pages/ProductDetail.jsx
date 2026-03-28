@@ -3,6 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { ShoppingBag, Heart, Star, Plus, Minus, Building2, CalendarDays, Users, CircleDollarSign, IdCard, FileText, Truck, ShieldCheck, ThumbsUp } from "lucide-react";
 import API from "../config/api/apiconfig";
 import { submitQuote } from "../utils/orderApi";
+import { submitContactEnquiry } from "../utils/contactApi";
 
 // Assets
 import bananaChilli from "../assets/banana/bananaChilli.jpeg";
@@ -328,8 +329,8 @@ export default function ProductDetail() {
                           e.preventDefault();
                           try {
                             await submitQuote({
-                              source: "product",
-                              sourceLabel: "Product Detail",
+                              source: "home",
+                              sourceLabel: "Home Page",
                               product: {
                                 id: detailProduct.id || id,
                                 title: detailProduct.title,
@@ -346,6 +347,16 @@ export default function ProductDetail() {
                               page: "product",
                               section: "Product Detail",
                             });
+                            
+                            // Also submit as a contact enquiry so it shows up in "Contact Enquiries" admin page
+                            await submitContactEnquiry({
+                              name: quoteForm.name,
+                              phone: quoteForm.mobile,
+                              email: quoteForm.email,
+                              message: `[Product: ${detailProduct.title}] ${quoteForm.message}`,
+                              source: "order",
+                            });
+
                             alert("Your order is confirmed.");
                             setShowQuoteModal(false);
                             setQuoteForm({ name: "", mobile: "", email: "", message: "" });
