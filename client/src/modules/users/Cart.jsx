@@ -234,8 +234,8 @@ export default function Cart() {
           phone: orderForm.phone,
         },
         message: "Order from cart page. Address: " + orderForm.location,
-        source: "cart",
-        sourceLabel: "Cart Page",
+        source: "home",
+        sourceLabel: "Home Page",
       });
       // Cart clear (frontend only)
       setCartItems([]);
