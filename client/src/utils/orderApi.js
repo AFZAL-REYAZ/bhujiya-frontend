@@ -1,20 +1,6 @@
-const ORDER_API_BASE =
-  import.meta.env.VITE_ORDER_API_URL || "http://localhost:5000/api";
+import API from "../config/api/apiconfig";
 
 export async function submitQuote(payload) {
-  const token = localStorage.getItem("token");
-  const res = await fetch(`${ORDER_API_BASE}/orders/quote`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
-    body: JSON.stringify(payload),
-  });
-
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) {
-    throw new Error(data.message || "Failed to submit quote");
-  }
+  const { data } = await API.post("/orders/quote", payload);
   return data;
 }
