@@ -761,7 +761,7 @@ export default function BusinessToBusiness({ products = [] }) {
             </form>
           </div>
 
-          <div className="flex flex-row justify-between bg-[#F7F1E6] rounded-3xl px-6 sm:px-8 py-8 border border-[#E5D7C3]">
+          <div className="flex flex-row justify-between bg-[#F7F1E6] rounded-3xl px-6 mt-4 sm:px-8 py-8 border border-[#E5D7C3]">
             
             <div className="mt-6 space-y-4">
             <h3 className="text-base sm:text-lg font-semibold text-[#0b3b2a]">

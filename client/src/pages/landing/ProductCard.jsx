@@ -65,61 +65,106 @@ const ProductCard = ({ product, onOpen, origin }) => {
         </div>
       </motion.div>
 
-      {showBuyNowModal && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 relative">
-            <button
-              className="absolute top-2 right-3 text-gray-400 hover:text-gray-700 text-xl"
-              onClick={() => setShowBuyNowModal(false)}
-            >
-              ×
-            </button>
-            <h3 className="text-lg font-bold mb-4 text-gray-900">Enter your details</h3>
-            <form onSubmit={handleFormSubmit} className="space-y-3">
-              <div>
-                <label className="block text-xs font-semibold mb-1">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={form.name}
-                  onChange={handleFormChange}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-green-500 outline-none"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold mb-1">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={form.email}
-                  onChange={handleFormChange}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-green-500 outline-none"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-semibold mb-1">Mobile</label>
-                <input
-                  type="tel"
-                  name="mobile"
-                  value={form.mobile}
-                  onChange={handleFormChange}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-green-500 outline-none"
-                  required
-                />
-              </div>
-              {formError && <div className="text-red-500 text-xs">{formError}</div>}
-              <button
-                type="submit"
-                className="w-full bg-[#0b3b2a] text-white py-2 rounded-lg font-semibold hover:bg-green-800 transition-colors"
-              >
-                Continue to Cart
-              </button>
-            </form>
-          </div>
+{showBuyNowModal && (
+  <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
+    <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full relative overflow-hidden">
+
+      {/* Close Button */}
+      <button
+        className="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-xl z-10"
+        onClick={() => setShowBuyNowModal(false)}
+      >
+        ×
+      </button>
+
+      <div className="flex flex-col md:flex-row">
+
+        {/* 🔥 LEFT SIDE - PRODUCT DETAILS */}
+        <div className="md:w-1/2 bg-gray-50 p-6 flex flex-col items-center justify-center border-r">
+          
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-40 h-40 object-cover rounded-xl mb-4 shadow"
+          />
+
+          <h3 className="text-lg font-semibold text-gray-900 text-center line-clamp-2">
+            {product.title}
+          </h3>
+
+          <p className="text-xl font-bold text-green-700 mt-2">
+            ₹ {product.price}
+          </p>
+
+          <span className="text-sm text-gray-500 mt-1">
+            {product.quantity}
+          </span>
+
         </div>
-      )}
+
+        {/* 🔥 RIGHT SIDE - FORM */}
+        <div className="md:w-1/2 p-6">
+
+          <h3 className="text-lg font-bold mb-4 text-gray-900">
+            Enter your details
+          </h3>
+
+          <form onSubmit={handleFormSubmit} className="space-y-3">
+
+            <div>
+              <label className="block text-xs font-semibold mb-1">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleFormChange}
+                className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-green-500 outline-none"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold mb-1">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleFormChange}
+                className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-green-500 outline-none"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold mb-1">Mobile</label>
+              <input
+                type="tel"
+                name="mobile"
+                value={form.mobile}
+                onChange={handleFormChange}
+                className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-green-500 outline-none"
+                required
+              />
+            </div>
+
+            {formError && (
+              <div className="text-red-500 text-xs">{formError}</div>
+            )}
+
+            <button
+              type="submit"
+              className="w-full bg-[#0b3b2a] text-white py-2 rounded-lg font-semibold hover:bg-green-800 transition-colors"
+            >
+              Continue to Cart
+            </button>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 };

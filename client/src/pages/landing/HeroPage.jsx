@@ -44,7 +44,7 @@ const HeroPage = () => {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative mt-4">
             <div className="relative overflow-hidden rounded-3xl h-[45vh] sm:h-[55vh] md:h-[65vh]">
               <motion.div
                 animate={{ x: `-${heroIndex * 100}%` }}
